@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.5](https://github.com/rhangai/node-vue-packages/compare/v0.0.4...v0.0.5) (2021-05-25)
+
+
+### Bug Fixes
+
+* Submit config has better typings ([14c1e8e](https://github.com/rhangai/node-vue-packages/commit/14c1e8e614709dfb9908df6075e60d84711d1294))
+
+
+
+
+
 ## [0.0.4](https://github.com/rhangai/node-vue-packages/compare/v0.0.3...v0.0.4) (2021-05-25)
 
 
