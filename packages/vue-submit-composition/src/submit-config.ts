@@ -1,22 +1,28 @@
+import { InjectionKey, provide } from '@vue/composition-api';
+
 // prettier-ignore
 export type SubmitConfigRequestFunction<TRequestConfig, TResponse> = (config: TRequestConfig) => TResponse | Promise<TResponse>;
+
+export type SubmitConfigHandle<TRequestConfig, TResponse> = {
+	key: InjectionKey<SubmitConfig<TRequestConfig, TResponse>>;
+};
 
 export type SubmitConfig<TRequestConfig, TResponse> = {
 	request: SubmitConfigRequestFunction<TRequestConfig, TResponse>;
 };
 
-type SubmitConfigFromRequestFunction<T> =
-	// prettier-ignore
-	T extends SubmitConfigRequestFunction<infer TRequestConfig, infer TResponse> ? SubmitConfig<TRequestConfig, TResponse>
-	: SubmitConfig<unknown, unknown>;
+export function createSubmitConfig<TRequestConfig, TResponse>() {
+	type SubmitConfigType = SubmitConfig<TRequestConfig, TResponse>;
+	type SubmitConfigHandleType = SubmitConfigHandle<TRequestConfig, TResponse>;
 
-export function createSubmitConfig<TRequestFunction extends SubmitConfigRequestFunction<any, any>>() {
-	const submitConfig: Partial<SubmitConfigFromRequestFunction<TRequestFunction>> = {};
-	const registerSubmit = (fn: TRequestFunction) => {
-		submitConfig.request = fn;
+	const submitConfigHandle: SubmitConfigHandleType = {
+		key: Symbol('@rhangai/vue-submit-composition/handle'),
+	};
+	const provideSubmitConfig = (config: SubmitConfigType) => {
+		provide(submitConfigHandle.key, config);
 	};
 	return {
-		submitConfig: submitConfig as SubmitConfigFromRequestFunction<TRequestFunction>,
-		registerSubmit,
+		submitConfig: submitConfigHandle,
+		provideSubmitConfig,
 	};
 }
