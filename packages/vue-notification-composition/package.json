@@ -1,0 +1,13 @@
+{
+  "name": "@rhangai/vue-notification-composition",
+  "version": "0.0.0",
+  "description": "Wrapper to handle requests",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@vue/composition-api": "^1.0.0-rc.9"
+  },
+  "peerDependencies": {
+    "@vue/composition-api": "*"
+  }
+}
