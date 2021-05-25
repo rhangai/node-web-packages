@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.4](https://github.com/rhangai/node-vue-packages/compare/v0.0.3...v0.0.4) (2021-05-25)
+
+
+### Bug Fixes
+
+* prepublishOnly lifecycle ([d5d8aa7](https://github.com/rhangai/node-vue-packages/commit/d5d8aa7ab9ab720d3e314d5b6a1e7ecf750eab28))
+
+
+
+
+
 ## [0.0.3](https://github.com/rhangai/node-vue-packages/compare/v0.0.2...v0.0.3) (2021-05-25)
 
 **Note:** Version bump only for package @rhangai/vue-submit-composition
