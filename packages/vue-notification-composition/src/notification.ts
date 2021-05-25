@@ -1,45 +1,37 @@
-import {
-	InjectionKey,
-	provide,
-	inject,
-	ref,
-	Ref,
-	reactive,
-	nextTick,
-	UnwrapRef,
-} from '@vue/composition-api';
+import { ref, Ref, reactive, nextTick, UnwrapRef } from '@vue/composition-api';
 
-type NotificationHandler<TNotification> = (notification: TNotification) => void;
+export type NotificationHandler<TNotification> = (notification: TNotification) => void;
 
-type NotificationRefHandlerItem<TNotification> = {
+export type NotificationRefHandlerItem<TNotification> = {
 	id: number;
 	notification: UnwrapRef<TNotification>;
 	active: boolean;
 	resolve: () => void;
 };
 
+/**
+ * Create a new useNotification and registerNotificationHandler
+ */
 export function createUseNotification<TNotification>() {
-	const notificationHandlerKey: InjectionKey<NotificationHandler<TNotification>> =
-		Symbol('notification-handler');
-	const provideNotificationHandler = (handler: NotificationHandler<TNotification>) => {
-		provide(notificationHandlerKey, handler);
+	let notificationHandler: NotificationHandler<TNotification>;
+	const registerNotificationHandler = (handler: NotificationHandler<TNotification>) => {
+		notificationHandler = handler;
 	};
 	const useNotification = () => {
-		const notificationHandler = inject(notificationHandlerKey)!;
-		const notify = (notification: TNotification) => {
-			notificationHandler(notification);
-		};
-		return { notify };
+		if (!notificationHandler) {
+			throw new Error(`No notification handler. Did you call registerNotificationHandler?`);
+		}
+		return { notify: notificationHandler };
 	};
-	return [useNotification, provideNotificationHandler];
+	return { useNotification, registerNotificationHandler };
 }
 
 /**
- * @param provideFunction
+ * @param registerNotificationHandler
  * @returns
  */
 export function useNotificationRefHandler<TNotification>(
-	provideFunction: (handler: NotificationHandler<TNotification>) => void
+	registerNotificationHandler: (handler: NotificationHandler<TNotification>) => void
 ) {
 	let notificationIdCounter = 0;
 	const notifications: Ref<NotificationRefHandlerItem<TNotification>[]> = ref([]);
@@ -65,6 +57,6 @@ export function useNotificationRefHandler<TNotification>(
 			notificationItem.active = true;
 		});
 	};
-	provideFunction(notify);
-	return [notify, notifications];
+	registerNotificationHandler(notify);
+	return { notifications };
 }

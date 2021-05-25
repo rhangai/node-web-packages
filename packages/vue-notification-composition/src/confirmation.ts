@@ -1,17 +1,8 @@
-import {
-	InjectionKey,
-	provide,
-	inject,
-	ref,
-	Ref,
-	reactive,
-	nextTick,
-	UnwrapRef,
-} from '@vue/composition-api';
+import { ref, Ref, reactive, nextTick, UnwrapRef } from '@vue/composition-api';
 
-type ConfirmationHandler<TConfirmation> = (confirmation: TConfirmation) => Promise<boolean>;
+export type ConfirmationHandler<TConfirmation> = (confirmation: TConfirmation) => Promise<boolean>;
 
-type ConfirmationRefHandlerItem<TConfirmation> = {
+export type ConfirmationRefHandlerItem<TConfirmation> = {
 	id: number;
 	confirmation: UnwrapRef<TConfirmation>;
 	active: boolean;
@@ -21,24 +12,25 @@ type ConfirmationRefHandlerItem<TConfirmation> = {
 };
 
 export function createUseConfirmation<TConfirmation>() {
-	const confirmationHandlerKey: InjectionKey<ConfirmationHandler<TConfirmation>> =
-		Symbol('confirmation-handler');
-	const provideConfirmationHandler = (handler: ConfirmationHandler<TConfirmation>) => {
-		provide(confirmationHandlerKey, handler);
+	let confirmationHandler: ConfirmationHandler<TConfirmation>;
+	const registerConfirmationHandler = (handler: ConfirmationHandler<TConfirmation>) => {
+		confirmationHandler = handler;
 	};
 	const useConfirmation = () => {
-		const confirmationHandler = inject(confirmationHandlerKey)!;
+		if (!confirmationHandler) {
+			throw new Error(`No confirmation handler. Did you call registerConfirmationHandler?`);
+		}
 		return { confirm: confirmationHandler };
 	};
-	return [useConfirmation, provideConfirmationHandler];
+	return { useConfirmation, registerConfirmationHandler };
 }
 
 /**
- * @param provideFunction
+ * @param registerConfirmationHandler
  * @returns
  */
 export function useConfirmationRefHandler<TConfirmation>(
-	provideFunction: (handler: ConfirmationHandler<TConfirmation>) => void
+	registerConfirmationHandler: (handler: ConfirmationHandler<TConfirmation>) => void
 ) {
 	let confirmationIdCounter = 0;
 	const confirmations: Ref<ConfirmationRefHandlerItem<TConfirmation>[]> = ref([]);
@@ -73,6 +65,6 @@ export function useConfirmationRefHandler<TConfirmation>(
 			});
 		});
 	};
-	provideFunction(confirm);
-	return [confirm, confirmations];
+	registerConfirmationHandler(confirm);
+	return { confirmations };
 }

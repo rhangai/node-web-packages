@@ -3,6 +3,7 @@ module.exports = {
 	plugins: ['@rhangai'],
 	extends: ['plugin:@rhangai/vue-typescript'],
 	parserOptions: {
-		project: 'tsconfig.json',
+		tsconfigRootDir: __dirname,
+		project: './tsconfig.json',
 	},
 };

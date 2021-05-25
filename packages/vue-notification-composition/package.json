@@ -1,11 +1,17 @@
 {
   "name": "@rhangai/vue-notification-composition",
   "version": "0.0.0",
-  "description": "Wrapper to handle requests",
-  "main": "index.js",
+  "description": "Framework agnostic notification for vue",
+  "main": "lib/index.js",
   "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint src",
+    "lint:fix": "eslint --fix src"
+  },
   "devDependencies": {
-    "@vue/composition-api": "^1.0.0-rc.9"
+    "@vue/composition-api": "^1.0.0-rc.9",
+    "vue": "^2.6.12"
   },
   "peerDependencies": {
     "@vue/composition-api": "*"
