@@ -1,6 +1,10 @@
 import { ref, Ref, reactive, nextTick, UnwrapRef } from '@vue/composition-api';
 
-export type ConfirmationHandler<TConfirmation> = (confirmation: TConfirmation) => Promise<boolean>;
+export type ConfirmationHandler<TConfirmation> = (confirmation: TConfirmation) => boolean | Promise<boolean>;
+
+export type CreateUseConfirmationOptions<TConfirmation> = {
+	confirm: ConfirmationHandler<TConfirmation>;
+};
 
 export type ConfirmationRefHandlerItem<TConfirmation> = {
 	id: number;
@@ -11,27 +15,18 @@ export type ConfirmationRefHandlerItem<TConfirmation> = {
 	reject: () => void;
 };
 
-export function createUseConfirmation<TConfirmation>() {
-	let confirmationHandler: ConfirmationHandler<TConfirmation>;
-	const registerConfirmationHandler = (handler: ConfirmationHandler<TConfirmation>) => {
-		confirmationHandler = handler;
-	};
-	const useConfirmation = () => {
-		if (!confirmationHandler) {
-			throw new Error(`No confirmation handler. Did you call registerConfirmationHandler?`);
-		}
-		return { confirm: confirmationHandler };
-	};
-	return { useConfirmation, registerConfirmationHandler };
+export function createUseConfirmation<TConfirmation>(options: CreateUseConfirmationOptions<TConfirmation>) {
+	const useConfirmation = () => ({ confirm: options.confirm });
+	return { useConfirmation };
 }
 
-/**
- * @param registerConfirmationHandler
- * @returns
- */
-export function useConfirmationRefHandler<TConfirmation>(
-	registerConfirmationHandler: (handler: ConfirmationHandler<TConfirmation>) => void
-) {
+export function createUseConfirmationRef<TConfirmation>() {
+	const { confirm, confirmations } = createConfirmationRefHandler<TConfirmation>();
+	const { useConfirmation } = createUseConfirmation<TConfirmation>({ confirm });
+	return { useConfirmation, confirmations };
+}
+
+function createConfirmationRefHandler<TConfirmation>() {
 	let confirmationIdCounter = 0;
 	const confirmations: Ref<ConfirmationRefHandlerItem<TConfirmation>[]> = ref([]);
 	const confirm = (confirmation: TConfirmation) => {
@@ -65,6 +60,5 @@ export function useConfirmationRefHandler<TConfirmation>(
 			});
 		});
 	};
-	registerConfirmationHandler(confirm);
-	return { confirmations };
+	return { confirm, confirmations };
 }
