@@ -15,10 +15,12 @@
   "devDependencies": {
     "@vue/composition-api": "^1.0.0-rc.9",
     "npm-run-all": "^4.1.5",
+    "ramda": "^0.27.1",
     "rimraf": "^3.0.2"
   },
   "peerDependencies": {
-    "@vue/composition-api": "*"
+    "@vue/composition-api": "*",
+    "ramda": "^0.27.1"
   },
   "publishConfig": {
     "access": "public"
