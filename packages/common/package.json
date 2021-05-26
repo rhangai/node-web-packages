@@ -1,0 +1,22 @@
+{
+  "name": "@rhangai/web-common",
+  "version": "0.0.5",
+  "description": "Common web packages",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf lib",
+    "build": "tsc",
+    "lint": "eslint src",
+    "lint:fix": "eslint --fix src",
+    "prepublishOnly": "run-s clean build"
+  },
+  "dependencies": {
+    "bignumber.js": "^9.0.1",
+    "dayjs": "^1.10.4"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
