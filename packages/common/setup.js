@@ -1,3 +1,3 @@
-import { dateSetup } from './lib/date/date-setup';
+import { dateSetup } from './lib/types/date/date-setup';
 
 dateSetup();
