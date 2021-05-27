@@ -1,0 +1,29 @@
+{
+  "name": "@rhangai/vue-form-composition",
+  "version": "0.0.7",
+  "description": "Form controls using vue composition",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf lib",
+    "build": "tsc",
+    "lint": "eslint src",
+    "lint:fix": "eslint --fix src",
+    "prepublishOnly": "run-s clean build"
+  },
+  "devDependencies": {
+    "@vue/composition-api": "^1.0.0-rc.9",
+    "npm-run-all": "^4.1.5",
+    "ramda": "^0.27.1",
+    "rimraf": "^3.0.2",
+    "vue": "^2.6.12"
+  },
+  "peerDependencies": {
+    "@vue/composition-api": "*",
+    "ramda": "^0.27.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
