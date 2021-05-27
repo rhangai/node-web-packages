@@ -1,1 +1,1 @@
-# @rhangai/vue-notification-composition
+# @rhangai/vue-form-composition
