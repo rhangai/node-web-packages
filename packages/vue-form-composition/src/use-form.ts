@@ -12,6 +12,7 @@ export type UseFormOptions<T> = {
 
 export type UseFormResult<T> = {
 	form: Ref<T>;
+	formSet: (inputValue: Partial<T> | null) => void;
 	formRules: ComputedRef<FormRules<T>>;
 	formControl: UnwrapRef<FormControl>;
 	formControlUseSubmitting: (submitting: Ref<boolean>) => void;
@@ -21,7 +22,7 @@ export function useForm<T extends {}>(options: UseFormOptions<T>): UseFormResult
 	const { formControl, formControlUseSubmitting } = provideFormControl(options.props);
 	const formRaw: T = reactive(options.form()) as T;
 
-	const formSet = (inputValue: any) => {
+	const formSet = (inputValue: Partial<T> | null) => {
 		const newValue = options.form();
 		if (!inputValue || typeof inputValue !== 'object') {
 			Object.assign(formRaw, newValue);
@@ -31,6 +32,7 @@ export function useForm<T extends {}>(options: UseFormOptions<T>): UseFormResult
 
 		if (inputValue === formRaw) return;
 		for (const key in inputValue) {
+			if (inputValue[key] === undefined) continue;
 			if (key in formRaw) {
 				(newValue as any)[key] = inputValue[key];
 			}
@@ -53,6 +55,7 @@ export function useForm<T extends {}>(options: UseFormOptions<T>): UseFormResult
 
 	return {
 		form,
+		formSet,
 		formRules,
 		formControl,
 		formControlUseSubmitting,
