@@ -1,0 +1,21 @@
+{
+  "name": "@rhangai/eslint-config-vue",
+  "version": "0.1.0",
+  "description": "Wrapper to handle requests",
+  "main": "index.js",
+  "license": "MIT",
+  "peerDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.25.0",
+    "@typescript-eslint/parser": "^4.25.0",
+    "@vue/eslint-config-airbnb": "^5.3.0",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "@vue/eslint-config-typescript": "^7.0.0",
+    "eslint": "^7.27.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-vue": "^7.10.0",
+    "prettier": "^2.3.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
