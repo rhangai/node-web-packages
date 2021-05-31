@@ -41,7 +41,7 @@ export function createUseSubmit<TRequestConfig, TResult, TNotification, TConfirm
 	createSubmitOptions: CreateUseSubmitOptions<TRequestConfig, TResult, TNotification, TConfirmation>
 ) {
 	type UseSubmitOptionsType = UseSubmitOptions<TRequestConfig, TResult, TNotification, TConfirmation>;
-	type SubmitRequestOptionsType = SubmitRequestOptions<TResult, TNotification, TConfirmation>;
+	type SubmitRequestOptionsType<TRequestResult> = SubmitRequestOptions<TRequestResult, TNotification, TConfirmation>;
 
 	const { submitConfig: submitConfigHandle, useNotification, useConfirmation, defaults } = createSubmitOptions;
 
@@ -88,7 +88,7 @@ export function createUseSubmit<TRequestConfig, TResult, TNotification, TConfirm
 			const notificationDefaults = submitReactiveOptionResolve(defaultsParam, ...params);
 			await notify({ ...notificationDefaults, ...notification });
 		};
-		const doSubmitRequest = async (options: SubmitRequestOptionsType) => {
+		const doSubmitRequest = async (options: SubmitRequestOptionsType<any>) => {
 			try {
 				if (options.validate != null) {
 					const isValid = await options.validate();
@@ -117,8 +117,8 @@ export function createUseSubmit<TRequestConfig, TResult, TNotification, TConfirm
 		return { doSubmitRequest };
 	};
 
-	const useSubmitRequest = <TParams extends any[]>(
-		options: SubmitReactiveOption<SubmitRequestOptionsType, TParams>
+	const useSubmitRequest = <TRequestResult, TParams extends any[]>(
+		options: SubmitReactiveOption<SubmitRequestOptionsType<TRequestResult>, TParams>
 	) => {
 		const { doSubmitRequest } = useSubmitRequestBase();
 		const submitting = ref(false);
@@ -137,11 +137,13 @@ export function createUseSubmit<TRequestConfig, TResult, TNotification, TConfirm
 	const useSubmit = <TParams extends any[]>(options: SubmitReactiveOption<UseSubmitOptionsType, TParams>) => {
 		const submitConfig = inject(submitConfigHandle.key);
 		if (!submitConfig) throw new Error(`Did you call provideSubmitConfig?`);
-		return useSubmitRequest<TParams>((...params: TParams) => mapRequestOptions(submitConfig, options, params));
+		return useSubmitRequest<TResult, TParams>((...params: TParams) =>
+			mapRequestOptions(submitConfig, options, params)
+		);
 	};
 
-	const useSubmitRequestMultiple = <TParams extends any[]>(
-		options: SubmitReactiveOption<SubmitRequestOptionsType, TParams>
+	const useSubmitRequestMultiple = <TRequestResult, TParams extends any[]>(
+		options: SubmitReactiveOption<SubmitRequestOptionsType<TRequestResult>, TParams>
 	) => {
 		const { doSubmitRequest } = useSubmitRequestBase();
 
@@ -167,7 +169,7 @@ export function createUseSubmit<TRequestConfig, TResult, TNotification, TConfirm
 	const useSubmitMultiple = <TParams extends any[]>(options: SubmitReactiveOption<UseSubmitOptionsType, TParams>) => {
 		const submitConfig = inject(submitConfigHandle.key);
 		if (!submitConfig) throw new Error(`Did you call provideSubmitConfig?`);
-		return useSubmitRequestMultiple<TParams>((...params: TParams) =>
+		return useSubmitRequestMultiple<TResult, TParams>((...params: TParams) =>
 			mapRequestOptions(submitConfig, options, params)
 		);
 	};
