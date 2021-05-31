@@ -16,6 +16,7 @@ export type UseFormResult<T> = {
 	form: Ref<T>;
 	formGet: <U = T>() => Exact<T, U>;
 	formSet: (inputValue: Partial<T> | null) => void;
+	formReset: () => void;
 	formRules: ComputedRef<FormRules<T>>;
 	formControl: UnwrapRef<FormControl>;
 	formControlUseSubmitting: (submitting: Ref<boolean>) => void;
@@ -62,6 +63,7 @@ export function useForm<T extends {}>(options: UseFormOptions<T>): UseFormResult
 			return formRaw as Exact<T, U>;
 		},
 		formSet,
+		formReset: () => formSet(null),
 		formRules,
 		formControl,
 		formControlUseSubmitting,
