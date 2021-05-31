@@ -1,6 +1,8 @@
 import { computed, watch, Ref, ComputedRef, reactive, UnwrapRef } from '@vue/composition-api';
 import { FormControl, FormControlPropsType, provideFormControl } from './control';
 
+type Exact<T, SHAPE> = T extends SHAPE ? (Exclude<keyof T, keyof SHAPE> extends never ? T : void) : void;
+
 export type FormRules<T> = Partial<Record<keyof T, unknown>>;
 
 export type UseFormOptions<T> = {
@@ -12,6 +14,7 @@ export type UseFormOptions<T> = {
 
 export type UseFormResult<T> = {
 	form: Ref<T>;
+	formGet: <U = T>() => Exact<T, U>;
 	formSet: (inputValue: Partial<T> | null) => void;
 	formRules: ComputedRef<FormRules<T>>;
 	formControl: UnwrapRef<FormControl>;
@@ -55,6 +58,9 @@ export function useForm<T extends {}>(options: UseFormOptions<T>): UseFormResult
 
 	return {
 		form,
+		formGet<U = T>() {
+			return formRaw as Exact<T, U>;
+		},
 		formSet,
 		formRules,
 		formControl,
