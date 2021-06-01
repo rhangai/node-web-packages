@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.10](https://github.com/rhangai/node-web-packages/compare/v0.1.9...v0.1.10) (2021-06-01)
+
+
+### Bug Fixes
+
+* Export of $auth on nuxt context ([9f43b71](https://github.com/rhangai/node-web-packages/commit/9f43b7187bb1b17194c67ed5f162b65d4818b6ae))
+
+
+
+
+
 ## [0.1.9](https://github.com/rhangai/node-web-packages/compare/v0.1.8...v0.1.9) (2021-06-01)
 
 
