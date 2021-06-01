@@ -8,7 +8,7 @@ export class AuthModule {
 	private storeNamespace: string;
 
 	constructor(private readonly options: AuthModuleOptions) {
-		this.storeNamespace = this.options.storeNamespace ?? 'core';
+		this.storeNamespace = this.options.storeNamespace ?? 'auth';
 		this.auth = new AuthRequestService({
 			interval: options.interval,
 			authRequestConfig: options.authRequestConfig,
@@ -38,7 +38,7 @@ export class AuthModule {
 
 		const { authStatus, error, data } = await this.auth.refresh(async (authPayload: any) => {
 			const usuario = await getUsuario(authPayload);
-			this.options.context.store.commit(`${this.storeNamespace}/usuario`, usuario);
+			this.options.context.store.commit(`${this.storeNamespace}/user`, usuario);
 		});
 		if (authStatus === AuthResponseStatus.UNAUTHORIZED) {
 			await this.onRouteUnauthorized(options.route);
