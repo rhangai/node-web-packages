@@ -3,6 +3,111 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.10](https://github.com/rhangai/node-web-packages/compare/v0.1.9...v0.1.10) (2021-06-01)
+
+
+### Bug Fixes
+
+* Export of $auth on nuxt context ([9f43b71](https://github.com/rhangai/node-web-packages/commit/9f43b7187bb1b17194c67ed5f162b65d4818b6ae))
+
+
+
+
+
+## [0.1.9](https://github.com/rhangai/node-web-packages/compare/v0.1.8...v0.1.9) (2021-06-01)
+
+
+### Bug Fixes
+
+* Exports of nuxt-auth-module ([1d22ee5](https://github.com/rhangai/node-web-packages/commit/1d22ee504c47be80dec6176a550f2f8c41beea05))
+
+
+
+
+
+## [0.1.8](https://github.com/rhangai/node-web-packages/compare/v0.1.7...v0.1.8) (2021-06-01)
+
+**Note:** Version bump only for package root
+
+
+
+
+
+## [0.1.7](https://github.com/rhangai/node-web-packages/compare/v0.1.6...v0.1.7) (2021-06-01)
+
+**Note:** Version bump only for package root
+
+
+
+
+
+## [0.1.6](https://github.com/rhangai/node-web-packages/compare/v0.1.5...v0.1.6) (2021-06-01)
+
+**Note:** Version bump only for package root
+
+
+
+
+
+## [0.1.5](https://github.com/rhangai/node-web-packages/compare/v0.1.4...v0.1.5) (2021-06-01)
+
+**Note:** Version bump only for package root
+
+
+
+
+
+## [0.1.4](https://github.com/rhangai/node-web-packages/compare/v0.1.3...v0.1.4) (2021-05-31)
+
+**Note:** Version bump only for package root
+
+
+
+
+
+## [0.1.3](https://github.com/rhangai/node-web-packages/compare/v0.1.2...v0.1.3) (2021-05-31)
+
+
+### Bug Fixes
+
+* Request result type ([34d407d](https://github.com/rhangai/node-web-packages/commit/34d407dad68ff66f6b4e6a6b2eaadd5f5bdaa453))
+
+
+
+
+
+## [0.1.2](https://github.com/rhangai/node-web-packages/compare/v0.1.1...v0.1.2) (2021-05-28)
+
+**Note:** Version bump only for package root
+
+
+
+
+
+## [0.1.1](https://github.com/rhangai/node-web-packages/compare/v0.1.0...v0.1.1) (2021-05-27)
+
+**Note:** Version bump only for package root
+
+
+
+
+
+# [0.1.0](https://github.com/rhangai/node-web-packages/compare/v0.0.8...v0.1.0) (2021-05-27)
+
+**Note:** Version bump only for package root
+
+
+
+
+
+## [0.0.8](https://github.com/rhangai/node-web-packages/compare/v0.0.7...v0.0.8) (2021-05-27)
+
+**Note:** Version bump only for package root
+
+
+
+
+
 ## [0.0.7](https://github.com/rhangai/node-web-packages/compare/v0.0.6...v0.0.7) (2021-05-26)
 
 **Note:** Version bump only for package root

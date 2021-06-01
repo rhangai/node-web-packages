@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.3](https://github.com/rhangai/node-web-packages/compare/v0.1.2...v0.1.3) (2021-05-31)
+
+
+### Bug Fixes
+
+* Request result type ([34d407d](https://github.com/rhangai/node-web-packages/commit/34d407dad68ff66f6b4e6a6b2eaadd5f5bdaa453))
+
+
+
+
+
+# [0.1.0](https://github.com/rhangai/node-web-packages/compare/v0.0.8...v0.1.0) (2021-05-27)
+
+**Note:** Version bump only for package @rhangai/vue-submit-composition
+
+
+
+
+
+## [0.0.8](https://github.com/rhangai/node-web-packages/compare/v0.0.7...v0.0.8) (2021-05-27)
+
+**Note:** Version bump only for package @rhangai/vue-submit-composition
+
+
+
+
+
 ## [0.0.7](https://github.com/rhangai/node-web-packages/compare/v0.0.6...v0.0.7) (2021-05-26)
 
 **Note:** Version bump only for package @rhangai/vue-submit-composition

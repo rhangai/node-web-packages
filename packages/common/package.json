@@ -1,6 +1,6 @@
 {
   "name": "@rhangai/web-common",
-  "version": "0.0.7",
+  "version": "0.1.0",
   "description": "Common web packages",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
