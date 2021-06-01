@@ -40,15 +40,15 @@ function useFormControlInternal(formControlProvider: FormControlProvider) {
 		// prettier-ignore
 		formControl = reactive({
 			readonly: computed(() => unref(formControlProvider.readonly) ?? formControlParent.readonly),
-			disabled: computed(() => unref(formControlProvider.disabled) ??  formControlParent.disabled),
+			disabled: computed(() => unref(formControlProvider.disabled) ?? formControlParent.disabled),
 			shouldValidate: computed(() => unref(formControlProvider.shouldValidate) ?? formControlParent.shouldValidate),
 		});
 	}
 	return { formControl, formControlParent };
 }
 
-export function useFormControl(formControlProvider: FormControlPropsType) {
-	return useFormControlInternal(formControlProvider);
+export function useFormControl(props: FormControlPropsType) {
+	return useFormControlInternal(props);
 }
 
 export function provideFormControl(formControlProvider: FormControlProvider) {
