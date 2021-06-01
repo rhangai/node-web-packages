@@ -2,7 +2,7 @@
   "name": "@rhangai/nuxt-auth-module",
   "version": "0.1.8",
   "description": "Nuxt module for authentication",
-  "main": "nuxt/index.js",
+  "main": "lib/index.js",
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf lib",

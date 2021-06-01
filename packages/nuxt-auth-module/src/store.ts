@@ -1,16 +1,17 @@
-export function pjCoreCreateStore() {
+/* eslint-disable no-param-reassign */
+export function authCreateStore() {
 	return {
 		state: () => ({
-			usuario: null,
+			user: null,
 			data: null,
 		}),
 		mutations: {
 			set(state: any, payload: any) {
-				state.usuario = payload.usuario;
+				state.user = payload.user;
 				state.data = payload.data;
 			},
-			usuario(state: any, payload: any) {
-				state.usuario = payload ? { ...payload } : null;
+			user(state: any, payload: any) {
+				state.user = payload ? { ...payload } : null;
 			},
 		},
 	};

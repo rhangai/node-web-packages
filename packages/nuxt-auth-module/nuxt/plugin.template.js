@@ -1,7 +1,7 @@
-import { PjCoreModule } from '@packages/pj-nuxt-module/src/core';
+import { AuthModule } from '@rhangai/nuxt-auth-module';
 
-export default function pjNuxtModulePlugin(context, inject) {
-	const core = new PjCoreModule({
+export default function authNuxtModulePlugin(context, inject) {
+	const core = new AuthModule({
 		interval: <%= options.interval %>,
 		context: context,
 		authRequestConfig: JSON.parse('<%= options.authRequestConfig %>'),

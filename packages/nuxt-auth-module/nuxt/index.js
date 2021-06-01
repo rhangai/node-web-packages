@@ -1,6 +1,7 @@
+/* eslint-disable no-param-reassign */
 import { resolve } from 'path';
 
-export default function pjNuxtModule(moduleOptions) {
+export default function authNuxtModule(moduleOptions) {
 	this.addPlugin({
 		src: resolve(__dirname, 'plugin.template.js'),
 		options: {
@@ -17,8 +18,7 @@ export default function pjNuxtModule(moduleOptions) {
 
 function normalizeRoutes(routes) {
 	if (!routes) return [];
-	if (!Array.isArray(routes))
-		throw new Error(`Configuração inválida de rotas. Deve ser uma array`);
+	if (!Array.isArray(routes)) throw new Error(`Configuração inválida de rotas. Deve ser uma array`);
 	routes = routes.flatMap(normalizeRoute);
 	return routes.reverse();
 }
@@ -38,12 +38,10 @@ function normalizeRoute(route) {
 			if (typeof route.path !== 'string') throw new Error(`routes.path deve ser string.`);
 			return { path: route.path, public: route.public };
 		} else if (route.pathPrefix != null) {
-			if (typeof route.pathPrefix !== 'string')
-				throw new Error(`routes.pathPrefix deve ser string.`);
+			if (typeof route.pathPrefix !== 'string') throw new Error(`routes.pathPrefix deve ser string.`);
 			return { pathPrefix: route.pathPrefix, public: route.public };
 		} else if (route.pathRegex != null) {
-			if (typeof route.pathRegex !== 'string')
-				throw new Error(`routes.pathRegex deve ser string.`);
+			if (typeof route.pathRegex !== 'string') throw new Error(`routes.pathRegex deve ser string.`);
 			return { pathRegex: route.pathRegex, public: route.public };
 		}
 	}
