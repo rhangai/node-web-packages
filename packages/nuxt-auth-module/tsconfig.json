@@ -3,5 +3,6 @@
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "lib"
-  }
+  },
+  "exclude": ["types.d.ts"]
 }
