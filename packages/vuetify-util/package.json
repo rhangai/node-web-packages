@@ -1,5 +1,5 @@
 {
-  "name": "@rhangai/vuetify-utils",
+  "name": "@rhangai/vuetify-util",
   "version": "0.0.5",
   "description": "Vuetify utility",
   "main": "lib/index.js",
