@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.12](https://github.com/rhangai/node-web-packages/compare/v0.1.11...v0.1.12) (2021-06-02)
+
+
+### Bug Fixes
+
+* Form now allow for null on nested objects ([cb37030](https://github.com/rhangai/node-web-packages/commit/cb37030cd38bbeb5e3e1842f98fd73190a70a04e))
+
+
+
+
+
 ## [0.1.11](https://github.com/rhangai/node-web-packages/compare/v0.1.10...v0.1.11) (2021-06-02)
 
 **Note:** Version bump only for package root

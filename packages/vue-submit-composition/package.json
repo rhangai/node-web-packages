@@ -1,6 +1,6 @@
 {
   "name": "@rhangai/vue-submit-composition",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "Wrapper to handle requests",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
