@@ -1,4 +1,4 @@
-import { computed, Ref, ComputedRef, reactive, UnwrapRef } from '@vue/composition-api';
+import { computed, Ref, ComputedRef, reactive, UnwrapRef, isRef } from '@vue/composition-api';
 import { FormControl, FormControlPropsType, provideFormControl } from './control';
 
 type Exact<T, SHAPE> = T extends SHAPE ? (Exclude<keyof T, keyof SHAPE> extends never ? T : void) : void;
@@ -8,7 +8,7 @@ export type FormRules<T> = Partial<Record<keyof T, unknown>>;
 export type UseFormOptions<T> = {
 	props: FormControlPropsType;
 	form: () => T;
-	formRules?: FormRules<T>;
+	formRules?: ReactiveValue<FormRules<T>>;
 	onValue?: (value: T) => void;
 };
 
@@ -53,7 +53,8 @@ export function useForm<T extends {}>(options: UseFormOptions<T>): UseFormResult
 	const formRules = computed<FormRules<T>>(() => {
 		if (!formControl.shouldValidate) return {};
 		if (formControl.readonly || formControl.disabled) return {};
-		return options.formRules ?? {};
+		const formRulesValue = resolveValue(options.formRules);
+		return formRulesValue ?? {};
 	});
 
 	return {
@@ -67,4 +68,11 @@ export function useForm<T extends {}>(options: UseFormOptions<T>): UseFormResult
 		formControl,
 		formControlUseSubmitting,
 	};
+}
+
+type ReactiveValue<T> = T | (() => T) | ComputedRef<T>;
+function resolveValue<T>(param: T | (() => T) | ComputedRef<T>): T {
+	if (isRef(param)) return param.value;
+	else if (typeof param === 'function') return (param as any)();
+	return param;
 }
