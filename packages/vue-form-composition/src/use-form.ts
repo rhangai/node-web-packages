@@ -5,9 +5,14 @@ type Exact<T, SHAPE> = T extends SHAPE ? (Exclude<keyof T, keyof SHAPE> extends 
 
 export type FormRules<T> = Partial<Record<keyof T, unknown>>;
 
+type FormDefinitionValue<T> = T extends Record<string, any> ? FormDefinition<T> | null : T;
+export type FormDefinition<T extends Record<string, any>> = {
+	[K in keyof T]: FormDefinitionValue<T[K]>;
+};
+
 export type UseFormOptions<T> = {
 	props: FormControlPropsType;
-	form: () => T;
+	form: () => FormDefinition<T>;
 	formRules?: ReactiveValue<FormRules<T>>;
 	onValue?: (value: T) => void;
 };
