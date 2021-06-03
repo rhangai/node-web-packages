@@ -16,8 +16,9 @@ export type AuthModuleOptions = {
 	authRoutes: AuthModuleOptionsRoute[];
 };
 
-export type AuthModuleRefreshOptions<User> = {
+export type AuthModuleRefreshOptions<User, Data> = {
 	route: Context['route'];
 	fetchUser?(payload: any): Promise<User> | User;
-	fetchData?(user: User): Promise<unknown> | unknown;
+	fetchData?(user: User): Promise<Data> | Data;
+	validate?(payload: { user: User; data: Data }): Promise<boolean> | boolean;
 };

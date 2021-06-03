@@ -23,8 +23,8 @@ export class AuthModule {
 		});
 	}
 
-	async refresh<User = unknown>(options: AuthModuleRefreshOptions<User>): Promise<void> {
-		const payload: Record<string, unknown> = {};
+	async refresh<User = unknown, Data = unknown>(options: AuthModuleRefreshOptions<User, Data>): Promise<void> {
+		const payload: Partial<{ user: User; data: Data }> = {};
 
 		const getUser = async (authPayload: any): Promise<User> => {
 			const defaultUser = {
@@ -50,6 +50,12 @@ export class AuthModule {
 		const user = await getUser(data);
 		payload.user = user;
 		payload.data = await options.fetchData?.(user);
+		if (options.validate) {
+			const isValid = options.validate(payload as Required<typeof payload>);
+			if (isValid === false) {
+				return;
+			}
+		}
 		this.options.context.store.commit(`${this.storeNamespace}/set`, payload);
 	}
 
