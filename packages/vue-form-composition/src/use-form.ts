@@ -1,20 +1,8 @@
 import { computed, Ref, ComputedRef, reactive, UnwrapRef, isRef } from '@vue/composition-api';
 import { FormControl, FormControlPropsType, provideFormControl } from './control';
-
-type Exact<T, SHAPE> = T extends SHAPE ? (Exclude<keyof T, keyof SHAPE> extends never ? T : void) : void;
+import { FormDefinition, FormType } from './types';
 
 export type FormRules<T> = Partial<Record<keyof T, unknown>>;
-
-// prettier-ignore
-type FormDefinitionValue<T> =
-	T extends ReadonlyArray<infer U> ? Array<Exclude<FormDefinitionValue<U>, null>> :
-	T extends Array<infer U> ? Array<Exclude<FormDefinitionValue<U>, null>> :
-	T extends {} ? FormDefinition<T> :
-	T;
-
-export type FormDefinition<T extends Record<string, any>> = {
-	-readonly [K in keyof T]: FormDefinitionValue<T[K]>;
-};
 
 export type UseFormOptions<T> = {
 	props: FormControlPropsType;
@@ -24,8 +12,7 @@ export type UseFormOptions<T> = {
 };
 
 export type UseFormResult<T> = {
-	form: Ref<T>;
-	formGet: <U = T>() => Exact<T, U>;
+	form: Ref<FormType<T>>;
 	formSet: (inputValue: Partial<T> | null) => void;
 	formReset: () => void;
 	formRules: ComputedRef<FormRules<T>>;
@@ -35,13 +22,13 @@ export type UseFormResult<T> = {
 
 export function useForm<T extends {}>(options: UseFormOptions<T>): UseFormResult<T> {
 	const { formControl, formControlUseSubmitting } = provideFormControl(options.props);
-	const formRaw: T = reactive(options.form()) as T;
+	const formRaw: FormType<T> = reactive(options.form()) as FormType<T>;
 
 	const formSet = (inputValue: Partial<T> | null) => {
 		const newValue = options.form();
 		if (!inputValue || typeof inputValue !== 'object') {
 			Object.assign(formRaw, newValue);
-			options.onValue?.(formRaw);
+			options.onValue?.(formRaw as T);
 			return;
 		}
 
@@ -53,10 +40,10 @@ export function useForm<T extends {}>(options: UseFormOptions<T>): UseFormResult
 			}
 		}
 		Object.assign(formRaw, newValue);
-		options.onValue?.(formRaw);
+		options.onValue?.(formRaw as T);
 	};
 
-	const form = computed<T>({
+	const form = computed<FormType<T>>({
 		get: () => formRaw,
 		set: (value: any) => formSet(value),
 	});
@@ -70,9 +57,6 @@ export function useForm<T extends {}>(options: UseFormOptions<T>): UseFormResult
 
 	return {
 		form,
-		formGet<U = T>() {
-			return formRaw as Exact<T, U>;
-		},
 		formSet,
 		formReset: () => formSet(null),
 		formRules,
