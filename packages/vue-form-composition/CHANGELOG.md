@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.18](https://github.com/rhangai/node-web-packages/compare/v0.1.17...v0.1.18) (2021-06-03)
+
+
+### Bug Fixes
+
+* FormDefinition type to remove readonly ([4c641fd](https://github.com/rhangai/node-web-packages/commit/4c641fd9151c44a6fa06c6ce639575f9cf309c26))
+
+
+
+
+
 ## [0.1.12](https://github.com/rhangai/node-web-packages/compare/v0.1.11...v0.1.12) (2021-06-02)
 
 
