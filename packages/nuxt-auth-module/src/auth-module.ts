@@ -51,7 +51,7 @@ export class AuthModule {
 		payload.user = user;
 		payload.data = await options.fetchData?.(user);
 		if (options.validate) {
-			const isValid = options.validate(payload as Required<typeof payload>);
+			const isValid = await options.validate(payload as Required<typeof payload>);
 			if (isValid === false) {
 				return;
 			}
