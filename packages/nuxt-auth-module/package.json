@@ -1,6 +1,6 @@
 {
   "name": "@rhangai/nuxt-auth-module",
-  "version": "0.1.14",
+  "version": "0.1.16",
   "description": "Nuxt module for authentication",
   "main": "lib/index.js",
   "license": "MIT",
