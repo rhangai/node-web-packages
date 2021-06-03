@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.14](https://github.com/rhangai/node-web-packages/compare/v0.1.13...v0.1.14) (2021-06-03)
+
+
+### Bug Fixes
+
+* Name of user variable ([528df55](https://github.com/rhangai/node-web-packages/commit/528df55c887889a5e726af6d7a9fdacaaceeb777))
+
+
+
+
+
 ## [0.1.12](https://github.com/rhangai/node-web-packages/compare/v0.1.11...v0.1.12) (2021-06-02)
 
 **Note:** Version bump only for package @rhangai/nuxt-auth-module
