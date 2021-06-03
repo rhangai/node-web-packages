@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.19](https://github.com/rhangai/node-web-packages/compare/v0.1.18...v0.1.19) (2021-06-03)
+
+
+### Bug Fixes
+
+* Export of FormDefinition ([5a75130](https://github.com/rhangai/node-web-packages/commit/5a7513065d1251cd501aca192f42122c36953b0e))
+
+
+
+
+
 ## [0.1.18](https://github.com/rhangai/node-web-packages/compare/v0.1.17...v0.1.18) (2021-06-03)
 
 
