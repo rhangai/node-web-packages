@@ -5,9 +5,15 @@ type Exact<T, SHAPE> = T extends SHAPE ? (Exclude<keyof T, keyof SHAPE> extends 
 
 export type FormRules<T> = Partial<Record<keyof T, unknown>>;
 
-type FormDefinitionValue<T> = T extends Record<string, any> ? FormDefinition<T> | null : T;
+// prettier-ignore
+type FormDefinitionValue<T> =
+	T extends ReadonlyArray<infer U> ? Array<Exclude<FormDefinitionValue<U>, null>> :
+	T extends Array<infer U> ? Array<Exclude<FormDefinitionValue<U>, null>> :
+	T extends {} ? FormDefinition<T> :
+	T;
+
 export type FormDefinition<T extends Record<string, any>> = {
-	[K in keyof T]: FormDefinitionValue<T[K]>;
+	-readonly [K in keyof T]: FormDefinitionValue<T[K]>;
 };
 
 export type UseFormOptions<T> = {
