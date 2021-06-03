@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.15](https://github.com/rhangai/node-web-packages/compare/v0.1.14...v0.1.15) (2021-06-03)
+
+
+### Bug Fixes
+
+* Delay when resolving confirmations/notifications ([86660f0](https://github.com/rhangai/node-web-packages/commit/86660f0e00cfc4faa5fab238b7ccbbdef3a8a562))
+
+
+
+
+
 ## [0.1.12](https://github.com/rhangai/node-web-packages/compare/v0.1.11...v0.1.12) (2021-06-02)
 
 **Note:** Version bump only for package @rhangai/vue-notification-composition
