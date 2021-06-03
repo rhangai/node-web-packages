@@ -26,19 +26,19 @@ export class AuthModule {
 	async refresh<User = unknown>(options: AuthModuleRefreshOptions<User>): Promise<void> {
 		const payload: Record<string, unknown> = {};
 
-		const getUsuario = async (authPayload: any): Promise<User> => {
-			const defaultUsuario = {
+		const getUser = async (authPayload: any): Promise<User> => {
+			const defaultUser = {
 				id: authPayload.sub,
 				email: authPayload.email,
 				nome: authPayload.name,
 			};
-			const usuario = await options.fetchUser?.(authPayload);
-			return { ...defaultUsuario, ...usuario } as any;
+			const user = await options.fetchUser?.(authPayload);
+			return { ...defaultUser, ...user } as any;
 		};
 
 		const { authStatus, error, data } = await this.auth.refresh(async (authPayload: any) => {
-			const usuario = await getUsuario(authPayload);
-			this.options.context.store.commit(`${this.storeNamespace}/user`, usuario);
+			const user = await getUser(authPayload);
+			this.options.context.store.commit(`${this.storeNamespace}/user`, user);
 		});
 		if (authStatus === AuthResponseStatus.UNAUTHORIZED) {
 			await this.onRouteUnauthorized(options.route);
@@ -47,9 +47,9 @@ export class AuthModule {
 		if (error) {
 			throw error;
 		}
-		const usuario = await getUsuario(data);
-		payload.usuario = usuario;
-		payload.data = await options.fetchData?.(usuario);
+		const user = await getUser(data);
+		payload.user = user;
+		payload.data = await options.fetchData?.(user);
 		this.options.context.store.commit(`${this.storeNamespace}/set`, payload);
 	}
 
