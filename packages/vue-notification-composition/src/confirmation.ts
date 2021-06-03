@@ -1,4 +1,5 @@
 import { ref, Ref, reactive, nextTick, UnwrapRef } from '@vue/composition-api';
+import { TIMEOUT_DELAY } from './constants';
 
 export type ConfirmationHandler<TConfirmation> = (confirmation: TConfirmation) => boolean | Promise<boolean>;
 
@@ -33,19 +34,22 @@ function createConfirmationRefHandler<TConfirmation>() {
 		const confirmationId = confirmationIdCounter;
 		confirmationIdCounter += 1;
 		return new Promise<boolean>((resolve) => {
+			let resolved = false;
 			const confirmationItem = reactive({
 				id: confirmationId,
 				confirmation,
 				active: false,
 				resolve(value: boolean) {
+					if (resolved) return;
+					resolved = true;
+					resolve(value);
 					confirmationItem.active = false;
-					nextTick(() => {
-						resolve(value);
+					setTimeout(() => {
 						const index = confirmations.value.findIndex((n) => n.id === confirmationId);
 						if (index >= 0) {
 							confirmations.value.splice(index, 1);
 						}
-					});
+					}, TIMEOUT_DELAY);
 				},
 				confirm() {
 					confirmationItem.resolve(true);

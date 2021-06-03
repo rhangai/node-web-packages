@@ -1,4 +1,5 @@
 import { ref, Ref, reactive, nextTick, UnwrapRef } from '@vue/composition-api';
+import { TIMEOUT_DELAY } from './constants';
 
 export type NotificationHandler<TNotification> = (notification: TNotification) => void;
 export type CreateUseNotificationOptions<TNotification> = {
@@ -35,6 +36,7 @@ function createNotificationRefHandler<TNotification>() {
 	let notificationIdCounter = 0;
 	const notifications: Ref<NotificationRefHandlerItem<TNotification>[]> = ref([]);
 	const notify = (notification: TNotification) => {
+		let resolved = false;
 		const notificationId = notificationIdCounter;
 		notificationIdCounter += 1;
 
@@ -50,8 +52,10 @@ function createNotificationRefHandler<TNotification>() {
 			notification,
 			active: false,
 			resolve() {
+				if (resolved) return;
+				resolved = true;
 				notificationItem.active = false;
-				nextTick(remove);
+				setTimeout(remove, TIMEOUT_DELAY);
 			},
 		});
 		notifications.value.push(notificationItem);
