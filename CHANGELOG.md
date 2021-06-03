@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.17](https://github.com/rhangai/node-web-packages/compare/v0.1.16...v0.1.17) (2021-06-03)
+
+
+### Bug Fixes
+
+* Await on options.validate ([bed8a84](https://github.com/rhangai/node-web-packages/commit/bed8a8430fffef45b28f172144fedd41ca5aa307))
+
+
+
+
+
 ## [0.1.16](https://github.com/rhangai/node-web-packages/compare/v0.1.15...v0.1.16) (2021-06-03)
 
 **Note:** Version bump only for package root
