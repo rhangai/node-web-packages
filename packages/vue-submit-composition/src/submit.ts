@@ -2,12 +2,13 @@
 import { computed, inject, reactive, ref, set } from '@vue/composition-api';
 import { SubmitConfig, SubmitConfigHandle } from './submit-config';
 import { SubmitReactiveOption, SubmitReactiveExtract, submitReactiveOptionResolve } from './utils';
+import { validateItem, ValidateItem } from './validate';
 
 type SubmitPromiseOrValue<T> = T | Promise<T>;
 
 type SubmitRequestOptions<TResult, TNotification, TConfirmation> = {
 	request: () => SubmitPromiseOrValue<TResult>;
-	validate?: () => SubmitPromiseOrValue<boolean>;
+	validate?: ValidateItem;
 	confirm?: SubmitReactiveOption<null | false | TConfirmation, []>;
 	notifySuccess?: SubmitReactiveOption<TNotification | false, [TResult]>;
 	onSuccess?: (result: TResult) => SubmitPromiseOrValue<void>;
@@ -95,7 +96,7 @@ export function createUseSubmit<TRequestConfig, TResult, TNotification, TConfirm
 		const doSubmitRequest = async (options: SubmitRequestOptionsType<any>) => {
 			try {
 				if (options.validate != null) {
-					const isValid = await options.validate();
+					const isValid = await validateItem(options.validate);
 					if (!isValid) {
 						await options.onValidationError?.();
 						await submitNotify([], options.notifyValidationError, defaults.notifyValidationError);
