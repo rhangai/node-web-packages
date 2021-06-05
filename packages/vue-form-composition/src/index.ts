@@ -1,5 +1,5 @@
 export * from './state';
-export * from './rule';
+export * from './validator';
 export * from './props';
 export * from './use-form';
 export * from './use-form-model';

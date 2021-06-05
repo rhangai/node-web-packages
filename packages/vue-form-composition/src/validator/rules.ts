@@ -2,7 +2,11 @@ import { computed, ComputedRef, isRef } from '@vue/composition-api';
 import { useFormState } from '../state';
 import { FormType } from '../types';
 
-export type FormRules<T> = Partial<Record<keyof T, unknown>>;
+export type FormRule<T> = (item: T) => boolean | string;
+
+export type FormRules<T> = {
+	[K in keyof T]?: Array<FormRule<T[K]>> | undefined;
+};
 
 export type UseFormRulesResult<T> = {
 	formRules: ComputedRef<FormRules<T>>;
