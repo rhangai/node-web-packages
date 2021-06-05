@@ -1,5 +1,5 @@
 import { computed, ComputedRef, isRef } from '@vue/composition-api';
-import { useFormControl } from '../control';
+import { useFormControl } from '../state';
 import { FormType } from '../types';
 
 export type FormRules<T> = Partial<Record<keyof T, unknown>>;

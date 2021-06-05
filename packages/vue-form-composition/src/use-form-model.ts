@@ -1,5 +1,5 @@
 import { watch } from '@vue/composition-api';
-import { FormControlPropsType } from './control';
+import { FormControlPropsType } from './state';
 import { useForm, UseFormOptions, UseFormResult } from './use-form';
 
 export type UseFormModelOptions<T> = Omit<UseFormOptions<T>, 'onValue' | 'props'> & {

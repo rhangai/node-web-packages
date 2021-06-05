@@ -1,4 +1,4 @@
-import { FormControlProps } from './control/form-control-props';
+import { FormControlProps } from './state/form-state-props';
 
 export const FormProps = {
 	...FormControlProps,

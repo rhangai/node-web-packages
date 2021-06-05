@@ -1,19 +1,35 @@
 import { computed, Ref, reactive, ref } from '@vue/composition-api';
-import { FormControl, FormControlPropsType, provideFormControl } from './control';
+import { FormState, FormStatePropsType, provideFormState } from './state';
 import { FormDefinition, FormType } from './types';
 
 export type UseFormOptions<T> = {
-	props: FormControlPropsType;
+	props: FormStatePropsType;
 	form: FormDefinition<T>;
 	onValue?: (value: T) => void;
 };
 
 export type UseFormResult<T> = {
+	/**
+	 * The form object, only allows
+	 */
 	form: FormType<T>;
+	/**
+	 * Set a value on the form
+	 */
 	formSet: (inputValue: Partial<T> | null) => void;
+	/**
+	 * Reset the form
+	 */
 	formReset: () => void;
-	formControl: FormControl;
-	formUseSubmitting: (submitting: Ref<boolean>) => void;
+	/**
+	 * State of the current form.
+	 */
+	formState: FormState;
+	/**
+	 * Use to disable the form when submitting.
+	 * Calling this function multiple types will disable the form if ANY of the refs are true.
+	 */
+	formUseSubmitting: (submitting: Ref<boolean>) => () => void;
 };
 
 /**
@@ -22,10 +38,12 @@ export type UseFormResult<T> = {
  * @returns
  */
 export function useForm<T>(options: UseFormOptions<T>): UseFormResult<T> {
-	const { formControl, formUseSubmitting } = useFormControlSubmitting(options.props);
+	const { formState, formUseSubmitting } = useFormStateSubmitting(options.props);
 	const form: FormType<T> = reactive(clone(options.form)) as FormType<T>;
 	if ('seal' in Object) Object.seal(form);
 	const formSet = (inputValue: Partial<T> | null) => {
+		if (inputValue === form) return;
+
 		const newValue = clone(options.form);
 		if (!inputValue || typeof inputValue !== 'object') {
 			Object.assign(form, newValue);
@@ -33,7 +51,6 @@ export function useForm<T>(options: UseFormOptions<T>): UseFormResult<T> {
 			return;
 		}
 
-		if (inputValue === form) return;
 		for (const key in inputValue) {
 			if (inputValue[key] === undefined) continue;
 			if (key in form) {
@@ -46,16 +63,16 @@ export function useForm<T>(options: UseFormOptions<T>): UseFormResult<T> {
 
 	return {
 		form,
-		formControl,
+		formState,
 		formSet,
 		formReset: () => formSet(null),
 		formUseSubmitting,
 	};
 }
 
-function useFormControlSubmitting(props: FormControlPropsType) {
+function useFormStateSubmitting(props: FormStatePropsType) {
 	const formSubmittingRefs = ref<Array<Ref<boolean>>>([]);
-	const { formControl } = provideFormControl({
+	const { formState } = provideFormState({
 		...props,
 		disabled: computed(() => {
 			for (const submittingRef of formSubmittingRefs.value) {
@@ -66,8 +83,12 @@ function useFormControlSubmitting(props: FormControlPropsType) {
 	});
 	const formUseSubmitting = (submittingRef: Ref<boolean>) => {
 		formSubmittingRefs.value.push(submittingRef);
+		return () => {
+			const index = formSubmittingRefs.value.indexOf(submittingRef);
+			if (index >= 0) formSubmittingRefs.value.splice(index, 1);
+		};
 	};
-	return { formControl, formUseSubmitting };
+	return { formState, formUseSubmitting };
 }
 
 function clone<T>(obj: T): T {
