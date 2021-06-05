@@ -2,7 +2,7 @@
 type FormDefinitionValue<T> =
 	T extends ReadonlyArray<infer U> ? Array<Exclude<FormDefinitionValue<U>, null>> :
 	T extends Array<infer U> ? Array<Exclude<FormDefinitionValue<U>, null>> :
-	T extends {} ? FormDefinition<T> :
+	T extends Record<string, any> ? (T | null) :
 	T;
 
 export type FormDefinition<T extends Record<string, any>> = {

@@ -4,8 +4,8 @@ import { FormDefinition, FormType } from './types';
 
 export type UseFormOptions<T> = {
 	props: FormControlPropsType;
-	form: () => FormDefinition<T>;
-	onValue?: (value: T) => void;
+	form: FormDefinition<T>;
+	onValue?: (value: unknown) => void;
 };
 
 export type UseFormResult<T> = {
@@ -27,9 +27,9 @@ export function useForm<T>(options: UseFormOptions<T>): UseFormResult<T> {
 		...options.props,
 		disabled: computed(() => (formSubmitting.value ? true : options.props.disabled)),
 	});
-	const form: FormType<T> = reactive(options.form()) as FormType<T>;
+	const form: FormType<T> = reactive(clone(options.form)) as FormType<T>;
 	const formSet = (inputValue: Partial<T> | null) => {
-		const newValue = options.form();
+		const newValue = clone(options.form);
 		if (!inputValue || typeof inputValue !== 'object') {
 			Object.assign(form, newValue);
 			options.onValue?.(form as T);
@@ -62,4 +62,8 @@ export function useForm<T>(options: UseFormOptions<T>): UseFormResult<T> {
 			);
 		},
 	};
+}
+
+function clone<T>(obj: T): T {
+	return JSON.parse(JSON.stringify(obj));
 }
