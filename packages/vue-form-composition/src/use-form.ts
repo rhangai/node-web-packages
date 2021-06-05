@@ -5,7 +5,7 @@ import { FormDefinition, FormType } from './types';
 export type UseFormOptions<T> = {
 	props: FormControlPropsType;
 	form: FormDefinition<T>;
-	onValue?: (value: unknown) => void;
+	onValue?: (value: T) => void;
 };
 
 export type UseFormResult<T> = {

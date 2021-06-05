@@ -7,9 +7,9 @@ export type UseFormModelOptions<T> = Omit<UseFormOptions<T>, 'onValue' | 'props'
 	emit: (event: 'input', value: T) => void;
 };
 
-export function useFormModel<T extends {}>(options: UseFormModelOptions<T>): UseFormResult<T> {
+export function useFormModel<T>(options: UseFormModelOptions<T>): UseFormResult<T> {
 	const { emit, ...useFormOptions } = options;
-	const formBindings = useForm({
+	const formBindings = useForm<T>({
 		...useFormOptions,
 		onValue(v) {
 			emit('input', v);
