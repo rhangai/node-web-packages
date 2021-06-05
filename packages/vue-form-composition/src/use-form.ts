@@ -1,4 +1,4 @@
-import { computed, Ref, reactive, ref, watch } from '@vue/composition-api';
+import { computed, Ref, reactive, ref } from '@vue/composition-api';
 import { FormControl, FormControlPropsType, provideFormControl } from './control';
 import { FormDefinition, FormType } from './types';
 
@@ -22,11 +22,7 @@ export type UseFormResult<T> = {
  * @returns
  */
 export function useForm<T>(options: UseFormOptions<T>): UseFormResult<T> {
-	const formSubmitting = ref(false);
-	const { formControl } = provideFormControl({
-		...options.props,
-		disabled: computed(() => (formSubmitting.value ? true : options.props.disabled)),
-	});
+	const { formControl, formUseSubmitting } = useFormControlSubmitting(options.props);
 	const form: FormType<T> = reactive(clone(options.form)) as FormType<T>;
 	if ('seal' in Object) Object.seal(form);
 	const formSet = (inputValue: Partial<T> | null) => {
@@ -53,16 +49,25 @@ export function useForm<T>(options: UseFormOptions<T>): UseFormResult<T> {
 		formControl,
 		formSet,
 		formReset: () => formSet(null),
-		formUseSubmitting(submitting) {
-			watch(
-				submitting,
-				(v) => {
-					formSubmitting.value = v;
-				},
-				{ immediate: true }
-			);
-		},
+		formUseSubmitting,
 	};
+}
+
+function useFormControlSubmitting(props: FormControlPropsType) {
+	const formSubmittingRefs = ref<Array<Ref<boolean>>>([]);
+	const { formControl } = provideFormControl({
+		...props,
+		disabled: computed(() => {
+			for (const submittingRef of formSubmittingRefs.value) {
+				if (submittingRef.value) return false;
+			}
+			return props.disabled;
+		}),
+	});
+	const formUseSubmitting = (submittingRef: Ref<boolean>) => {
+		formSubmittingRefs.value.push(submittingRef);
+	};
+	return { formControl, formUseSubmitting };
 }
 
 function clone<T>(obj: T): T {
