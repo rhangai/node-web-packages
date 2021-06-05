@@ -2,7 +2,9 @@ import { computed, ComputedRef, isRef } from '@vue/composition-api';
 import { useFormState } from '../state';
 import { FormType } from '../types';
 
-export type FormRule<T> = (item: T) => boolean | string;
+export type FormRuleResult = boolean | string;
+
+export type FormRule<T> = (item: T) => FormRuleResult;
 
 export type FormRules<T> = {
 	[K in keyof T]?: Array<FormRule<T[K]>> | undefined;
