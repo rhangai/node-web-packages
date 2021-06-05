@@ -28,6 +28,7 @@ export function useForm<T>(options: UseFormOptions<T>): UseFormResult<T> {
 		disabled: computed(() => (formSubmitting.value ? true : options.props.disabled)),
 	});
 	const form: FormType<T> = reactive(clone(options.form)) as FormType<T>;
+	if ('seal' in Object) Object.seal(form);
 	const formSet = (inputValue: Partial<T> | null) => {
 		const newValue = clone(options.form);
 		if (!inputValue || typeof inputValue !== 'object') {
