@@ -1,9 +1,9 @@
 import { watch } from '@vue/composition-api';
-import { FormControlPropsType } from './state';
+import { FormStatePropsType } from './state';
 import { useForm, UseFormOptions, UseFormResult } from './use-form';
 
 export type UseFormModelOptions<T> = Omit<UseFormOptions<T>, 'onValue' | 'props'> & {
-	props: FormControlPropsType & { value?: unknown };
+	props: FormStatePropsType & { value?: unknown };
 	emit: (event: 'input', value: T) => void;
 };
 

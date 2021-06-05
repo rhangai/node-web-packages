@@ -1,5 +1,5 @@
 import { computed, ComputedRef, isRef } from '@vue/composition-api';
-import { useFormControl } from '../state';
+import { useFormState } from '../state';
 import { FormType } from '../types';
 
 export type FormRules<T> = Partial<Record<keyof T, unknown>>;
@@ -9,10 +9,10 @@ export type UseFormRulesResult<T> = {
 };
 
 export function useFormRules<T>(form: FormType<T>, formRulesParam: ReactiveValue<FormRules<T>>): UseFormRulesResult<T> {
-	const { formControl } = useFormControl();
+	const { formState } = useFormState();
 	const formRules = computed<FormRules<T>>(() => {
-		if (!formControl.shouldValidate) return {};
-		if (formControl.readonly || formControl.disabled) return {};
+		if (!formState.shouldValidate) return {};
+		if (formState.readonly || formState.disabled) return {};
 		const formRulesValue = resolveValue(formRulesParam);
 		return formRulesValue ?? {};
 	});
