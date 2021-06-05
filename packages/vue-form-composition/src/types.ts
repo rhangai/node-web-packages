@@ -6,7 +6,7 @@ type FormDefinitionValue<T> =
 	T;
 
 export type FormDefinition<T extends Record<string, any>> = {
-	-readonly [K in keyof T]: FormDefinitionValue<T[K]>;
+	-readonly [K in keyof T]-?: FormDefinitionValue<T[K]>;
 };
 
 // prettier-ignore
@@ -17,5 +17,5 @@ type FormTypeValue<T> =
 	T;
 
 export type FormType<T extends Record<string, any>> = {
-	-readonly [K in keyof T]: FormTypeValue<T[K]>;
+	-readonly [K in keyof T]-?: FormTypeValue<T[K]>;
 };
