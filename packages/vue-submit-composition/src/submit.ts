@@ -38,9 +38,18 @@ export type CreateUseSubmitOptions<TRequestConfig, TResult, TNotification, TConf
 	};
 };
 
+export type SubmitRequestOptionsDefineType<TResult, RequestOptions extends SubmitRequestOptions<any, any, any>> =
+	RequestOptions extends SubmitRequestOptions<any, infer TNotification, infer TConfirmation>
+		? SubmitRequestOptions<TResult, TNotification, TConfirmation>
+		: SubmitRequestOptions<TResult, unknown, unknown>;
+
 // prettier-ignore
 export type CreateUseSubmitOptionsType<TUseSubmit extends (...args: any[]) => any> =
 	SubmitReactiveExtract<Parameters<TUseSubmit>[0]>;
+
+// prettier-ignore
+export type CreateUseSubmitRequestOptionsType<TResult, TUseSubmit extends (...args: any[]) => any> =
+	SubmitRequestOptionsDefineType<TResult, SubmitReactiveExtract<Parameters<TUseSubmit>[0]>>;
 
 export function createUseSubmit<TRequestConfig, TResult, TNotification, TConfirmation>(
 	createSubmitOptions: CreateUseSubmitOptions<TRequestConfig, TResult, TNotification, TConfirmation>
