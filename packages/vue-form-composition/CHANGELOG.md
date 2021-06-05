@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.2](https://github.com/rhangai/node-web-packages/compare/v0.2.1...v0.2.2) (2021-06-05)
+
+
+### Bug Fixes
+
+* Typing of optional definition ([6f0e90c](https://github.com/rhangai/node-web-packages/commit/6f0e90cc7c62cd9a8f8c7d9d122f613e96e45776))
+
+
+
+
+
 ## [0.2.1](https://github.com/rhangai/node-web-packages/compare/v0.2.0...v0.2.1) (2021-06-05)
 
 **Note:** Version bump only for package @rhangai/vue-form-composition
