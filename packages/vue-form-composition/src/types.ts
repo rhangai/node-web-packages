@@ -5,7 +5,7 @@ type FormDefinitionValue<T> =
 	T extends Record<string, any> ? (T | null) :
 	T;
 
-export type FormDefinition<T extends Record<string, any>> = {
+export type FormDefinition<T extends Record<string, unknown>> = {
 	-readonly [K in keyof T]-?: FormDefinitionValue<T[K]>;
 };
 
@@ -16,6 +16,6 @@ type FormTypeValue<T> =
 	T extends {} ? FormType<T> :
 	T;
 
-export type FormType<T extends Record<string, any>> = {
+export type FormType<T extends Record<string, unknown>> = {
 	-readonly [K in keyof T]-?: FormTypeValue<T[K]>;
 };

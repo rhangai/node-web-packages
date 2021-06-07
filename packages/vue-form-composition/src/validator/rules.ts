@@ -14,7 +14,10 @@ export type UseFormRulesResult<T> = {
 	formRules: ComputedRef<FormRules<T>>;
 };
 
-export function useFormRules<T>(form: FormType<T>, formRulesParam: ReactiveValue<FormRules<T>>): UseFormRulesResult<T> {
+export function useFormRules<T extends Record<string, unknown>>(
+	form: FormType<T>,
+	formRulesParam: ReactiveValue<FormRules<T>>
+): UseFormRulesResult<T> {
 	const { formState } = useFormState();
 	const formRules = computed<FormRules<T>>(() => {
 		if (!formState.shouldValidate) return {};

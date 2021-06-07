@@ -2,13 +2,13 @@ import { computed, Ref, reactive, ref } from '@vue/composition-api';
 import { FormState, FormStatePropsType, provideFormState } from './state';
 import { FormDefinition, FormType } from './types';
 
-export type UseFormOptions<T> = {
+export type UseFormOptions<T extends Record<string, unknown>> = {
 	props: FormStatePropsType;
 	form: FormDefinition<T>;
 	onValue?: (value: T) => void;
 };
 
-export type UseFormResult<T> = {
+export type UseFormResult<T extends Record<string, unknown>> = {
 	/**
 	 * The form object, only allows
 	 */
@@ -37,7 +37,7 @@ export type UseFormResult<T> = {
  * @param options
  * @returns
  */
-export function useForm<T>(options: UseFormOptions<T>): UseFormResult<T> {
+export function useForm<T extends Record<string, unknown>>(options: UseFormOptions<T>): UseFormResult<T> {
 	const { formState, formUseSubmitting } = useFormStateSubmitting(options.props);
 	const form: FormType<T> = reactive(clone(options.form)) as FormType<T>;
 	if ('seal' in Object) Object.seal(form);
