@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.4](https://github.com/rhangai/node-web-packages/compare/v0.2.3...v0.2.4) (2021-06-07)
+
+
+### Bug Fixes
+
+* Typings for useForm ([f60d782](https://github.com/rhangai/node-web-packages/commit/f60d7829c7b4b549572f2d13ae484da5aa753470))
+
+
+
+
+
 ## [0.2.3](https://github.com/rhangai/node-web-packages/compare/v0.2.2...v0.2.3) (2021-06-05)
 
 **Note:** Version bump only for package root
