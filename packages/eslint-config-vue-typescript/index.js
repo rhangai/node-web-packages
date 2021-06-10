@@ -18,6 +18,7 @@ module.exports = {
 		'no-void': ['error', { allowAsStatement: true }],
 		'no-use-before-define': ['error', 'nofunc'],
 		'no-shadow': 'off',
+		'prefer-destructuring': ['error', { object: true, array: false }],
 		'@typescript-eslint/no-floating-promises': 'error',
 		'@typescript-eslint/explicit-module-boundary-types': 'off',
 		'@typescript-eslint/no-shadow': ['error'],
