@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.11](https://github.com/rhangai/node-web-packages/compare/v0.2.10...v0.2.11) (2021-06-10)
+
+
+### Bug Fixes
+
+* useFormRules with Ref form type ([08a0a34](https://github.com/rhangai/node-web-packages/commit/08a0a34d3bd5e47ada3c8e8e9ca17cfc861acddb))
+
+
+
+
+
 ## [0.2.10](https://github.com/rhangai/node-web-packages/compare/v0.2.9...v0.2.10) (2021-06-10)
 
 **Note:** Version bump only for package root
