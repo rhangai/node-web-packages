@@ -15,12 +15,26 @@ module.exports = {
 		},
 	},
 	rules: {
-		'no-void': ['error', { allowAsStatement: true }],
-		'no-use-before-define': ['error', 'nofunc'],
+		'class-methods-use-this': 'off',
+		'no-continue': 'off',
+		'no-use-before-define': 'off',
 		'no-shadow': 'off',
+		'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
+		'no-void': ['error', { allowAsStatement: true }],
 		'prefer-destructuring': ['error', { object: true, array: false }],
 		'@typescript-eslint/no-floating-promises': 'error',
 		'@typescript-eslint/explicit-module-boundary-types': 'off',
+		'@typescript-eslint/no-use-before-define': [
+			'error',
+			{
+				functions: false,
+				classes: false,
+				variables: true,
+				enums: false,
+				typedefs: false,
+				ignoreTypeReferences: true,
+			},
+		],
 		'@typescript-eslint/no-shadow': ['error'],
 		'import/prefer-default-export': 'off',
 		'import/extensions': [
