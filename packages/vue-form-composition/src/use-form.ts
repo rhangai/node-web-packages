@@ -12,11 +12,11 @@ export type UseFormResult<T extends Record<string, unknown>> = {
 	/**
 	 * The form object, only allows
 	 */
-	form: FormType<T>;
+	form: Ref<FormType<T>>;
 	/**
 	 * Set a value on the form
 	 */
-	formSet: (inputValue: Partial<T> | null) => void;
+	formSet: <TInput = Partial<T>>(inputValue: TInput) => void;
 	/**
 	 * Reset the form
 	 */
@@ -39,27 +39,38 @@ export type UseFormResult<T extends Record<string, unknown>> = {
  */
 export function useForm<T extends Record<string, unknown>>(options: UseFormOptions<T>): UseFormResult<T> {
 	const { formState, formUseSubmitting } = useFormStateSubmitting(options.props);
-	const form: FormType<T> = reactive(clone(options.form)) as FormType<T>;
-	if ('seal' in Object) Object.seal(form);
-	const formSet = (inputValue: Partial<T> | null) => {
-		if (inputValue === form) return;
+	const formValue: FormType<T> = reactive(clone(options.form)) as FormType<T>;
+	if ('seal' in Object) Object.seal(formValue);
+
+	const formSet = (inputValueParam: unknown | null) => {
+		if (inputValueParam === formValue) return;
 
 		const newValue = clone(options.form);
-		if (!inputValue || typeof inputValue !== 'object') {
-			Object.assign(form, newValue);
-			options.onValue?.(form as T);
+		if (!inputValueParam || typeof inputValueParam !== 'object') {
+			Object.assign(formValue, newValue);
+			options.onValue?.(formValue as T);
 			return;
 		}
 
+		const inputValue = inputValueParam as Record<string, any>;
 		for (const key in inputValue) {
 			if (inputValue[key] === undefined) continue;
-			if (key in form) {
+			if (key in formValue) {
 				(newValue as any)[key] = inputValue[key];
 			}
 		}
-		Object.assign(form, newValue);
-		options.onValue?.(form as T);
+		Object.assign(formValue, newValue);
+		options.onValue?.(formValue as T);
 	};
+
+	const form = computed<FormType<T>>({
+		get() {
+			return formValue;
+		},
+		set(value: unknown | null) {
+			formSet(value);
+		},
+	});
 
 	return {
 		form,
