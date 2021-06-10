@@ -1,29 +1,24 @@
 /* eslint-disable arrow-body-style */
-import { computed, inject, reactive, ref, set } from '@vue/composition-api';
-import { SubmitConfig, SubmitConfigHandle } from './submit-config';
+import { computed, reactive, ref, set } from '@vue/composition-api';
 import { SubmitReactiveOption, submitReactiveOptionResolve } from './utils';
+import { validateItem, ValidateItem } from './validate';
 
+type Awaited<T> = T extends Promise<infer U> ? U : T;
 type SubmitPromiseOrValue<T> = T | Promise<T>;
 
-type SubmitRequestOptions<TResult, TNotification, TConfirmation> = {
-	request: () => SubmitPromiseOrValue<TResult>;
-	validate?: () => SubmitPromiseOrValue<boolean>;
+export type UseSubmitBaseOptions<TResult, TNotification, TConfirmation> = {
+	request: () => SubmitPromiseOrValue<Awaited<TResult>>;
+	validate?: ValidateItem;
 	confirm?: SubmitReactiveOption<null | false | TConfirmation, []>;
-	notifySuccess?: SubmitReactiveOption<TNotification | false, [TResult]>;
-	onSuccess?: (result: TResult) => SubmitPromiseOrValue<void>;
+	notifySuccess?: SubmitReactiveOption<TNotification | false, [Awaited<TResult>]>;
+	onSuccess?: (result: Awaited<TResult>) => SubmitPromiseOrValue<void>;
 	notifyError?: SubmitReactiveOption<TNotification | false, [Error]>;
 	onError?: (error: Error) => SubmitPromiseOrValue<void>;
 	notifyValidationError?: SubmitReactiveOption<TNotification | false, []>;
 	onValidationError?: () => SubmitPromiseOrValue<void>;
 };
 
-export type UseSubmitOptions<TRequestConfig, TResult, TNotification, TConfirmation> = TRequestConfig &
-	Omit<SubmitRequestOptions<TResult, TNotification, TConfirmation>, 'request'> & {
-		requestConfig?: Partial<TRequestConfig>;
-	};
-
-export type CreateUseSubmitOptions<TRequestConfig, TResult, TNotification, TConfirmation> = {
-	submitConfig: SubmitConfigHandle<TRequestConfig, TResult>;
+export type CreateUseSubmitOptions<TNotification, TConfirmation> = {
 	useNotification(): {
 		notify(options: TNotification): SubmitPromiseOrValue<void>;
 	};
@@ -31,51 +26,18 @@ export type CreateUseSubmitOptions<TRequestConfig, TResult, TNotification, TConf
 		confirm(options: TConfirmation): SubmitPromiseOrValue<boolean>;
 	};
 	defaults: {
-		notifySuccess: SubmitReactiveOption<TNotification, [TResult]>;
+		notifySuccess: SubmitReactiveOption<TNotification, [unknown]>;
 		notifyError: SubmitReactiveOption<TNotification, [Error]>;
 		notifyValidationError: SubmitReactiveOption<TNotification, []>;
 	};
 };
 
-export function createUseSubmit<TRequestConfig, TResult, TNotification, TConfirmation>(
-	createSubmitOptions: CreateUseSubmitOptions<TRequestConfig, TResult, TNotification, TConfirmation>
+export function createUseSubmit<TNotification, TConfirmation>(
+	createSubmitOptions: CreateUseSubmitOptions<TNotification, TConfirmation>
 ) {
-	type UseSubmitOptionsType = UseSubmitOptions<TRequestConfig, TResult, TNotification, TConfirmation>;
-	type SubmitRequestOptionsType = SubmitRequestOptions<TResult, TNotification, TConfirmation>;
-
-	const { submitConfig: submitConfigHandle, useNotification, useConfirmation, defaults } = createSubmitOptions;
-
-	const mapRequestOptions = <TParams extends any[]>(
-		submitConfig: SubmitConfig<TRequestConfig, TResult>,
-		options: SubmitReactiveOption<UseSubmitOptionsType, TParams>,
-		params: TParams
-	) => {
-		const {
-			validate,
-			confirm,
-			notifyError,
-			notifySuccess,
-			notifyValidationError,
-			onError,
-			onSuccess,
-			onValidationError,
-			requestConfig,
-			...config
-		} = submitReactiveOptionResolve(options, ...params);
-		return {
-			request: () => submitConfig.request({ ...(config as any), ...requestConfig }),
-			confirm,
-			validate,
-			notifyError,
-			notifySuccess,
-			notifyValidationError,
-			onError,
-			onSuccess,
-			onValidationError,
-		};
-	};
-
-	const useSubmitRequestBase = () => {
+	type UseSubmitOptionsType<TRequestResult> = UseSubmitBaseOptions<TRequestResult, TNotification, TConfirmation>;
+	const { useNotification, useConfirmation, defaults } = createSubmitOptions;
+	const useSubmitBase = () => {
 		const { notify } = useNotification();
 		const { confirm } = useConfirmation();
 		const submitNotify = async <TParams extends any[]>(
@@ -88,10 +50,10 @@ export function createUseSubmit<TRequestConfig, TResult, TNotification, TConfirm
 			const notificationDefaults = submitReactiveOptionResolve(defaultsParam, ...params);
 			await notify({ ...notificationDefaults, ...notification });
 		};
-		const doSubmitRequest = async (options: SubmitRequestOptionsType) => {
+		const doSubmitRequest = async (options: UseSubmitOptionsType<any>) => {
 			try {
 				if (options.validate != null) {
-					const isValid = await options.validate();
+					const isValid = await validateItem(options.validate);
 					if (!isValid) {
 						await options.onValidationError?.();
 						await submitNotify([], options.notifyValidationError, defaults.notifyValidationError);
@@ -117,10 +79,10 @@ export function createUseSubmit<TRequestConfig, TResult, TNotification, TConfirm
 		return { doSubmitRequest };
 	};
 
-	const useSubmitRequest = <TParams extends any[]>(
-		options: SubmitReactiveOption<SubmitRequestOptionsType, TParams>
+	const useSubmit = <TRequestResult, TParams extends any[]>(
+		options: SubmitReactiveOption<UseSubmitOptionsType<TRequestResult>, TParams>
 	) => {
-		const { doSubmitRequest } = useSubmitRequestBase();
+		const { doSubmitRequest } = useSubmitBase();
 		const submitting = ref(false);
 		const submit = async (...params: TParams) => {
 			if (submitting.value) throw new Error(`Already submitting`);
@@ -134,22 +96,15 @@ export function createUseSubmit<TRequestConfig, TResult, TNotification, TConfirm
 		return { submit, submitting };
 	};
 
-	const useSubmit = <TParams extends any[]>(options: SubmitReactiveOption<UseSubmitOptionsType, TParams>) => {
-		const submitConfig = inject(submitConfigHandle.key);
-		if (!submitConfig) throw new Error(`Did you call provideSubmitConfig?`);
-		return useSubmitRequest<TParams>((...params: TParams) => mapRequestOptions(submitConfig, options, params));
-	};
-
-	const useSubmitRequestMultiple = <TParams extends any[]>(
-		options: SubmitReactiveOption<SubmitRequestOptionsType, TParams>
+	const useSubmitMultiple = <TRequestResult, TParams extends any[]>(
+		options: SubmitReactiveOption<UseSubmitOptionsType<TRequestResult>, TParams>
 	) => {
-		const { doSubmitRequest } = useSubmitRequestBase();
-
+		const { doSubmitRequest } = useSubmitBase();
 		const submitting = reactive<Record<string, boolean>>({});
 		const submittingAny = computed(() => {
 			const values = Object.values(submitting);
 			if (values.length <= 0) return false;
-			return values.findIndex((c) => c === true) < 0;
+			return values.findIndex((c) => c === true) >= 0;
 		});
 		const submit = async (key: string | number, ...params: TParams) => {
 			if (key == null) throw new Error(`No key when using submitMultiple`);
@@ -164,18 +119,8 @@ export function createUseSubmit<TRequestConfig, TResult, TNotification, TConfirm
 		return { submit, submitting, submittingAny };
 	};
 
-	const useSubmitMultiple = <TParams extends any[]>(options: SubmitReactiveOption<UseSubmitOptionsType, TParams>) => {
-		const submitConfig = inject(submitConfigHandle.key);
-		if (!submitConfig) throw new Error(`Did you call provideSubmitConfig?`);
-		return useSubmitRequestMultiple<TParams>((...params: TParams) =>
-			mapRequestOptions(submitConfig, options, params)
-		);
-	};
-
 	return {
 		useSubmit,
 		useSubmitMultiple,
-		useSubmitRequest,
-		useSubmitRequestMultiple,
 	};
 }

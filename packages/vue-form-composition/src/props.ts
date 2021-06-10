@@ -1,7 +1,11 @@
-import { FormControlProps } from './control/form-control-props';
+import { FormStateProps } from './state/form-state-props';
 
 export const FormProps = {
-	...FormControlProps,
+	...FormStateProps,
+};
+
+export const FormModelProps = {
+	...FormStateProps,
 	value: {
 		type: Object,
 		default: null,

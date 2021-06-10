@@ -1,0 +1,31 @@
+{
+  "name": "@rhangai/nuxt-auth-module",
+  "version": "0.2.0",
+  "description": "Nuxt module for authentication",
+  "main": "lib/index.js",
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf lib",
+    "build": "tsc",
+    "lint": "eslint src",
+    "lint:fix": "eslint --fix src",
+    "prepublishOnly": "yarn run -s clean && yarn run -s build"
+  },
+  "devDependencies": {
+    "@nuxt/types": "^2.15.6",
+    "axios": "^0.21.1",
+    "chokidar": "^3.5.1",
+    "vue-loader": "^15.9.7",
+    "vue-meta": "^2.4.0",
+    "vue-router": "^3.5.1",
+    "vue-server-renderer": "^2.6.13",
+    "vue-template-compiler": "^2.6.13",
+    "vuex": "^3.6.2"
+  },
+  "peerDependencies": {
+    "axios": "^0.21.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
