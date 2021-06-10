@@ -24,6 +24,8 @@ module.exports = {
 		'prefer-destructuring': ['error', { object: true, array: false }],
 		'@typescript-eslint/no-floating-promises': 'error',
 		'@typescript-eslint/explicit-module-boundary-types': 'off',
+		'@typescript-eslint/no-inferrable-types': 'off',
+		'@typescript-eslint/no-empty-interface': 'off',
 		'@typescript-eslint/no-use-before-define': [
 			'error',
 			{
