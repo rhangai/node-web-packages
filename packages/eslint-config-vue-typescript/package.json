@@ -1,6 +1,6 @@
 {
   "name": "@rhangai/eslint-config-vue-typescript",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "Eslint config for vue-typescript projects",
   "main": "index.js",
   "license": "MIT",
