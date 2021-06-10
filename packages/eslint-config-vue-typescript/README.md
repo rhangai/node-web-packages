@@ -1,5 +1,6 @@
 ```sh
-yarn add --dev eslint \
+yarn add --dev @rhangai/eslint-config-vue-typescript \
+  eslint \
   prettier \
   eslint-config-airbnb-base \
   eslint-plugin-import \
@@ -8,7 +9,7 @@ yarn add --dev eslint \
   @typescript-eslint/eslint-plugin \
   @typescript-eslint/parser \
   @vue/eslint-config-prettier \
-  @vue/eslint-config-typescript
+  @vue/eslint-config-typescript \
 ```
 
 ```js
