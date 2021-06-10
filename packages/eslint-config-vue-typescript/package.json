@@ -1,7 +1,7 @@
 {
-  "name": "@rhangai/eslint-config-vue",
+  "name": "@rhangai/eslint-config-vue-typescript",
   "version": "0.1.0",
-  "description": "Wrapper to handle requests",
+  "description": "Eslint config for vue-typescript projects",
   "main": "index.js",
   "license": "MIT",
   "peerDependencies": {
