@@ -1,4 +1,4 @@
-import { computed, ComputedRef, isRef } from '@vue/composition-api';
+import { computed, ComputedRef, isRef, Ref } from '@vue/composition-api';
 import { useFormState } from '../state';
 import { FormType } from '../types';
 
@@ -15,7 +15,7 @@ export type UseFormRulesResult<T> = {
 };
 
 export function useFormRules<T extends Record<string, unknown>>(
-	form: FormType<T>,
+	form: Ref<FormType<T>>,
 	formRulesParam: ReactiveValue<FormRules<T>>
 ): UseFormRulesResult<T> {
 	const { formState } = useFormState();
