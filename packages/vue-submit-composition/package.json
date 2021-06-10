@@ -13,7 +13,7 @@
     "preversion": "yarn run -s clean && yarn run -s build"
   },
   "devDependencies": {
-    "@vue/composition-api": "^1.0.0-rc.9",
+    "@vue/composition-api": "^1.0.0-rc.11",
     "ramda": "^0.27.1",
     "rimraf": "^3.0.2"
   },
