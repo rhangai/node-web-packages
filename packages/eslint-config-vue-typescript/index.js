@@ -39,13 +39,12 @@ module.exports = {
 		'import/prefer-default-export': 'off',
 		'import/extensions': [
 			'error',
+			'always',
 			{
-				'.js': 'never',
-				'.jsx': 'never',
-				'.ts': 'never',
-				'.tsx': 'never',
-				'.json': 'always',
-				'.vue': 'always',
+				js: 'never',
+				jsx: 'never',
+				ts: 'never',
+				tsx: 'never',
 			},
 		],
 		'import/no-unresolved': [
