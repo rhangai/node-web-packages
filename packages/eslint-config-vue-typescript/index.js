@@ -21,7 +21,7 @@ module.exports = {
 		'no-shadow': 'off',
 		'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
 		'no-void': ['error', { allowAsStatement: true }],
-		'prefer-destructuring': ['error', { object: true, array: false }],
+		'prefer-destructuring': ['error', { VariableDeclarator: { object: true } }],
 		'@typescript-eslint/no-floating-promises': 'error',
 		'@typescript-eslint/explicit-module-boundary-types': 'off',
 		'@typescript-eslint/no-inferrable-types': 'off',
