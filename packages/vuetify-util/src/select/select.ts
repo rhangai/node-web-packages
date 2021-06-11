@@ -1,10 +1,10 @@
 import { ComputedRef, watch, computed, unref, reactive } from '@vue/composition-api';
 
 export type UseSelectOptions<T, TId> = {
-	props: { disabled?: boolean; readonly?: boolean; value?: TId | T | null };
+	props: { value: T | TId | null };
 	emit: (event: string, value: unknown) => void;
-	value: (v: T) => TId;
 	items: null | undefined | T[] | ReadonlyArray<T> | ComputedRef<null | undefined | T[] | ReadonlyArray<T>>;
+	itemValue: (v: T) => TId;
 };
 
 type UseSelectState<T, TId> = {
@@ -42,7 +42,7 @@ export function useSelect<T, TId extends string | number>(options: UseSelectOpti
 
 		const itemsMap = {} as Record<TId, T>;
 		items.forEach((item) => {
-			const key = options.value(item);
+			const key = options.itemValue(item);
 			itemsMap[key] = item;
 		});
 		return itemsMap;
@@ -59,7 +59,7 @@ export function useSelect<T, TId extends string | number>(options: UseSelectOpti
 		}
 		if (typeof value === 'object') {
 			selectState.object = value;
-			selectState.value = options.value(value);
+			selectState.value = options.itemValue(value);
 			selectState.appendObject = true;
 			options.emit('input', selectState.value);
 			options.emit('update:selected', selectState.object);
