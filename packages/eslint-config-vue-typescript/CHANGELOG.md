@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.13](https://github.com/rhangai/node-web-packages/compare/v0.2.12...v0.2.13) (2021-06-11)
+
+
+### Bug Fixes
+
+* prefer-destructuring rule only for objects on declaration ([97bff1a](https://github.com/rhangai/node-web-packages/commit/97bff1ae3b812888356f0405a9da90f25f2bffcd))
+
+
+
+
+
 ## [0.2.10](https://github.com/rhangai/node-web-packages/compare/v0.2.9...v0.2.10) (2021-06-10)
 
 **Note:** Version bump only for package @rhangai/eslint-config-vue-typescript
