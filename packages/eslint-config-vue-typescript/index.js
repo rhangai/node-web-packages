@@ -38,6 +38,14 @@ module.exports = {
 			},
 		],
 		'@typescript-eslint/no-shadow': ['error'],
+		'@typescript-eslint/no-unused-vars': [
+			'warn',
+			{
+				argsIgnorePattern: '^_',
+				caughtErrors: 'none',
+				ignoreRestSiblings: true,
+			},
+		],
 		'import/prefer-default-export': 'off',
 		'import/extensions': [
 			'error',
