@@ -12,9 +12,14 @@ export type FormStateProvider = {
 	readonly shouldValidate?: boolean | null | undefined | ComputedRef<boolean | null | undefined>;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const FORM_STATE_KEY: InjectionKey<FormState> = '@rhangai/vue-form-composition(form-state)' as any;
 
-export function useFormState() {
+export type UseFormStateResult = {
+	formState: FormState;
+};
+
+export function useFormState(): UseFormStateResult {
 	let formState = inject(FORM_STATE_KEY, null);
 	if (formState == null) {
 		formState = {
@@ -26,7 +31,7 @@ export function useFormState() {
 	return { formState };
 }
 
-export function provideFormState(provider: FormStateProvider) {
+export function provideFormState(provider: FormStateProvider): UseFormStateResult {
 	const { formState: formStateParent } = useFormState();
 	const formState: FormState = reactive({
 		readonly: computed(() => unref(provider.readonly) ?? formStateParent.readonly),

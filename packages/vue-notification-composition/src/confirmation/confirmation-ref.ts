@@ -1,11 +1,6 @@
-import { ref, Ref, reactive, nextTick, UnwrapRef } from '@vue/composition-api';
-import { TIMEOUT_DELAY } from './constants';
-
-export type ConfirmationHandler<TConfirmation> = (confirmation: TConfirmation) => boolean | Promise<boolean>;
-
-export type CreateUseConfirmationOptions<TConfirmation> = {
-	confirm: ConfirmationHandler<TConfirmation>;
-};
+import { ref, Ref, reactive, nextTick, UnwrapRef, ComputedRef } from '@vue/composition-api';
+import { TIMEOUT_DELAY } from '../constants';
+import { createUseConfirmation, CreateUseConfirmationResult } from './confirmation';
 
 export type ConfirmationRefHandlerItem<TConfirmation> = {
 	id: number;
@@ -16,12 +11,11 @@ export type ConfirmationRefHandlerItem<TConfirmation> = {
 	reject: () => void;
 };
 
-export function createUseConfirmation<TConfirmation>(options: CreateUseConfirmationOptions<TConfirmation>) {
-	const useConfirmation = () => ({ confirm: options.confirm });
-	return { useConfirmation };
-}
+export type CreateUseConfirmationRefResult<TConfirmation> = CreateUseConfirmationResult<TConfirmation> & {
+	confirmations: ComputedRef<ReadonlyArray<Readonly<ConfirmationRefHandlerItem<TConfirmation>>>>;
+};
 
-export function createUseConfirmationRef<TConfirmation>() {
+export function createUseConfirmationRef<TConfirmation>(): CreateUseConfirmationRefResult<TConfirmation> {
 	const { confirm, confirmations } = createConfirmationRefHandler<TConfirmation>();
 	const { useConfirmation } = createUseConfirmation<TConfirmation>({ confirm });
 	return { useConfirmation, confirmations };

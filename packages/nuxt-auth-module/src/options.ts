@@ -1,5 +1,5 @@
-import type { AxiosRequestConfig } from 'axios';
 import type { Context } from '@nuxt/types';
+import type { AxiosRequestConfig } from 'axios';
 
 export type AuthModuleOptionsRoute = {
 	path?: string;

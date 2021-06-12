@@ -2,9 +2,8 @@
   "version": "0.2.14",
   "npmClient": "yarn",
   "useWorkspaces": true,
-  "packages": [
-    "packages/*"
-  ],
+  "stream": true,
+  "packages": ["packages/*"],
   "command": {
     "version": {
       "conventionalCommits": true

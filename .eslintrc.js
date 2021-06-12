@@ -1,7 +1,7 @@
 module.exports = {
 	root: true,
-	plugins: ['@rhangai'],
-	extends: ['plugin:@rhangai/vue-typescript'],
+	extends: ['@rhangai/vue-typescript'],
+	ignorePatterns: ['.eslintrc.js'],
 	parserOptions: {
 		tsconfigRootDir: __dirname,
 		project: './tsconfig.json',

@@ -33,6 +33,9 @@ export function useFormRules<T extends Record<string, unknown>>(
 type ReactiveValue<T> = T | (() => T) | ComputedRef<T>;
 function resolveValue<T>(param: T | (() => T) | ComputedRef<T>): T {
 	if (isRef(param)) return param.value;
-	else if (typeof param === 'function') return (param as any)();
+	else if (typeof param === 'function') {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		return (param as any)();
+	}
 	return param;
 }

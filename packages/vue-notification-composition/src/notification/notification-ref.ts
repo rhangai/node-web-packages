@@ -1,10 +1,7 @@
-import { ref, Ref, reactive, nextTick, UnwrapRef } from '@vue/composition-api';
-import { TIMEOUT_DELAY } from './constants';
+import { ref, Ref, reactive, nextTick, UnwrapRef, ComputedRef } from '@vue/composition-api';
+import { TIMEOUT_DELAY } from '../constants';
+import { createUseNotification, CreateUseNotificationResult } from './notification';
 
-export type NotificationHandler<TNotification> = (notification: TNotification) => void;
-export type CreateUseNotificationOptions<TNotification> = {
-	notify: NotificationHandler<TNotification>;
-};
 export type NotificationRefHandlerItem<TNotification> = {
 	id: number;
 	notification: UnwrapRef<TNotification>;
@@ -12,18 +9,14 @@ export type NotificationRefHandlerItem<TNotification> = {
 	resolve: () => void;
 };
 
-/**
- * Create a new useNotification that delegates the function to notify
- */
-export function createUseNotification<TNotification>(options: CreateUseNotificationOptions<TNotification>) {
-	const useNotification = () => ({ notify: options.notify });
-	return { useNotification };
-}
+export type CreateUseNotificationRefResult<TNotification> = CreateUseNotificationResult<TNotification> & {
+	notifications: ComputedRef<ReadonlyArray<Readonly<NotificationRefHandlerItem<TNotification>>>>;
+};
 
 /**
  * Create a new useNotification and a notification array to be consumed to show all notifications
  */
-export function createUseNotificationRef<TNotification>() {
+export function createUseNotificationRef<TNotification>(): CreateUseNotificationRefResult<TNotification> {
 	const { notifications, notify } = createNotificationRefHandler<TNotification>();
 	const { useNotification } = createUseNotification({ notify });
 	return { useNotification, notifications };

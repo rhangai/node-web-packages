@@ -1,4 +1,4 @@
-/* eslint-disable no-param-reassign */
+/* eslint-disable no-param-reassign, @typescript-eslint/explicit-module-boundary-types */
 export function authCreateStore() {
 	return {
 		state: () => ({

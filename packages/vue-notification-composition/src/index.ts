@@ -1,2 +1,2 @@
-export * from './notification';
 export * from './confirmation';
+export * from './notification';

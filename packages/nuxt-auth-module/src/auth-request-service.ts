@@ -28,7 +28,7 @@ export class AuthRequestService {
 
 	constructor(private readonly options: AuthRequestServiceOptions) {}
 
-	cancel() {
+	cancel(): void {
 		if (this.timeout) {
 			clearTimeout(this.timeout);
 			this.timeout = null;

@@ -52,11 +52,11 @@ export function useForm<T extends Record<string, unknown>>(options: UseFormOptio
 			return;
 		}
 
-		const inputValue = inputValueParam as Record<string, any>;
+		const inputValue = inputValueParam as Record<string, unknown>;
 		for (const key in inputValue) {
 			if (inputValue[key] === undefined) continue;
 			if (key in formValue) {
-				(newValue as any)[key] = inputValue[key];
+				(newValue as Record<string, unknown>)[key] = inputValue[key];
 			}
 		}
 		Object.assign(formValue, newValue);
