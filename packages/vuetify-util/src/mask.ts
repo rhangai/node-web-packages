@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { computed, ref, unref, watch } from '@vue/composition-api';
 import IMask from 'imask';
 
@@ -81,7 +82,6 @@ function maskVuetifyPatch(imaskParam: IMask.InputMask<any>, maskComponentParam: 
 	imask.updateControl = function updateControl() {
 		oldImaskUpdateControl.apply(this);
 		const vuetifyProps: string[] = ['lazyValue', 'lazySearch'];
-		// @ts-ignore
 		vuetifyProps.forEach((prop) => {
 			if (prop in maskComponent) {
 				maskComponent[prop] = this.value;

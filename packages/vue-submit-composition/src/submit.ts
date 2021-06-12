@@ -32,6 +32,7 @@ export type CreateUseSubmitOptions<TNotification, TConfirmation> = {
 	};
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function createUseSubmit<TNotification, TConfirmation>(
 	createSubmitOptions: CreateUseSubmitOptions<TNotification, TConfirmation>
 ) {
@@ -40,7 +41,7 @@ export function createUseSubmit<TNotification, TConfirmation>(
 	const useSubmitBase = () => {
 		const { notify } = useNotification();
 		const { confirm } = useConfirmation();
-		const submitNotify = async <TParams extends any[]>(
+		const submitNotify = async <TParams extends unknown[]>(
 			params: TParams,
 			notificationParam: SubmitReactiveOption<TNotification | false, TParams> | null | undefined,
 			defaultsParam: SubmitReactiveOption<TNotification, TParams>
@@ -50,7 +51,7 @@ export function createUseSubmit<TNotification, TConfirmation>(
 			const notificationDefaults = submitReactiveOptionResolve(defaultsParam, ...params);
 			await notify({ ...notificationDefaults, ...notification });
 		};
-		const doSubmitRequest = async (options: UseSubmitOptionsType<any>) => {
+		const doSubmitRequest = async (options: UseSubmitOptionsType<unknown>) => {
 			try {
 				if (options.validate != null) {
 					const isValid = await validateItem(options.validate);
@@ -79,7 +80,7 @@ export function createUseSubmit<TNotification, TConfirmation>(
 		return { doSubmitRequest };
 	};
 
-	const useSubmit = <TRequestResult, TParams extends any[]>(
+	const useSubmit = <TRequestResult, TParams extends unknown[]>(
 		options: SubmitReactiveOption<UseSubmitOptionsType<TRequestResult>, TParams>
 	) => {
 		const { doSubmitRequest } = useSubmitBase();
@@ -88,7 +89,7 @@ export function createUseSubmit<TNotification, TConfirmation>(
 			if (submitting.value) throw new Error(`Already submitting`);
 			submitting.value = true;
 			try {
-				await doSubmitRequest(submitReactiveOptionResolve(options, ...params));
+				await doSubmitRequest(submitReactiveOptionResolve(options, ...params) as UseSubmitOptionsType<unknown>);
 			} finally {
 				submitting.value = false;
 			}
@@ -96,7 +97,7 @@ export function createUseSubmit<TNotification, TConfirmation>(
 		return { submit, submitting };
 	};
 
-	const useSubmitMultiple = <TRequestResult, TParams extends any[]>(
+	const useSubmitMultiple = <TRequestResult, TParams extends unknown[]>(
 		options: SubmitReactiveOption<UseSubmitOptionsType<TRequestResult>, TParams>
 	) => {
 		const { doSubmitRequest } = useSubmitBase();
@@ -111,7 +112,7 @@ export function createUseSubmit<TNotification, TConfirmation>(
 			if (submitting[key]) throw new Error(`Already submitting`);
 			set(submitting, key, true);
 			try {
-				await doSubmitRequest(submitReactiveOptionResolve(options, ...params));
+				await doSubmitRequest(submitReactiveOptionResolve(options, ...params) as UseSubmitOptionsType<unknown>);
 			} finally {
 				set(submitting, key, false);
 			}

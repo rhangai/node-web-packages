@@ -17,19 +17,19 @@ export function useHtmlInputElement(inputElementRef: Ref<any>) {
 		const component = inputElementRef.value;
 		if (!component) return null;
 
-		let htmlInputElement: HTMLInputElement | null = null;
+		let htmlInputElement: HTMLInputElement;
 		const element: HTMLElement = component.$el ?? component;
 		if (element.tagName === 'INPUT') {
 			htmlInputElement = element as HTMLInputElement;
 		} else {
 			const inputElements = element.getElementsByTagName('input');
-			htmlInputElement = inputElements[0] ?? null;
+			if (inputElements.length <= 0) return null;
+			htmlInputElement = inputElements[0];
 		}
-		if (!htmlInputElement) return null;
 		return {
 			input: htmlInputElement,
-			cursorSet: (p: number) => inputElementSetCursor(htmlInputElement!, p),
-			cursorGet: () => inputElementGetCursor(htmlInputElement!),
+			cursorSet: (p: number) => inputElementSetCursor(htmlInputElement, p),
+			cursorGet: () => inputElementGetCursor(htmlInputElement),
 		};
 	});
 

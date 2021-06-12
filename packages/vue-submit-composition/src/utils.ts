@@ -1,13 +1,13 @@
 import { ComputedRef, isRef } from '@vue/composition-api';
 
-export type SubmitReactiveOption<T, TParams extends any[]> = T | ComputedRef<T> | ((...params: TParams) => T);
+export type SubmitReactiveOption<T, TParams extends unknown[]> = T | ComputedRef<T> | ((...params: TParams) => T);
 export type SubmitPromiseOrValue<T> = T | Promise<T>;
 
-export function submitReactiveOptionResolve<T, TParams extends any[]>(
+export function submitReactiveOptionResolve<T, TParams extends unknown[]>(
 	options: SubmitReactiveOption<T, TParams>,
 	...params: TParams
 ): T;
-export function submitReactiveOptionResolve<T, TParams extends any[]>(
+export function submitReactiveOptionResolve<T, TParams extends unknown[]>(
 	options: SubmitReactiveOption<T, TParams> | null | undefined,
 	...params: TParams
 ): T | null {

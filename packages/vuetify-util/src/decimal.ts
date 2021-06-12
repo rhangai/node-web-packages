@@ -1,5 +1,6 @@
-import { ref, watch, ComputedRef, computed, isRef } from '@vue/composition-api';
+import { ref, watch, ComputedRef, computed, Ref, isRef } from '@vue/composition-api';
 import { Decimal, DecimalInput, decimalParse } from '@rhangai/web-common';
+import type BigNumber from 'bignumber.js';
 import { useTextFieldModelView } from './util/text-model-view';
 import { useTextFieldSyncCursor } from './util/text-sync';
 
@@ -7,11 +8,17 @@ type Option<T> = T | (() => T) | ComputedRef<T>;
 export type UseDecimalFieldOptions = {
 	value?: Option<unknown>;
 	decimalPlaces?: Option<number>;
-	decimalViewOptions?: Option<any>;
+	decimalViewOptions?: Option<BigNumber.Format>;
 	onInput?: (value: string | null) => void;
 };
 
-export function useDecimalField(options: UseDecimalFieldOptions) {
+export type UseDecimalFieldResult = {
+	decimalRef: Ref<unknown>;
+	decimalView: Ref<string>;
+	decimalOnInput(viewValue: string): void;
+};
+
+export function useDecimalField(options: UseDecimalFieldOptions): UseDecimalFieldResult {
 	const decimalPlaces = optionToRef(options.decimalPlaces, 2);
 	const decimalViewOptions = optionToRef(options.decimalViewOptions, {});
 
@@ -64,7 +71,7 @@ export function useDecimalField(options: UseDecimalFieldOptions) {
 function optionToRef<T>(value: Option<T>): ComputedRef<T>;
 function optionToRef<T>(value: Option<T> | undefined | null, defaultValue: T): ComputedRef<T>;
 function optionToRef<T>(value: Option<T>, defaultValue?: unknown): ComputedRef<unknown> {
-	if (typeof value === 'function') return computed(value as any);
+	if (typeof value === 'function') return computed(value as () => T);
 	else if (isRef(value)) return value;
 	else if (value != null) return computed(() => value);
 	return computed(() => defaultValue ?? null);

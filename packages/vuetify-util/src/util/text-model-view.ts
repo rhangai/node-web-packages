@@ -13,6 +13,7 @@ export function useTextFieldModelView<T>(options: UseTextFieldModelViewOptions<T
 
 	const setValue = (value: T | null) => {
 		textValue.value = value;
+		// eslint-disable-next-line @typescript-eslint/no-use-before-define
 		options.onValue?.(value, textModel.value, textView.value);
 	};
 
