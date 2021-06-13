@@ -15,13 +15,11 @@
   "devDependencies": {
     "@rhangai/web-common": "^0.2.6",
     "@vue/composition-api": "^1.0.0-rc.11",
-    "ramda": "^0.27.1",
     "rimraf": "^3.0.2"
   },
   "peerDependencies": {
-    "@rhangai/web-common": "^0.1.0",
-    "@vue/composition-api": "*",
-    "ramda": "^0.27.1"
+    "@rhangai/web-common": "^0.2.6",
+    "@vue/composition-api": "*"
   },
   "publishConfig": {
     "access": "public"
