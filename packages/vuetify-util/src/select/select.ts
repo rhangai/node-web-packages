@@ -10,7 +10,6 @@ export type UseSelectOptions<T, TId> = {
 type UseSelectState<T, TId> = {
 	value: TId | null;
 	object: T | null;
-	appendObject: boolean;
 };
 
 /**
@@ -25,34 +24,32 @@ export function useSelect<T, TId extends string | number>(options: UseSelectOpti
 	const selectState = reactive({
 		value: null as TId | null,
 		object: null as T | null,
-		appendObject: false,
 	}) as UseSelectState<T, TId>;
 
-	const selectItems = computed<ReadonlyArray<T>>(() => {
-		let items = unref(options.items) ?? [];
-		if (selectState.appendObject && selectState.object) {
-			items = [selectState.object as T, ...items];
-		}
-		return items;
-	});
-
-	const selectItemsMap = computed<Record<TId, T> | null>(() => {
-		const items = selectItems.value;
-		if (!items) return null;
-
+	const selectItemsMap = computed<Record<TId, T>>(() => {
+		const items = unref(options.items) ?? [];
 		const itemsMap = {} as Record<TId, T>;
 		items.forEach((item) => {
 			const key = options.itemValue(item);
 			itemsMap[key] = item;
 		});
+		if (selectState.object) {
+			const objectValue = options.itemValue(selectState.object);
+			if (!itemsMap[objectValue]) {
+				itemsMap[objectValue] = selectState.object;
+			}
+		}
 		return itemsMap;
+	});
+
+	const selectItems = computed<ReadonlyArray<T>>(() => {
+		return Object.values(selectItemsMap.value);
 	});
 
 	const updateValue = (value: T | TId | null | undefined, itemsMapValue: Record<TId, T> | null) => {
 		if (value == null) {
 			selectState.value = null;
 			selectState.object = null;
-			selectState.appendObject = false;
 			options.emit('input', selectState.value);
 			options.emit('update:selected', selectState.object);
 			return;
@@ -60,12 +57,11 @@ export function useSelect<T, TId extends string | number>(options: UseSelectOpti
 		if (typeof value === 'object') {
 			selectState.object = value;
 			selectState.value = options.itemValue(value);
-			selectState.appendObject = true;
 			options.emit('input', selectState.value);
 			options.emit('update:selected', selectState.object);
 		} else if (itemsMapValue) {
 			const valueId = value as TId;
-			const item = itemsMapValue[valueId];
+			const item = itemsMapValue[valueId] ?? null;
 			if (item) {
 				selectState.object = item;
 				selectState.value = valueId;
@@ -73,7 +69,6 @@ export function useSelect<T, TId extends string | number>(options: UseSelectOpti
 				selectState.object = null;
 				selectState.value = null;
 			}
-			selectState.appendObject = false;
 			options.emit('input', selectState.value);
 			options.emit('update:selected', selectState.object);
 		}
