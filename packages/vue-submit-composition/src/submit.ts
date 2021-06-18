@@ -101,7 +101,7 @@ export function createUseSubmit<TNotification, TConfirmation>(
 		options: SubmitReactiveOption<UseSubmitOptionsType<TRequestResult>, TParams>
 	) => {
 		const { doSubmitRequest } = useSubmitBase();
-		const submitting = reactive<Record<string, boolean>>({});
+		const submitting = ref<Record<string, boolean>>({});
 		const submittingAny = computed(() => {
 			const values = Object.values(submitting);
 			if (values.length <= 0) return false;
@@ -109,15 +109,19 @@ export function createUseSubmit<TNotification, TConfirmation>(
 		});
 		const submit = async (key: string | number, ...params: TParams) => {
 			if (key == null) throw new Error(`No key when using submitMultiple`);
-			if (submitting[key]) throw new Error(`Already submitting`);
-			set(submitting, key, true);
+			if (submitting.value[key]) throw new Error(`Already submitting`);
+			set(submitting.value, key, true);
 			try {
 				await doSubmitRequest(submitReactiveOptionResolve(options, ...params) as UseSubmitOptionsType<unknown>);
 			} finally {
-				set(submitting, key, false);
+				set(submitting.value, key, false);
 			}
 		};
-		return { submit, submitting, submittingAny };
+		return {
+			submit,
+			submitting,
+			submittingAny,
+		};
 	};
 
 	return {
