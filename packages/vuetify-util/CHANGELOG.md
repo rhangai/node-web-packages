@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.16](https://github.com/rhangai/node-web-packages/compare/v0.2.15...v0.2.16) (2021-06-18)
+
+
+### Bug Fixes
+
+* useSelect was not working when element was reselected ([7e8c309](https://github.com/rhangai/node-web-packages/commit/7e8c3090ca8a93a65aa326eb04d7c7e6b5d2da86))
+
+
+
+
+
 ## [0.2.15](https://github.com/rhangai/node-web-packages/compare/v0.2.14...v0.2.15) (2021-06-18)
 
 **Note:** Version bump only for package @rhangai/vuetify-util
