@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.15](https://github.com/rhangai/node-web-packages/compare/v0.2.14...v0.2.15) (2021-06-18)
+
+
+### Bug Fixes
+
+* Changed submitting to ref on useSubmitMultiple ([1902030](https://github.com/rhangai/node-web-packages/commit/1902030f8d6a70a59defd2d9e31bdc83ccee5018))
+
+
+
+
+
 ## [0.2.14](https://github.com/rhangai/node-web-packages/compare/v0.2.13...v0.2.14) (2021-06-11)
 
 **Note:** Version bump only for package root
