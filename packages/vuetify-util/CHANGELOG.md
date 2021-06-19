@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.17](https://github.com/rhangai/node-web-packages/compare/v0.2.16...v0.2.17) (2021-06-19)
+
+
+### Bug Fixes
+
+* useSelect was not keeping the order of elements ([ca4b1e1](https://github.com/rhangai/node-web-packages/commit/ca4b1e1e918d9a7b32352e51da685cac95b9d8eb))
+
+
+
+
+
 ## [0.2.16](https://github.com/rhangai/node-web-packages/compare/v0.2.15...v0.2.16) (2021-06-18)
 
 
