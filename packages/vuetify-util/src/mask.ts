@@ -40,7 +40,9 @@ export function useMaskField(options: UseMaskOptions) {
 			options.onInput?.(value);
 		});
 		imask.value = '';
-		imask.value = valueParam.value;
+		if (valueParam.value) {
+			imask.value = `${valueParam.value}`;
+		}
 
 		imaskInstance = imask;
 	};
