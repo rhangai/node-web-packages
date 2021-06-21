@@ -12,6 +12,11 @@ export function useMaskField(options: UseMaskOptions) {
 	const maskValue = ref('');
 	const maskRef = ref();
 
+	const valueParam = computed(() => {
+		if (!options.value) return '';
+		return options.value();
+	});
+
 	const maskInputElement = computed<HTMLInputElement | null>(() => {
 		const maskRefValue = unref(maskRef);
 		if (!maskRefValue) return null;
@@ -34,6 +39,9 @@ export function useMaskField(options: UseMaskOptions) {
 			maskValue.value = value;
 			options.onInput?.(value);
 		});
+		imask.value = '';
+		imask.value = valueParam.value;
+
 		imaskInstance = imask;
 	};
 
@@ -58,17 +66,15 @@ export function useMaskField(options: UseMaskOptions) {
 		}
 	});
 
-	if (options.value) {
-		watch(options.value, (value) => {
-			if (imaskInstance) {
-				if (value !== maskValue.value) {
-					imaskInstance.value = '';
-					imaskInstance.value = `${value}`;
-				}
-				imaskInstance.updateValue();
+	watch(valueParam, (value) => {
+		if (imaskInstance) {
+			if (value !== maskValue.value) {
+				imaskInstance.value = '';
+				imaskInstance.value = `${value}`;
 			}
-		});
-	}
+			imaskInstance.updateValue();
+		}
+	});
 	return {
 		maskRef,
 		maskValue,
