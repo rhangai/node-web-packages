@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.18](https://github.com/rhangai/node-web-packages/compare/v0.2.17...v0.2.18) (2021-06-21)
+
+
+### Bug Fixes
+
+* Initial mask value ([121b9ad](https://github.com/rhangai/node-web-packages/commit/121b9ade6ebc8e18113a71870d2be25798412fbf))
+* Initial value when not a string ([7672244](https://github.com/rhangai/node-web-packages/commit/76722448776daf6bcc5982aa97a2b8d613f6b9a0))
+
+
+
+
+
 ## [0.2.17](https://github.com/rhangai/node-web-packages/compare/v0.2.16...v0.2.17) (2021-06-19)
 
 
