@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.19](https://github.com/rhangai/node-web-packages/compare/v0.2.18...v0.2.19) (2021-06-22)
+
+
+### Bug Fixes
+
+* Array on useForm ([6466dfa](https://github.com/rhangai/node-web-packages/commit/6466dfa8104aca5d6873e7bf24abd262a4fd9b84))
+
+
+
+
+
 ## [0.2.18](https://github.com/rhangai/node-web-packages/compare/v0.2.17...v0.2.18) (2021-06-21)
 
 
