@@ -56,7 +56,11 @@ export function useForm<T extends Record<string, unknown>>(options: UseFormOptio
 		for (const key in inputValue) {
 			if (inputValue[key] === undefined) continue;
 			if (key in formValue) {
-				(newValue as Record<string, unknown>)[key] = inputValue[key];
+				let itemValue = inputValue[key];
+				if (Array.isArray(itemValue)) {
+					itemValue = itemValue.slice(0);
+				}
+				(newValue as Record<string, unknown>)[key] = itemValue;
 			}
 		}
 		Object.assign(formValue, newValue);
