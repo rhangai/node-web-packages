@@ -88,10 +88,11 @@ export function useForm<T extends Record<string, unknown>>(options: UseFormOptio
 function useFormStateSubmitting(props: FormStatePropsType) {
 	const formSubmittingRefs = ref<Array<Ref<boolean>>>([]);
 	const { formState } = provideFormState({
-		...props,
+		shouldValidate: computed(() => props.shouldValidate),
+		readonly: computed(() => props.readonly),
 		disabled: computed(() => {
 			for (const submittingRef of formSubmittingRefs.value) {
-				if (submittingRef.value) return false;
+				if (submittingRef.value) return true;
 			}
 			return props.disabled;
 		}),
