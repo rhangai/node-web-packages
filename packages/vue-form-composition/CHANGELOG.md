@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.20](https://github.com/rhangai/node-web-packages/compare/v0.2.19...v0.2.20) (2021-06-24)
+
+
+### Bug Fixes
+
+* Reactivity on form state ([3c64b8c](https://github.com/rhangai/node-web-packages/commit/3c64b8cae6a6b3ed353d12e97079e982a3392126))
+
+
+
+
+
 ## [0.2.19](https://github.com/rhangai/node-web-packages/compare/v0.2.18...v0.2.19) (2021-06-22)
 
 
