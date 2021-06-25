@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.21](https://github.com/rhangai/node-web-packages/compare/v0.2.20...v0.2.21) (2021-06-25)
+
+
+### Bug Fixes
+
+* Initial value on decimal ([484a4b9](https://github.com/rhangai/node-web-packages/commit/484a4b97d7425992cad9798d4f40e5c9b8fe1acf))
+
+
+
+
+
 ## [0.2.18](https://github.com/rhangai/node-web-packages/compare/v0.2.17...v0.2.18) (2021-06-21)
 
 
