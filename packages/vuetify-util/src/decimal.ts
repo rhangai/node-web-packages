@@ -59,7 +59,7 @@ export function useDecimalField(options: UseDecimalFieldOptions): UseDecimalFiel
 		},
 	});
 	const { textFieldOnInput: decimalOnInput } = useTextFieldSyncCursor(decimalRef, decimalView);
-	if (options.value) watch(optionToRef(options.value), decimalModelSet);
+	if (options.value) watch(optionToRef(options.value), decimalModelSet, { immediate: true });
 
 	return {
 		decimalRef,
