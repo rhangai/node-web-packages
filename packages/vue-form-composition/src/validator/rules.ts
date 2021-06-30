@@ -21,7 +21,6 @@ export function useFormRules<T extends Record<string, unknown>>(
 	const { formState } = useFormState();
 	const formRules = computed<FormRules<T>>(() => {
 		if (!formState.shouldValidate) return {};
-		if (formState.readonly || formState.disabled) return {};
 		const formRulesValue = resolveValue(formRulesParam);
 		return formRulesValue ?? {};
 	});
