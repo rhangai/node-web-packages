@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.22](https://github.com/rhangai/node-web-packages/compare/v0.2.21...v0.2.22) (2021-06-30)
+
+
+### Bug Fixes
+
+* Form rules validation only disabled on shouldValidate ([1ee5195](https://github.com/rhangai/node-web-packages/commit/1ee51958b73a4647d5efd26d210d996ec81745a1))
+
+
+
+
+
 ## [0.2.20](https://github.com/rhangai/node-web-packages/compare/v0.2.19...v0.2.20) (2021-06-24)
 
 
