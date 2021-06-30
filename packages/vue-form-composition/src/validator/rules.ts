@@ -15,7 +15,7 @@ export type UseFormRulesResult<T> = {
 };
 
 export function useFormRules<T extends Record<string, unknown>>(
-	form: Ref<FormType<T>>,
+	_form: Ref<FormType<T>>,
 	formRulesParam: ReactiveValue<FormRules<T>>
 ): UseFormRulesResult<T> {
 	const { formState } = useFormState();
