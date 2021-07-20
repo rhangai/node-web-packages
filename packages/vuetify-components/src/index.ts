@@ -1,4 +1,4 @@
-export { default as AppToolbar } from './toolbar.vue';
+export { default as Toolbar } from './toolbar.vue';
 export * from './card';
 export * from './form';
 export * from './form-bloco';
