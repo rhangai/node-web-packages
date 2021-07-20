@@ -20,7 +20,6 @@
     "@rhangai/vuetify-util": "^0.2"
   },
   "devDependencies": {
-    "@rhangai/web-common": "^0.2.15",
     "@types/ramda": "^0.27.44",
     "@vue/composition-api": "^1.0.0-rc.11",
     "pug": "^3.0.2",

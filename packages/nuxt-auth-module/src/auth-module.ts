@@ -23,7 +23,9 @@ export class AuthModule {
 		});
 	}
 
-	async refresh<User = unknown, Data = unknown>(options: AuthModuleRefreshOptions<User, Data>): Promise<void> {
+	async refresh<User = unknown, Data = unknown>(
+		options: AuthModuleRefreshOptions<User, Data>
+	): Promise<void> {
 		const payload: Partial<{ user: User; data: Data }> = {};
 
 		const getUser = async (authPayload: any): Promise<User> => {

@@ -1,4 +1,6 @@
-export type ConfirmationHandler<TConfirmation> = (confirmation: TConfirmation) => boolean | Promise<boolean>;
+export type ConfirmationHandler<TConfirmation> = (
+	confirmation: TConfirmation
+) => boolean | Promise<boolean>;
 
 export type CreateUseConfirmationOptions<TConfirmation> = {
 	confirm: ConfirmationHandler<TConfirmation>;

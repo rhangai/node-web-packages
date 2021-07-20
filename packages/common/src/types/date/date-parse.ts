@@ -5,7 +5,10 @@ export type DateParseOptions = {
 	inputFormat?: string;
 };
 
-export function dateParse(param: DateTypeInput, { inputFormat = 'YYYY-MM-DD' }: DateParseOptions): DateType {
+export function dateParse(
+	param: DateTypeInput,
+	{ inputFormat = 'YYYY-MM-DD' }: DateParseOptions
+): DateType {
 	let date: DateType;
 	if (typeof param === 'string') {
 		date = dayjs(param, inputFormat);

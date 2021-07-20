@@ -1,4 +1,12 @@
-import { ComputedRef, unref, reactive, computed, inject, provide, InjectionKey } from '@vue/composition-api';
+import {
+	ComputedRef,
+	unref,
+	reactive,
+	computed,
+	inject,
+	provide,
+	InjectionKey,
+} from '@vue/composition-api';
 
 export type FormState = {
 	readonly disabled: boolean;
@@ -36,7 +44,9 @@ export function provideFormState(provider: FormStateProvider): UseFormStateResul
 	const formState: FormState = reactive({
 		readonly: computed(() => unref(provider.readonly) ?? formStateParent.readonly),
 		disabled: computed(() => unref(provider.disabled) ?? formStateParent.disabled),
-		shouldValidate: computed(() => unref(provider.shouldValidate) ?? formStateParent.shouldValidate),
+		shouldValidate: computed(
+			() => unref(provider.shouldValidate) ?? formStateParent.shouldValidate
+		),
 	});
 	provide(FORM_STATE_KEY, formState);
 	return { formState };

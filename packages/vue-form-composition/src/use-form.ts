@@ -37,7 +37,9 @@ export type UseFormResult<T extends Record<string, unknown>> = {
  * @param options
  * @returns
  */
-export function useForm<T extends Record<string, unknown>>(options: UseFormOptions<T>): UseFormResult<T> {
+export function useForm<T extends Record<string, unknown>>(
+	options: UseFormOptions<T>
+): UseFormResult<T> {
 	const { formState, formUseSubmitting } = useFormStateSubmitting(options.props);
 	const formValue: FormType<T> = reactive(clone(options.form)) as FormType<T>;
 	if ('seal' in Object) Object.seal(formValue);

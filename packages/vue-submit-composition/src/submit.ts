@@ -36,14 +36,21 @@ export type CreateUseSubmitOptions<TNotification, TConfirmation> = {
 export function createUseSubmit<TNotification, TConfirmation>(
 	createSubmitOptions: CreateUseSubmitOptions<TNotification, TConfirmation>
 ) {
-	type UseSubmitOptionsType<TRequestResult> = UseSubmitBaseOptions<TRequestResult, TNotification, TConfirmation>;
+	type UseSubmitOptionsType<TRequestResult> = UseSubmitBaseOptions<
+		TRequestResult,
+		TNotification,
+		TConfirmation
+	>;
 	const { useNotification, useConfirmation, defaults } = createSubmitOptions;
 	const useSubmitBase = () => {
 		const { notify } = useNotification();
 		const { confirm } = useConfirmation();
 		const submitNotify = async <TParams extends unknown[]>(
 			params: TParams,
-			notificationParam: SubmitReactiveOption<TNotification | false, TParams> | null | undefined,
+			notificationParam:
+				| SubmitReactiveOption<TNotification | false, TParams>
+				| null
+				| undefined,
 			defaultsParam: SubmitReactiveOption<TNotification, TParams>
 		) => {
 			const notification = submitReactiveOptionResolve(notificationParam, ...params);
@@ -57,7 +64,11 @@ export function createUseSubmit<TNotification, TConfirmation>(
 					const isValid = await validateItem(options.validate);
 					if (!isValid) {
 						await options.onValidationError?.();
-						await submitNotify([], options.notifyValidationError, defaults.notifyValidationError);
+						await submitNotify(
+							[],
+							options.notifyValidationError,
+							defaults.notifyValidationError
+						);
 						return;
 					}
 				}
@@ -81,7 +92,10 @@ export function createUseSubmit<TNotification, TConfirmation>(
 	};
 
 	const useSubmit = <TRequestResult, TParams extends unknown[]>(
-		options: SubmitReactiveOption<SubmitPromiseOrValue<UseSubmitOptionsType<TRequestResult> | null>, TParams>
+		options: SubmitReactiveOption<
+			SubmitPromiseOrValue<UseSubmitOptionsType<TRequestResult> | null>,
+			TParams
+		>
 	) => {
 		const { doSubmitRequest } = useSubmitBase();
 		const submitting = ref(false);
@@ -90,7 +104,8 @@ export function createUseSubmit<TNotification, TConfirmation>(
 			submitting.value = true;
 			try {
 				const submitOptions = await submitReactiveOptionResolve(options, ...params);
-				if (submitOptions != null) await doSubmitRequest(submitOptions as UseSubmitOptionsType<unknown>);
+				if (submitOptions != null)
+					await doSubmitRequest(submitOptions as UseSubmitOptionsType<unknown>);
 			} finally {
 				submitting.value = false;
 			}
@@ -99,7 +114,10 @@ export function createUseSubmit<TNotification, TConfirmation>(
 	};
 
 	const useSubmitMultiple = <TRequestResult, TParams extends unknown[]>(
-		options: SubmitReactiveOption<SubmitPromiseOrValue<UseSubmitOptionsType<TRequestResult> | null>, TParams>
+		options: SubmitReactiveOption<
+			SubmitPromiseOrValue<UseSubmitOptionsType<TRequestResult> | null>,
+			TParams
+		>
 	) => {
 		const { doSubmitRequest } = useSubmitBase();
 		const submitting = ref<Record<string, boolean>>({});
@@ -114,7 +132,8 @@ export function createUseSubmit<TNotification, TConfirmation>(
 			set(submitting.value, key, true);
 			try {
 				const submitOptions = await submitReactiveOptionResolve(options, ...params);
-				if (submitOptions != null) await doSubmitRequest(submitOptions as UseSubmitOptionsType<unknown>);
+				if (submitOptions != null)
+					await doSubmitRequest(submitOptions as UseSubmitOptionsType<unknown>);
 			} finally {
 				set(submitting.value, key, false);
 			}

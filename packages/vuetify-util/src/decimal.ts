@@ -30,34 +30,36 @@ export function useDecimalField(options: UseDecimalFieldOptions): UseDecimalFiel
 			return null;
 		}
 	};
-	const { textModelSet: decimalModelSet, textView: decimalView } = useTextFieldModelView<Decimal>({
-		modelParse(v: unknown) {
-			if (typeof v === 'string' || typeof v === 'number') return decimalTryParse(v);
-			else if (Decimal.isBigNumber(v)) return v;
-			return null;
-		},
-		modelFormat(v) {
-			return v.toFixed(decimalPlaces.value);
-		},
-		viewParse(v) {
-			const view = v.replace(/\D/g, '');
-			if (!view) return null;
-			const decimal = decimalTryParse(view);
-			if (!decimal) return null;
-			return decimal.shiftedBy(-decimalPlaces.value);
-		},
-		viewFormat(v) {
-			return v.toFormat(decimalPlaces.value, {
-				decimalSeparator: ',',
-				groupSeparator: '.',
-				groupSize: 3,
-				...decimalViewOptions.value,
-			});
-		},
-		onValue(value, modelValue) {
-			options.onInput?.(modelValue);
-		},
-	});
+	const { textModelSet: decimalModelSet, textView: decimalView } = useTextFieldModelView<Decimal>(
+		{
+			modelParse(v: unknown) {
+				if (typeof v === 'string' || typeof v === 'number') return decimalTryParse(v);
+				else if (Decimal.isBigNumber(v)) return v;
+				return null;
+			},
+			modelFormat(v) {
+				return v.toFixed(decimalPlaces.value);
+			},
+			viewParse(v) {
+				const view = v.replace(/\D/g, '');
+				if (!view) return null;
+				const decimal = decimalTryParse(view);
+				if (!decimal) return null;
+				return decimal.shiftedBy(-decimalPlaces.value);
+			},
+			viewFormat(v) {
+				return v.toFormat(decimalPlaces.value, {
+					decimalSeparator: ',',
+					groupSeparator: '.',
+					groupSize: 3,
+					...decimalViewOptions.value,
+				});
+			},
+			onValue(value, modelValue) {
+				options.onInput?.(modelValue);
+			},
+		}
+	);
 	const { textFieldOnInput: decimalOnInput } = useTextFieldSyncCursor(decimalRef, decimalView);
 	if (options.value) watch(optionToRef(options.value), decimalModelSet, { immediate: true });
 

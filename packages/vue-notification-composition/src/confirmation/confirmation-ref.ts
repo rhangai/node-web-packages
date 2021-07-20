@@ -11,11 +11,16 @@ export type ConfirmationRefHandlerItem<TConfirmation> = {
 	reject: () => void;
 };
 
-export type CreateUseConfirmationRefResult<TConfirmation> = CreateUseConfirmationResult<TConfirmation> & {
-	confirmations: ComputedRef<ReadonlyArray<Readonly<ConfirmationRefHandlerItem<TConfirmation>>>>;
-};
+export type CreateUseConfirmationRefResult<TConfirmation> =
+	CreateUseConfirmationResult<TConfirmation> & {
+		confirmations: ComputedRef<
+			ReadonlyArray<Readonly<ConfirmationRefHandlerItem<TConfirmation>>>
+		>;
+	};
 
-export function createUseConfirmationRef<TConfirmation>(): CreateUseConfirmationRefResult<TConfirmation> {
+export function createUseConfirmationRef<
+	TConfirmation
+>(): CreateUseConfirmationRefResult<TConfirmation> {
 	const { confirm, confirmations } = createConfirmationRefHandler<TConfirmation>();
 	const { useConfirmation } = createUseConfirmation<TConfirmation>({ confirm });
 	return { useConfirmation, confirmations };

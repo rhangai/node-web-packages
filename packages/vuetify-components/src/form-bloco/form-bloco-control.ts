@@ -1,13 +1,22 @@
-import { inject, provide, Ref, ref, shallowRef, ComputedRef, computed } from 'vue-demi';
-import { defineInjectionKey } from '@@web/lib/util';
+import {
+	inject,
+	provide,
+	Ref,
+	ref,
+	shallowRef,
+	ComputedRef,
+	computed,
+	InjectionKey,
+} from 'vue-demi';
 
 export type FormBlocoControl = {
 	formBlocoEditando: Ref<unknown>;
 };
 
-const FORM_BLOCO_CONTROL_KEY = defineInjectionKey<FormBlocoControl>('form-bloco-control');
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const FORM_BLOCO_CONTROL_KEY: InjectionKey<FormBlocoControl> = 'form-bloco-control' as any;
 
-export function provideFormBlocoControl() {
+export function provideFormBlocoControl(): FormBlocoControl {
 	const formBlocoEditando = shallowRef(null);
 	provide(FORM_BLOCO_CONTROL_KEY, {
 		formBlocoEditando,
@@ -15,6 +24,7 @@ export function provideFormBlocoControl() {
 	return { formBlocoEditando };
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function useFormBlocoControl() {
 	const formBlocoKey = Object.freeze({});
 	const formBlocoControl = inject(FORM_BLOCO_CONTROL_KEY, null);

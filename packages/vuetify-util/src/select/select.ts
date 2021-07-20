@@ -3,7 +3,12 @@ import { ComputedRef, watch, computed, unref, reactive } from '@vue/composition-
 export type UseSelectOptions<T, TId> = {
 	props: { value: T | TId | null };
 	emit: (event: string, value: unknown) => void;
-	items: null | undefined | T[] | ReadonlyArray<T> | ComputedRef<null | undefined | T[] | ReadonlyArray<T>>;
+	items:
+		| null
+		| undefined
+		| T[]
+		| ReadonlyArray<T>
+		| ComputedRef<null | undefined | T[] | ReadonlyArray<T>>;
 	itemValue: (v: T) => TId;
 };
 

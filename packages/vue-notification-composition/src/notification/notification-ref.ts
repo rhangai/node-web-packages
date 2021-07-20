@@ -9,14 +9,19 @@ export type NotificationRefHandlerItem<TNotification> = {
 	resolve: () => void;
 };
 
-export type CreateUseNotificationRefResult<TNotification> = CreateUseNotificationResult<TNotification> & {
-	notifications: ComputedRef<ReadonlyArray<Readonly<NotificationRefHandlerItem<TNotification>>>>;
-};
+export type CreateUseNotificationRefResult<TNotification> =
+	CreateUseNotificationResult<TNotification> & {
+		notifications: ComputedRef<
+			ReadonlyArray<Readonly<NotificationRefHandlerItem<TNotification>>>
+		>;
+	};
 
 /**
  * Create a new useNotification and a notification array to be consumed to show all notifications
  */
-export function createUseNotificationRef<TNotification>(): CreateUseNotificationRefResult<TNotification> {
+export function createUseNotificationRef<
+	TNotification
+>(): CreateUseNotificationRefResult<TNotification> {
 	const { notifications, notify } = createNotificationRefHandler<TNotification>();
 	const { useNotification } = createUseNotification({ notify });
 	return { useNotification, notifications };
