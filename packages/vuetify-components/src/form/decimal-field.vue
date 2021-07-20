@@ -1,5 +1,5 @@
 <template lang="pug">
-app-text-field(
+text-field(
 	:value='decimalView',
 	@input='decimalOnInput',
 	v-bind='$attrs',
@@ -16,10 +16,14 @@ app-text-field(
 import { defineComponent } from 'vue-demi';
 import { useDecimalField } from '@rhangai/vuetify-util';
 import { omit } from 'ramda';
+import TextField from './text-field.vue';
 import { provideVuetifyFieldRef } from './vuetify-field';
 
 export default defineComponent({
 	inheritAttrs: false,
+	components: {
+		TextField,
+	},
 	props: {
 		decimalPlaces: {
 			type: Number,

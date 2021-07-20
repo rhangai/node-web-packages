@@ -1,5 +1,5 @@
 <template lang="pug">
-app-mask-field(
+mask-field(
 	:value='dateView',
 	:label='label',
 	:rules='dateRules',
@@ -31,9 +31,13 @@ app-mask-field(
 import { defineComponent, ref, watch, shallowRef, computed } from 'vue-demi';
 import { FormStateProps, provideFormState } from '@rhangai/vue-form-composition';
 import { dateParse, DateParseOptions, DateType } from '@rhangai/web-common';
+import MaskField from './mask-field.vue';
 
 export default defineComponent({
 	inheritAttrs: false,
+	components: {
+		MaskField,
+	},
 	props: {
 		...FormStateProps,
 		value: { type: String, default: '' },
