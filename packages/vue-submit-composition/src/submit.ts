@@ -1,5 +1,5 @@
 /* eslint-disable arrow-body-style */
-import { computed, reactive, ref, set } from '@vue/composition-api';
+import { computed, ref, set } from '@vue/composition-api';
 import { SubmitReactiveOption, submitReactiveOptionResolve } from './utils';
 import { validateItem, ValidateItem } from './validate';
 
