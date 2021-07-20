@@ -13,7 +13,8 @@ v-form(ref='formRef', @submit.prevent)
 						color='#222',
 						depressed,
 						text,
-						x-small) Cancelar #[v-icon.ml-2(small) mdi-cancel]
+						x-small
+					) Cancelar #[v-icon.ml-2(small) mdi-cancel]
 					v-btn.form-bloco__action-button(
 						:disabled='formState.disabled || edicaoValorInalterado',
 						:loading='formSubmitting || loading',
@@ -21,7 +22,8 @@ v-form(ref='formRef', @submit.prevent)
 						color='primary',
 						depressed,
 						type='submit',
-						x-small) Salvar #[v-icon.ml-2(small) mdi-content-save]
+						x-small
+					) Salvar #[v-icon.ml-2(small) mdi-content-save]
 				template(v-else)
 					v-btn.form-bloco__action-button(
 						:disabled='formState.disabled',
@@ -29,25 +31,21 @@ v-form(ref='formRef', @submit.prevent)
 						color='primary',
 						outlined,
 						text,
-						x-small) {{ editarLabel }} #[v-icon.ml-2(small) mdi-pencil]
+						x-small
+					) {{ editarLabel }} #[v-icon.ml-2(small) mdi-pencil]
 
 	slot
 	template(v-if='!isEdicao && !blocoReadonly')
 		v-row
 			v-spacer
 			v-col(cols='auto')
-				v-btn(
-					:disabled='formState.disabled',
-					:loading='formSubmitting || loading',
-					@click='formSubmit',
-					color='primary')
+				v-btn(:disabled='formState.disabled', :loading='formSubmitting || loading', @click='formSubmit', color='primary')
 					slot(name='cadastrar') Cadastrar
 </template>
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue-demi';
 import { provideFormState, useFormState } from '@rhangai/vue-form-composition';
 import { equals } from 'ramda';
-import { useSubmit } from '@@web/lib/submit';
 import { useFormBlocoControl } from './form-bloco-control';
 
 export default defineComponent({
@@ -91,18 +89,20 @@ export default defineComponent({
 	},
 	setup(props, { emit }) {
 		const formRef = ref();
-		const { formBlocoControlDisabled, formBlocoEditando, formBlocoEditar } =
-			useFormBlocoControl();
+		const formSubmitting = ref(false);
+		const formSubmit = async () => {
+			if (formSubmitting.value) return;
+			formSubmitting.value = true;
+			try {
+				if (formRef.value?.validate() === false) return;
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				await (props as any).submit?.();
+			} finally {
+				formSubmitting.value = false;
+			}
+		};
 
-		const { submit: formSubmit, submitting: formSubmitting } = useSubmit(() => ({
-			request: props.submit ?? (() => null),
-			validate: [formRef],
-			notifySuccess: false,
-			notifyError: false,
-			onSuccess() {
-				emit('success');
-			},
-		}));
+		const { formBlocoControlDisabled, formBlocoEditando, formBlocoEditar } = useFormBlocoControl();
 
 		const { formState: formStateParent } = useFormState();
 		const blocoReadonly = computed(() => {

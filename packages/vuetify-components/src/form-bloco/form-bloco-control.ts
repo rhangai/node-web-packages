@@ -1,11 +1,10 @@
-import { inject, provide, Ref, ref, shallowRef, ComputedRef, computed } from 'vue-demi';
-import { defineInjectionKey } from '@@web/lib/util';
+import { inject, provide, Ref, ref, shallowRef, ComputedRef, computed, InjectionKey } from 'vue-demi';
 
 export type FormBlocoControl = {
 	formBlocoEditando: Ref<unknown>;
 };
 
-const FORM_BLOCO_CONTROL_KEY = defineInjectionKey<FormBlocoControl>('form-bloco-control');
+const FORM_BLOCO_CONTROL_KEY: InjectionKey<FormBlocoControl> = 'form-bloco-control' as any;
 
 export function provideFormBlocoControl() {
 	const formBlocoEditando = shallowRef(null);
@@ -34,8 +33,7 @@ export function useFormBlocoControl() {
 		formBlocoControlDisabled: computed(() => {
 			if (!formBlocoControl) return false;
 			return (
-				formBlocoControl.formBlocoEditando.value &&
-				formBlocoControl.formBlocoEditando.value !== formBlocoKey
+				formBlocoControl.formBlocoEditando.value && formBlocoControl.formBlocoEditando.value !== formBlocoKey
 			);
 		}),
 		formBlocoEditar,

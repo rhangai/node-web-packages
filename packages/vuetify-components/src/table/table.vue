@@ -6,21 +6,18 @@ v-data-table.app-table(
 	:footer-props='footerProps',
 	:headers='tableHeaders',
 	v-bind='$attrs',
-	v-on='$listeners')
+	v-on='$listeners'
+)
 	template(#item.actions='item')
 		.app-table__actions
 			slot(name='actions', v-bind='item')
 	template(:slot='name', v-for='(_, name) in $slots')
 		slot(:name='name')
-	template(
-		:slot='name',
-		slot-scope='scope',
-		v-for='(_, name) in $scopedSlots')
+	template(:slot='name', slot-scope='scope', v-for='(_, name) in $scopedSlots')
 		slot(:name='name', v-bind='scope')
 </template>
 <script lang="ts">
 import { computed, defineComponent } from 'vue-demi';
-import { definePropType } from '@@web/lib/util';
 import { provideTableContext } from './table-context';
 
 export default defineComponent({
@@ -43,7 +40,7 @@ export default defineComponent({
 			default: false,
 		},
 		headers: {
-			type: definePropType<any[]>(Array),
+			type: Array,
 			default: [],
 		},
 		actions: {
@@ -82,12 +79,6 @@ export default defineComponent({
 .app-table {
 	table-layout: fixed;
 	background: transparent !important;
-
-	&::v-deep table {
-		thead tr th {
-			color: $primary !important;
-		}
-	}
 
 	&#{&}--has-pointer::v-deep tr {
 		cursor: pointer;

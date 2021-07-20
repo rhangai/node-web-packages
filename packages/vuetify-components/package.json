@@ -4,29 +4,33 @@
   "description": "Vuetify utility",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
-  "license": "MIT",
   "scripts": {
-    "clean": "rm -rf lib",
-    "prebuild": "yarn run -s clean",
     "build": "vue-cli-service build --target lib --inline-vue src/index.ts",
     "lint": "eslint src",
+    "clean": "rm -rf lib",
     "lint:fix": "eslint --fix src",
+    "prebuild": "yarn run -s clean",
     "preversion": "yarn run -s build"
+  },
+  "dependencies": {
+    "ramda": "^0.27.1",
+    "vue-demi": "^0.11.2"
   },
   "devDependencies": {
     "@rhangai/web-common": "^0.2.15",
-    "@vue/cli-service": "^4.5.13",
+    "@types/ramda": "^0.27.44",
     "@vue/composition-api": "^1.0.0-rc.11",
-    "rimraf": "^3.0.2"
+    "pug": "^3.0.2",
+    "pug-plain-loader": "^1.1.0",
+    "rimraf": "^3.0.2",
+    "typescript": "~4.1.5"
   },
   "peerDependencies": {
     "@rhangai/web-common": "^0.2.6",
     "@vue/composition-api": "*"
   },
+  "license": "MIT",
   "publishConfig": {
     "access": "public"
-  },
-  "dependencies": {
-    "imask": "^6.0.7"
   }
 }
