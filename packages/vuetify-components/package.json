@@ -1,6 +1,6 @@
 {
   "name": "@rhangai/vuetify-components",
-  "version": "0.2.26",
+  "version": "0.2.27",
   "description": "Vuetify utility",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
