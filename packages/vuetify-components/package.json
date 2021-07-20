@@ -1,0 +1,32 @@
+{
+  "name": "@rhangai/vuetify-components",
+  "version": "0.2.21",
+  "description": "Vuetify utility",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf lib",
+    "prebuild": "yarn run -s clean",
+    "build": "vue-cli-service build --target lib --inline-vue src/index.ts",
+    "lint": "eslint src",
+    "lint:fix": "eslint --fix src",
+    "preversion": "yarn run -s build"
+  },
+  "devDependencies": {
+    "@rhangai/web-common": "^0.2.15",
+    "@vue/cli-service": "^4.5.13",
+    "@vue/composition-api": "^1.0.0-rc.11",
+    "rimraf": "^3.0.2"
+  },
+  "peerDependencies": {
+    "@rhangai/web-common": "^0.2.6",
+    "@vue/composition-api": "*"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "imask": "^6.0.7"
+  }
+}
