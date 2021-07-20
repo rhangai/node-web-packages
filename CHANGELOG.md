@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.26](https://github.com/rhangai/node-web-packages/compare/v0.2.25...v0.2.26) (2021-07-20)
+
+
+### Bug Fixes
+
+* Relative components ([2094e13](https://github.com/rhangai/node-web-packages/commit/2094e1315386c69b0c19dd05f830c010dd0141c9))
+
+
+
+
+
 ## [0.2.25](https://github.com/rhangai/node-web-packages/compare/v0.2.24...v0.2.25) (2021-07-20)
 
 
