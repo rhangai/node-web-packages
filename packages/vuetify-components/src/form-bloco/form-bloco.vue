@@ -13,8 +13,7 @@ v-form(ref='formRef', @submit.prevent)
 						color='#222',
 						depressed,
 						text,
-						x-small
-					) Cancelar #[v-icon.ml-2(small) mdi-cancel]
+						x-small) Cancelar #[v-icon.ml-2(small) mdi-cancel]
 					v-btn.form-bloco__action-button(
 						:disabled='formState.disabled || edicaoValorInalterado',
 						:loading='formSubmitting || loading',
@@ -22,8 +21,7 @@ v-form(ref='formRef', @submit.prevent)
 						color='primary',
 						depressed,
 						type='submit',
-						x-small
-					) Salvar #[v-icon.ml-2(small) mdi-content-save]
+						x-small) Salvar #[v-icon.ml-2(small) mdi-content-save]
 				template(v-else)
 					v-btn.form-bloco__action-button(
 						:disabled='formState.disabled',
@@ -31,15 +29,18 @@ v-form(ref='formRef', @submit.prevent)
 						color='primary',
 						outlined,
 						text,
-						x-small
-					) {{ editarLabel }} #[v-icon.ml-2(small) mdi-pencil]
+						x-small) {{ editarLabel }} #[v-icon.ml-2(small) mdi-pencil]
 
 	slot
 	template(v-if='!isEdicao && !blocoReadonly')
 		v-row
 			v-spacer
 			v-col(cols='auto')
-				v-btn(:disabled='formState.disabled', :loading='formSubmitting || loading', @click='formSubmit', color='primary')
+				v-btn(
+					:disabled='formState.disabled',
+					:loading='formSubmitting || loading',
+					@click='formSubmit',
+					color='primary')
 					slot(name='cadastrar') Cadastrar
 </template>
 <script lang="ts">
@@ -102,7 +103,8 @@ export default defineComponent({
 			}
 		};
 
-		const { formBlocoControlDisabled, formBlocoEditando, formBlocoEditar } = useFormBlocoControl();
+		const { formBlocoControlDisabled, formBlocoEditando, formBlocoEditar } =
+			useFormBlocoControl();
 
 		const { formState: formStateParent } = useFormState();
 		const blocoReadonly = computed(() => {

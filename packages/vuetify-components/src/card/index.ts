@@ -1,2 +1,2 @@
-export { default as AppCard } from './card.vue';
-export { default as AppCardComToolbar } from './card-com-toolbar.vue';
+export { default as Card } from './card.vue';
+export { default as CardComToolbar } from './card-com-toolbar.vue';

@@ -20,7 +20,6 @@ v-data-table.app-table(
 </template>
 <script lang="ts">
 import { computed, defineComponent } from 'vue-demi';
-import { definePropType } from '@@web/lib/util';
 import { provideTableContext } from './table-context';
 
 export default defineComponent({
@@ -43,8 +42,8 @@ export default defineComponent({
 			default: false,
 		},
 		headers: {
-			type: definePropType<any[]>(Array),
-			default: [],
+			type: Array,
+			default: () => [],
 		},
 		actions: {
 			type: Number,

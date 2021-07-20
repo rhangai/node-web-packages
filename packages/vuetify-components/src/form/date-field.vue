@@ -45,6 +45,7 @@ export default defineComponent({
 	},
 	setup(props, { emit }) {
 		const { formState } = provideFormState(props);
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const dateTryParse = (value: any, options: DateParseOptions) => {
 			try {
 				return dateParse(value, options);

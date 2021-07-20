@@ -1,4 +1,4 @@
-export type AppTableHeaderColumn = {
+export type TableHeaderColumn = {
 	text: string;
 	value: string;
 	width?: number | string;
@@ -6,4 +6,4 @@ export type AppTableHeaderColumn = {
 	align?: 'left' | 'center' | 'right';
 };
 
-export type AppTableHeaders = AppTableHeaderColumn[];
+export type TableHeaders = TableHeaderColumn[];

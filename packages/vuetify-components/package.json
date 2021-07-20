@@ -5,12 +5,9 @@
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "scripts": {
-    "build": "vue-cli-service build --target lib --inline-vue src/index.ts",
-    "lint": "eslint src",
+    "lint": "eslint --ext vue,ts src",
     "clean": "rm -rf lib",
-    "lint:fix": "eslint --fix src",
-    "prebuild": "yarn run -s clean",
-    "preversion": "yarn run -s build"
+    "lint:fix": "eslint --ext vue,ts --fix src"
   },
   "dependencies": {
     "ramda": "^0.27.1",
