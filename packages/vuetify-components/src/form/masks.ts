@@ -1,4 +1,6 @@
-import { ref, Ref } from 'vue-demi';
+import { ref, Ref, computed } from 'vue-demi';
+import IMask from 'imask';
+import { mapObjIndexed } from 'ramda';
 
 export const MASKS: Ref<Record<string, unknown>> = ref({
 	cep: { mask: '00000-000' },
@@ -16,6 +18,17 @@ export const MASKS: Ref<Record<string, unknown>> = ref({
 	},
 });
 
-export function registerMask(key: string, mask: unknown): void {
+export const MASKS_PIPE = computed<Record<string, (v: string) => string>>(() => {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	return mapObjIndexed((v) => IMask.createPipe(v as any), MASKS.value);
+});
+
+export function maskRegister(key: string, mask: unknown): void {
 	MASKS.value[key] = mask;
+}
+
+export function maskValue(key: string, value: string): string {
+	const pipe = MASKS_PIPE.value[key];
+	if (!pipe) return value;
+	return pipe(value);
 }

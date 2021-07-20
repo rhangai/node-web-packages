@@ -7,4 +7,4 @@ export { default as MaskField } from './mask-field.vue';
 export { default as Select } from './select.vue';
 export { default as TextField } from './text-field.vue';
 export { default as Textarea } from './textarea.vue';
-export { registerMask } from './masks';
+export { maskRegister, maskValue } from './masks';

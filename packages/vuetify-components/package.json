@@ -13,6 +13,7 @@
     "@rhangai/vue-form-composition": "^0.2.24",
     "@rhangai/vuetify-util": "^0.2.24",
     "@rhangai/web-common": "^0.2.24",
+    "imask": "^6.0.7",
     "ramda": "^0.27.1"
   },
   "devDependencies": {
