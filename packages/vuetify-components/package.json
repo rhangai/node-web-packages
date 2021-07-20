@@ -14,7 +14,10 @@
   },
   "dependencies": {
     "ramda": "^0.27.1",
-    "vue-demi": "^0.11.2"
+    "vue-demi": "^0.11.2",
+    "@rhangai/web-common": "^0.2",
+    "@rhangai/vue-form-composition": "^0.2",
+    "@rhangai/vuetify-util": "^0.2"
   },
   "devDependencies": {
     "@rhangai/web-common": "^0.2.15",

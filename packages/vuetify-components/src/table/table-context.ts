@@ -1,10 +1,11 @@
-import { computed, inject, provide, reactive, InjectionKey } from 'vue-demi';
+import { computed, inject, provide, reactive } from 'vue-demi';
+import { defineInjectionKey } from '@@web/lib/util';
 
 type AppTableContext = {
 	dense: boolean;
 };
 
-const APP_TABLE_CONTEXT_KEY: InjectionKey<AppTableContext> = 'app-table' as any;
+const APP_TABLE_CONTEXT_KEY = defineInjectionKey<AppTableContext>('app-table');
 
 export function provideTableContext(context: () => AppTableContext) {
 	provide(APP_TABLE_CONTEXT_KEY, reactive(computed(context)));
