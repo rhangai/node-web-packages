@@ -8,6 +8,8 @@ export class AuthModule {
 
 	private storeNamespace: string;
 
+	private credentials: Record<string, unknown> | null = null;
+
 	constructor(private readonly options: AuthModuleOptions) {
 		this.storeNamespace = this.options.storeNamespace ?? 'auth';
 		this.auth = new AuthRequestService({
@@ -22,6 +24,14 @@ export class AuthModule {
 				console.error(err);
 			},
 		});
+	}
+
+	setCredentials(credentials: Record<string, unknown> | null): void {
+		this.credentials = credentials;
+	}
+
+	getCredentials(): Record<string, unknown> | null {
+		return this.credentials;
 	}
 
 	setRequestConfig(config: Partial<AxiosRequestConfig>): void {
