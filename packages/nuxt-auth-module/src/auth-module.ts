@@ -1,4 +1,5 @@
 import type { Context } from '@nuxt/types';
+import { AxiosRequestConfig } from 'axios';
 import { AuthRequestService, AuthResponseStatus } from './auth-request-service';
 import type { AuthModuleOptions, AuthModuleRefreshOptions } from './options';
 
@@ -21,6 +22,10 @@ export class AuthModule {
 				console.error(err);
 			},
 		});
+	}
+
+	setRequestConfig(config: Partial<AxiosRequestConfig>): void {
+		this.auth.setConfig(config);
 	}
 
 	async refresh<User = unknown, Data = unknown>(

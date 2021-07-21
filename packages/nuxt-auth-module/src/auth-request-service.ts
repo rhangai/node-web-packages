@@ -26,7 +26,18 @@ export class AuthRequestService {
 
 	private cancelTokenSource: CancelTokenSource | null = null;
 
-	constructor(private readonly options: AuthRequestServiceOptions) {}
+	private config: AxiosRequestConfig;
+
+	constructor(private readonly options: AuthRequestServiceOptions) {
+		this.config = { ...options.authRequestConfig };
+	}
+
+	setConfig(config: Partial<AxiosRequestConfig>): void {
+		this.config = {
+			...this.options.authRequestConfig,
+			...config,
+		};
+	}
 
 	cancel(): void {
 		if (this.timeout) {
@@ -50,7 +61,7 @@ export class AuthRequestService {
 	private async doRequest(cancelToken: CancelToken | null): Promise<AuthResponse> {
 		try {
 			const result = await axios({
-				...this.options.authRequestConfig,
+				...this.config,
 				cancelToken: cancelToken ?? undefined,
 				validateStatus(status) {
 					return status === 200 || status === 401;
