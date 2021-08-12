@@ -6,6 +6,17 @@ import { validateItem, ValidateItem } from './validate';
 type Awaited<T> = T extends Promise<infer U> ? U : T;
 type SubmitPromiseOrValue<T> = T | Promise<T>;
 
+const VUE_SUBMIT_ERROR_HANDLED = 'VUE_SUBMIT(error-handler)';
+
+class VueSubmitErrorHandled extends Error {
+	public readonly [VUE_SUBMIT_ERROR_HANDLED]: boolean;
+
+	constructor(message?: string) {
+		super(message);
+		this[VUE_SUBMIT_ERROR_HANDLED] = true;
+	}
+}
+
 export type UseSubmitBaseOptions<TResult, TNotification, TConfirmation> = {
 	request: () => SubmitPromiseOrValue<Awaited<TResult>>;
 	validate?: ValidateItem;
@@ -69,7 +80,7 @@ export function createUseSubmit<TNotification, TConfirmation>(
 							options.notifyValidationError,
 							defaults.notifyValidationError
 						);
-						return;
+						throw new VueSubmitErrorHandled(`Validation error`);
 					}
 				}
 
@@ -83,8 +94,14 @@ export function createUseSubmit<TNotification, TConfirmation>(
 				await options.onSuccess?.(result);
 				await submitNotify([result], options.notifySuccess, defaults.notifySuccess);
 			} catch (err) {
-				await options.onError?.(err);
-				await submitNotify([err], options.notifyError, defaults.notifyError);
+				if (!err[VUE_SUBMIT_ERROR_HANDLED]) {
+					await options.onError?.(err);
+					await submitNotify([err], options.notifyError, defaults.notifyError);
+					Object.defineProperty(err, VUE_SUBMIT_ERROR_HANDLED, {
+						value: true,
+						enumerable: false,
+					});
+				}
 				throw err;
 			}
 		};
