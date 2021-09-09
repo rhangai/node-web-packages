@@ -1,8 +1,8 @@
 import { ref, Ref, computed } from 'vue-demi';
-import IMask from 'imask';
+import IMask, { AnyMaskedOptions } from 'imask';
 import { mapObjIndexed } from 'ramda';
 
-export const MASKS: Ref<Record<string, unknown>> = ref({
+export const MASKS: Ref<Record<string, AnyMaskedOptions>> = ref({
 	cep: { mask: '00000-000' },
 	cpf: { mask: '000.000.000-00' },
 	cnpj: { mask: '00.000.000/0000-00' },
