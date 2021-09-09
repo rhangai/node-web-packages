@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.33](https://github.com/rhangai/node-web-packages/compare/v0.2.32...v0.2.33) (2021-09-09)
+
+**Note:** Version bump only for package @rhangai/vuetify-components
+
+
+
+
+
 ## [0.2.32](https://github.com/rhangai/node-web-packages/compare/v0.2.31...v0.2.32) (2021-09-09)
 
 **Note:** Version bump only for package @rhangai/vuetify-components
