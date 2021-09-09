@@ -8,7 +8,13 @@ export type UseMaskOptions = {
 	onInput?: (value: string) => void;
 };
 
-export function maskTransform(input: string, mask: AnyMaskedOptions) {
+/**
+ * Transform a single value using the mask
+ * @param input
+ * @param mask
+ * @returns The masked string
+ */
+export function maskTransform(input: string, mask: AnyMaskedOptions): string {
 	return IMask.pipe(input, mask);
 }
 
