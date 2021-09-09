@@ -2,6 +2,8 @@
 import { computed, ref, unref, watch } from '@vue/composition-api';
 import IMask, { AnyMaskedOptions } from 'imask';
 
+export type MaskOptions = AnyMaskedOptions;
+
 export type UseMaskOptions = {
 	value?: () => string;
 	mask?: () => AnyMaskedOptions;
