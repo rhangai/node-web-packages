@@ -1,12 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { computed, ref, unref, watch } from '@vue/composition-api';
-import IMask from 'imask';
+import IMask, { AnyMaskedOptions } from 'imask';
 
 export type UseMaskOptions = {
 	value?: () => string;
-	mask?: () => unknown;
+	mask?: () => AnyMaskedOptions;
 	onInput?: (value: string) => void;
 };
+
+export function maskTransform(input: string, mask: AnyMaskedOptions) {
+	return IMask.pipe(input, mask);
+}
 
 export function useMaskField(options: UseMaskOptions) {
 	const maskValue = ref('');
@@ -28,7 +32,7 @@ export function useMaskField(options: UseMaskOptions) {
 		return child[0] ?? null;
 	});
 
-	const maskIMaskOptions = computed<any>(() => options.mask?.() ?? { mask: /./ });
+	const maskIMaskOptions = computed<AnyMaskedOptions>(() => options.mask?.() ?? { mask: /./ });
 
 	let imaskInstance: IMask.InputMask<any> | null = null;
 	const maskSetup = (element: HTMLInputElement, maskOptions: any) => {
