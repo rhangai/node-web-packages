@@ -23,7 +23,7 @@ export const MASKS_PIPE = computed<Record<string, (v: string) => string>>(() => 
 	return mapObjIndexed((v) => IMask.createPipe(v as any), MASKS.value);
 });
 
-export function maskRegister(key: string, mask: unknown): void {
+export function maskRegister(key: string, mask: AnyMaskedOptions): void {
 	MASKS.value[key] = mask;
 }
 
