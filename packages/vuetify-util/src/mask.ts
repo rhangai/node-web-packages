@@ -96,9 +96,13 @@ export function useMaskField(options: UseMaskOptions) {
 }
 
 function maskVuetifyPatch(imaskParam: IMask.InputMask<any>, maskComponentParam: any) {
-	const imask = imaskParam;
+	const imask: IMask.InputMask<any> & {
+		// eslint-disable-next-line camelcase
+		$$__updateControl?: IMask.InputMask<any>['updateControl'];
+	} = imaskParam;
 	const maskComponent = maskComponentParam;
-	const oldImaskUpdateControl = imask.updateControl;
+	const oldImaskUpdateControl = imask.$$__updateControl || imask.updateControl;
+	imask.$$__updateControl = oldImaskUpdateControl;
 	imask.updateControl = function updateControl() {
 		oldImaskUpdateControl.apply(this);
 		const vuetifyProps: string[] = ['lazyValue', 'lazySearch'];
@@ -106,7 +110,7 @@ function maskVuetifyPatch(imaskParam: IMask.InputMask<any>, maskComponentParam: 
 			if (prop in maskComponent) {
 				maskComponent[prop] = this.value;
 			}
-			if (prop in maskComponent.$children[0]) {
+			if (maskComponent.$children[0] && prop in maskComponent.$children[0]) {
 				maskComponent.$children[0][prop] = this.value;
 			}
 		});
