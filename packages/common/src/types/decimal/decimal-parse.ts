@@ -1,6 +1,6 @@
 import { Decimal, DecimalInput } from './decimal-type';
 
-export function decimalParse(param: DecimalInput): Decimal {
+export function decimalTryParse(param: DecimalInput): Decimal | null {
 	let decimal: Decimal;
 	if (typeof param === 'number') {
 		decimal = new Decimal(param);
@@ -9,8 +9,14 @@ export function decimalParse(param: DecimalInput): Decimal {
 	} else if (Decimal.isBigNumber(param)) {
 		decimal = param;
 	} else {
-		throw new Error(`Invalid decimal: ${param}`);
+		return null;
 	}
-	if (!decimal.isFinite()) throw new Error(`Invalid decimal: ${param}`);
+	if (!decimal.isFinite()) return null;
+	return decimal;
+}
+
+export function decimalParse(param: DecimalInput): Decimal {
+	const decimal = decimalTryParse(param);
+	if (!decimal) throw new Error(`Invalid decimal: ${param}`);
 	return decimal;
 }
