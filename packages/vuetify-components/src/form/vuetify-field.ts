@@ -1,7 +1,8 @@
 import { InjectionKey, provide, Ref, ref, inject } from 'vue-demi';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const VUETIFY_FIELD_REF_KEY: InjectionKey<Ref<unknown>> = 'honest(vuetify-field)' as any;
+const VUETIFY_FIELD_REF_KEY: InjectionKey<Ref<unknown>> =
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	'vuetify-components(vuetify-field)' as any;
 
 export function provideVuetifyFieldRef(fieldRef: Ref<unknown>): void {
 	provide(VUETIFY_FIELD_REF_KEY, fieldRef);
