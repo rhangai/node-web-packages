@@ -2,6 +2,7 @@
 mask-field(
 	:value='dateView',
 	:label='label',
+	:readonly='inputReadonly || readonly',
 	:rules='dateRules',
 	@input='dateViewSet',
 	mask='date',
@@ -20,7 +21,6 @@ mask-field(
 				v-icon(v-bind='activator.attrs', v-on='activator.on') mdi-calendar
 			v-date-picker(
 				:value='dateModel',
-				:allowed-dates='allowedDates',
 				:disabled='disabled',
 				:readonly='readonly',
 				@input='dateOnSelect',
@@ -46,7 +46,10 @@ export default defineComponent({
 		rules: { type: Array, default: () => [] },
 		disabled: { type: Boolean, default: null },
 		readonly: { type: Boolean, default: null },
+		inputReadonly: { type: Boolean, default: false },
 		datePickerProps: { type: Object, default: () => ({}) },
+		modelFormat: { type: String, default: 'YYYY-MM-DD' },
+		viewFormat: { type: String, default: 'DD/MM/YYYY' },
 	},
 	setup(props, { emit }) {
 		const { formState } = provideFormState(props);
@@ -64,23 +67,23 @@ export default defineComponent({
 		const dateView = ref('');
 		const dateModel = ref<string | null>();
 		const dateViewSet = (v: string) => {
-			const d = dateTryParse(v, { inputFormat: 'DD/MM/YYYY' });
+			const d = dateTryParse(v, { inputFormat: props.viewFormat });
 			dateView.value = v;
-			if (!d || d.format('DD/MM/YYYY') !== v) {
+			if (!d || d.format(props.viewFormat) !== v) {
 				dateObject.value = null;
 				dateModel.value = null;
 			} else {
 				dateObject.value = d;
-				dateModel.value = d.format('YYYY-MM-DD');
+				dateModel.value = d.format(props.modelFormat);
 			}
 			emit('input', dateModel.value);
 		};
 		const dateModelSet = (v: unknown) => {
 			if (v === dateModel.value) return;
-			const d = dateTryParse(v, { inputFormat: 'YYYY-MM-DD' });
+			const d = dateTryParse(v, { inputFormat: props.modelFormat });
 			dateObject.value = d;
 			if (d) {
-				dateView.value = d.format('DD/MM/YYYY');
+				dateView.value = d.format(props.viewFormat);
 			}
 		};
 		watch(() => props.value, dateModelSet, { immediate: true });
