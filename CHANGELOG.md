@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.35](https://github.com/rhangai/node-web-packages/compare/v0.2.34...v0.2.35) (2021-11-05)
+
+**Note:** Version bump only for package root
+
+
+
+
+
 ## [0.2.34](https://github.com/rhangai/node-web-packages/compare/v0.2.33...v0.2.34) (2021-09-10)
 
 **Note:** Version bump only for package root
