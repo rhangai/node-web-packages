@@ -27,7 +27,7 @@ export default defineComponent({
 	props: {
 		mask: {
 			type: String,
-			default: 'cpf',
+			default: null,
 		},
 		value: {
 			type: String,
