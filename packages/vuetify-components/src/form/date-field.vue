@@ -25,7 +25,8 @@ mask-field(
 				:readonly='readonly',
 				@input='dateOnSelect',
 				no-title,
-				scrollable)
+				scrollable,
+				v-bind='datePickerProps')
 </template>
 <script lang="ts">
 import { defineComponent, ref, watch, shallowRef, computed } from 'vue-demi';
@@ -43,9 +44,9 @@ export default defineComponent({
 		value: { type: String, default: '' },
 		label: { type: String, required: false, default: 'Data' },
 		rules: { type: Array, default: () => [] },
-		allowedDates: { type: Function, default: () => [] },
 		disabled: { type: Boolean, default: null },
 		readonly: { type: Boolean, default: null },
+		datePickerProps: { type: Object, default: () => ({}) },
 	},
 	setup(props, { emit }) {
 		const { formState } = provideFormState(props);
