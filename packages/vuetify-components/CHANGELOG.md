@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.40](https://github.com/rhangai/node-web-packages/compare/v0.2.39...v0.2.40) (2021-11-12)
+
+
+### Bug Fixes
+
+* Date field now accepts min&max ([5ee5ebf](https://github.com/rhangai/node-web-packages/commit/5ee5ebfe74f290122885b670c75ace5062636a3b))
+
+
+
+
+
 ## [0.2.39](https://github.com/rhangai/node-web-packages/compare/v0.2.38...v0.2.39) (2021-11-05)
 
 **Note:** Version bump only for package @rhangai/vuetify-components
