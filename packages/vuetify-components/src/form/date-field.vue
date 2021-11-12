@@ -88,13 +88,19 @@ export default defineComponent({
 		};
 		watch(() => props.value, dateModelSet, { immediate: true });
 
-		const dataInvalidRule = () => {
-			if (dateView.value && !dateModel.value) return `Data inválida`;
+		const dateRuleInvalid = (viewValue: string) => {
+			if (viewValue && !dateModel.value) return `Data inválida`;
 			return true;
 		};
 
 		const dateRules = computed(() => {
-			return [dataInvalidRule, ...props.rules];
+			const viewValue: string = dateView.value;
+			return [dateRuleInvalid, ...props.rules].map((rule) => {
+				if (typeof rule === 'function') {
+					return rule(viewValue);
+				}
+				return rule;
+			});
 		});
 
 		const dateOnSelect = (date: unknown) => {

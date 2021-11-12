@@ -7,6 +7,9 @@ import { useTextFieldSyncCursor } from './util/text-sync';
 type Option<T> = T | (() => T) | ComputedRef<T>;
 export type UseDecimalFieldOptions = {
 	value?: Option<unknown>;
+	min?: Option<number | string | null | undefined>;
+	max?: Option<number | string | null | undefined>;
+	shiftBy?: Option<number>;
 	decimalPlaces?: Option<number>;
 	decimalViewOptions?: Option<BigNumber.Format>;
 	onInput?: (value: string | null) => void;
@@ -19,8 +22,20 @@ export type UseDecimalFieldResult = {
 };
 
 export function useDecimalField(options: UseDecimalFieldOptions): UseDecimalFieldResult {
+	const shiftBy = optionToRef(options.shiftBy, 0);
 	const decimalPlaces = optionToRef(options.decimalPlaces, 2);
 	const decimalViewOptions = optionToRef(options.decimalViewOptions, {});
+
+	const min = computed(() => {
+		const minValue = optionUnref(options.min);
+		if (minValue == null) return null;
+		return new Decimal(minValue);
+	});
+	const max = computed(() => {
+		const maxValue = optionUnref(options.max);
+		if (maxValue == null) return null;
+		return new Decimal(maxValue);
+	});
 
 	const decimalRef = ref();
 	const decimalTryParse = (value: DecimalInput) => {
@@ -33,27 +48,34 @@ export function useDecimalField(options: UseDecimalFieldOptions): UseDecimalFiel
 	const { textModelSet: decimalModelSet, textView: decimalView } = useTextFieldModelView<Decimal>(
 		{
 			modelParse(v: unknown) {
-				if (typeof v === 'string' || typeof v === 'number') return decimalTryParse(v);
-				else if (Decimal.isBigNumber(v)) return v;
-				return null;
+				let modelValue: BigNumber | null = null;
+				if (typeof v === 'string' || typeof v === 'number') modelValue = decimalTryParse(v);
+				else if (Decimal.isBigNumber(v)) modelValue = v;
+				return modelValue;
 			},
 			modelFormat(v) {
-				return v.toFixed(decimalPlaces.value);
+				return v.toFixed(decimalPlaces.value + shiftBy.value);
 			},
 			viewParse(v) {
 				const view = v.replace(/\D/g, '');
 				if (!view) return null;
 				const decimal = decimalTryParse(view);
 				if (!decimal) return null;
-				return decimal.shiftedBy(-decimalPlaces.value);
+				return decimal.shiftedBy(-decimalPlaces.value - shiftBy.value);
 			},
 			viewFormat(v) {
-				return v.toFormat(decimalPlaces.value, {
+				return v.shiftedBy(shiftBy.value).toFormat(decimalPlaces.value, {
 					decimalSeparator: ',',
 					groupSeparator: '.',
 					groupSize: 3,
 					...decimalViewOptions.value,
 				});
+			},
+			transformValue(valueParam) {
+				let value = valueParam;
+				if (min.value && value.isLessThan(min.value)) value = min.value;
+				if (max.value && value.isGreaterThan(max.value)) value = max.value;
+				return value;
 			},
 			onValue(value, modelValue) {
 				options.onInput?.(modelValue);
@@ -70,11 +92,16 @@ export function useDecimalField(options: UseDecimalFieldOptions): UseDecimalFiel
 	};
 }
 
+function optionUnref<T>(value: Option<T>): T;
+function optionUnref<T>(value: Option<T | null | undefined> | null | undefined): T | null {
+	if (typeof value === 'function') return (value as any)() ?? null;
+	else if (isRef(value)) return value.value ?? null;
+	return value ?? null;
+}
+
 function optionToRef<T>(value: Option<T>): ComputedRef<T>;
 function optionToRef<T>(value: Option<T> | undefined | null, defaultValue: T): ComputedRef<T>;
 function optionToRef<T>(value: Option<T>, defaultValue?: unknown): ComputedRef<unknown> {
-	if (typeof value === 'function') return computed(value as () => T);
-	else if (isRef(value)) return value;
-	else if (value != null) return computed(() => value);
-	return computed(() => defaultValue ?? null);
+	if (isRef(value)) return value;
+	return computed(() => optionUnref(value) ?? defaultValue ?? null);
 }
