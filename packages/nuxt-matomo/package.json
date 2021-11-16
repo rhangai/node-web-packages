@@ -1,0 +1,17 @@
+{
+  "name": "@rhangai/nuxt-matomo",
+  "version": "0.2.24",
+  "description": "Nuxt matomo",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "scripts": {
+    "clean": "rm -rf lib",
+    "build": "tsc",
+    "lint": "eslint src",
+    "lint:fix": "eslint --fix src",
+    "preversion": "yarn run -s clean && yarn run -s build"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
