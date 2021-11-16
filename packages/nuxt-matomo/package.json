@@ -1,6 +1,6 @@
 {
   "name": "@rhangai/nuxt-matomo",
-  "version": "0.2.24",
+  "version": "0.2.41",
   "description": "Nuxt matomo",
   "license": "MIT",
   "main": "lib/index.js",
