@@ -5,6 +5,7 @@ type NuxtMatomoConfig = {
 	url: string;
 	siteId: string;
 	enabled?: boolean;
+	debug?: boolean;
 	scriptUrl?: string;
 	trackerUrl?: string;
 };
@@ -16,9 +17,9 @@ class NuxtMatomo {
 
 	private enabled = false;
 
-	constructor(private readonly config: NuxtMatomoConfig) {
-		if (this.config?.url && this.config?.enabled !== false) {
-			this.enabled = true;
+	constructor(isDev: boolean, private readonly config: NuxtMatomoConfig) {
+		if (this.config?.url && config?.enabled !== false) {
+			if (!isDev || config.debug) this.enabled = true;
 		}
 		this.injectScriptInternal();
 	}
@@ -64,8 +65,8 @@ class NuxtMatomo {
 	}
 }
 
-export default <Plugin>function nuxtMatomoPlugin({ app, $config }, inject) {
-	const nuxtMatomo = new NuxtMatomo($config.matomo);
+export default <Plugin>function nuxtMatomoPlugin({ app, $config, isDev }, inject) {
+	const nuxtMatomo = new NuxtMatomo(isDev, $config.matomo);
 	const { router } = app;
 	if (router) {
 		router.afterEach((to, from) => {
