@@ -44,18 +44,20 @@ export function useSelect<T, TId extends string | number>(options: UseSelectOpti
 		});
 		if (selectState.object) {
 			const objectValue = options.itemValue(selectState.object);
-			const itemEntry = itemsMap[objectValue];
-			if (!itemEntry) {
-				itemsMap[objectValue] = {
-					itemValue: objectValue,
-					item: selectState.object,
-					index: -1,
-				};
-				items.unshift(selectState.object);
-			} else {
-				const item = items[itemEntry.index];
-				items.splice(itemEntry.index, 1);
-				items.unshift(item);
+			if (objectValue != null) {
+				const itemEntry = itemsMap[objectValue];
+				if (!itemEntry) {
+					itemsMap[objectValue] = {
+						itemValue: objectValue,
+						item: selectState.object,
+						index: -1,
+					};
+					items.unshift(selectState.object);
+				} else {
+					const item = items[itemEntry.index];
+					items.splice(itemEntry.index, 1);
+					items.unshift(item);
+				}
 			}
 		}
 		return { itemsMap, items };
