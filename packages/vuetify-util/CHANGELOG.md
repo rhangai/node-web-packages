@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.43](https://github.com/rhangai/node-web-packages/compare/v0.2.42...v0.2.43) (2021-12-01)
+
+
+### Bug Fixes
+
+* Select item when value id is null ([74ccde9](https://github.com/rhangai/node-web-packages/commit/74ccde9607006bfadf328a6688eccecfb719154c))
+
+
+
+
+
 ## [0.2.40](https://github.com/rhangai/node-web-packages/compare/v0.2.39...v0.2.40) (2021-11-12)
 
 
