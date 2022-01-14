@@ -1,3 +1,4 @@
+import type { Context } from '@nuxt/types';
 import axios, { AxiosRequestConfig, CancelToken, CancelTokenSource } from 'axios';
 
 export enum AuthResponseStatus {
@@ -8,7 +9,7 @@ export enum AuthResponseStatus {
 type AuthRequestServiceOptions = {
 	interval: number;
 	authRequestConfig: AxiosRequestConfig;
-	onLogout(): void;
+	onRouteUnauthorized(route: Context['route']): void;
 	onError(err: Error): void;
 };
 
@@ -23,6 +24,8 @@ type AuthResponse = {
 
 export class AuthRequestService {
 	private timeout: any = null;
+
+	private currentRoute!: Context['route'];
 
 	private cancelTokenSource: CancelTokenSource | null = null;
 
@@ -50,7 +53,8 @@ export class AuthRequestService {
 		}
 	}
 
-	async refresh(cb: AuthRefreshCallback): Promise<AuthResponse> {
+	async refresh(route: Context['route'], cb: AuthRefreshCallback): Promise<AuthResponse> {
+		this.currentRoute = route;
 		this.cancel();
 		const cancelTokenSource = axios.CancelToken.source();
 		const response = this.doRequest(cancelTokenSource.token);
@@ -71,11 +75,14 @@ export class AuthRequestService {
 				return { authStatus: AuthResponseStatus.UNAUTHORIZED };
 			}
 			return { data: result.data, authStatus: AuthResponseStatus.AUTHORIZED };
-		} catch (err) {
+		} catch (err: any) {
 			if (axios.isCancel(err)) {
 				return { cancel: true, authStatus: null, error: err };
 			}
-			return { error: err, authStatus: null };
+			return {
+				error: err,
+				authStatus: null,
+			};
 		}
 	}
 
@@ -84,12 +91,12 @@ export class AuthRequestService {
 			this.timeout = null;
 			const { authStatus, error, data } = await this.doRequest(null);
 			if (authStatus === AuthResponseStatus.UNAUTHORIZED) {
-				this.options.onLogout();
+				this.options.onRouteUnauthorized(this.currentRoute);
 				return;
 			} else if (authStatus === AuthResponseStatus.AUTHORIZED) {
 				try {
 					await cb(data);
-				} catch (err) {
+				} catch (err: any) {
 					this.options.onError(err);
 				}
 			} else if (error) {

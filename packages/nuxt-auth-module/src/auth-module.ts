@@ -15,9 +15,9 @@ export class AuthModule {
 		this.auth = new AuthRequestService({
 			interval: options.interval,
 			authRequestConfig: options.authRequestConfig,
-			onLogout: () => {
+			onRouteUnauthorized: (route: Context['route']) => {
 				// eslint-disable-next-line @typescript-eslint/no-floating-promises
-				this.onLogout();
+				this.onRouteUnauthorized(route);
 			},
 			onError(err) {
 				// eslint-disable-next-line no-console
@@ -53,10 +53,13 @@ export class AuthModule {
 			return { ...defaultUser, ...user } as any;
 		};
 
-		const { authStatus, error, data } = await this.auth.refresh(async (authPayload: any) => {
-			const user = await getUser(authPayload);
-			this.options.context.store.commit(`${this.storeNamespace}/user`, user);
-		});
+		const { authStatus, error, data } = await this.auth.refresh(
+			options.route,
+			async (authPayload: any) => {
+				const user = await getUser(authPayload);
+				this.options.context.store.commit(`${this.storeNamespace}/user`, user);
+			}
+		);
 		if (authStatus === AuthResponseStatus.UNAUTHORIZED) {
 			await this.onRouteUnauthorized(options.route);
 			return;
