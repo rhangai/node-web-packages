@@ -3,6 +3,7 @@ import { DateType, DateTypeInput } from './date-type';
 
 export type DateParseOptions = {
 	inputFormat?: string;
+	utc?: boolean;
 };
 
 export function dateTryParse(
@@ -11,9 +12,9 @@ export function dateTryParse(
 ): DateType | null {
 	let date: DateType;
 	if (typeof param === 'string') {
-		date = dayjs(param, inputFormat);
+		date = dayjs.utc(param, inputFormat);
 	} else {
-		date = dayjs(param);
+		date = dayjs.utc(param);
 	}
 	if (!date.isValid()) return null;
 	return date;
