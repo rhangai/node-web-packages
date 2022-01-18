@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.45](https://github.com/rhangai/node-web-packages/compare/v0.2.44...v0.2.45) (2022-01-18)
+
+
+### Bug Fixes
+
+* UTC plugin when parsing dates ([1a5cd25](https://github.com/rhangai/node-web-packages/commit/1a5cd2591ab76484f226c5bfa72c6770cad888b3))
+
+
+
+
+
 ## [0.2.39](https://github.com/rhangai/node-web-packages/compare/v0.2.38...v0.2.39) (2021-11-05)
 
 **Note:** Version bump only for package @rhangai/web-common
