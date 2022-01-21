@@ -11,6 +11,13 @@ export type UseMaskOptions = {
 };
 
 /**
+ * Create a transformer function
+ */
+export function maskCreateTransformer(mask: AnyMaskedOptions): (input: string) => string {
+	return IMask.createPipe(mask);
+}
+
+/**
  * Transform a single value using the mask
  * @param input
  * @param mask
