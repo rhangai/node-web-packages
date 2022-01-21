@@ -31,7 +31,12 @@ module.exports = {
 						position: 'before',
 					},
 					{
-						pattern: '{@@**,@@*/**}',
+						pattern: '{@test/**/*,@@test/**/*}',
+						group: 'external',
+						position: 'after',
+					},
+					{
+						pattern: '{@@**,@@*/**,@app/**/*}',
 						group: 'internal',
 						position: 'before',
 					},
