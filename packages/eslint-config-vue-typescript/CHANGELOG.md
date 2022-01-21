@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.49](https://github.com/rhangai/node-web-packages/compare/v0.2.48...v0.2.49) (2022-01-21)
+
+
+### Bug Fixes
+
+* import/order rule ([36b97eb](https://github.com/rhangai/node-web-packages/commit/36b97eb3799a537732843aa2ad86448a3bbec9c9))
+
+
+
+
+
 ## [0.2.48](https://github.com/rhangai/node-web-packages/compare/v0.2.47...v0.2.48) (2022-01-21)
 
 **Note:** Version bump only for package @rhangai/eslint-config-vue-typescript
