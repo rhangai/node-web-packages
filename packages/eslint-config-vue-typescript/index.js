@@ -13,36 +13,22 @@ module.exports = {
 				groups: [
 					//
 					'builtin',
-					'external',
 					'internal',
+					'external',
 					'parent',
 					'sibling',
 					'index',
 				],
 				pathGroups: [
 					{
-						pattern: '{vue-demi,@vue/composition-api}',
-						group: 'external',
-						position: 'before',
-					},
-					{
-						pattern: '@nuxtjs/composition-api',
-						group: 'external',
-						position: 'before',
-					},
-					{
-						pattern: '{@test/**/*,@@test/**/*}',
-						group: 'external',
+						pattern: '{vue,vue-demi,@vue/composition-api}',
+						group: 'builtin',
 						position: 'after',
 					},
 					{
-						pattern: '{@@**,@@*/**,@app/**/*}',
-						group: 'internal',
-						position: 'before',
-					},
-					{
-						pattern: '{~/**,~/*/**}',
-						group: 'internal',
+						pattern: '@nuxtjs/composition-api',
+						group: 'builtin',
+						position: 'after',
 					},
 				],
 				pathGroupsExcludedImportTypes: ['builtin'],
