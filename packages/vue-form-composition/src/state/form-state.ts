@@ -9,15 +9,19 @@ import {
 } from '@vue/composition-api';
 
 export type FormState = {
-	readonly disabled: boolean;
 	readonly readonly: boolean;
+	readonly disabled: boolean;
 	readonly shouldValidate: boolean;
 };
 
+type ValueOrRef<T> = T | ComputedRef<T>;
+
 export type FormStateProvider = {
-	readonly disabled?: boolean | null | undefined | ComputedRef<boolean | null | undefined>;
-	readonly readonly?: boolean | null | undefined | ComputedRef<boolean | null | undefined>;
-	readonly shouldValidate?: boolean | null | undefined | ComputedRef<boolean | null | undefined>;
+	readonly readonly?: ValueOrRef<boolean | null | undefined>;
+	readonly disabled?: ValueOrRef<boolean | null | undefined>;
+	readonly shouldValidate?: ValueOrRef<boolean | null | undefined>;
+	readonly forceReadonly?: ValueOrRef<boolean | null | undefined>;
+	readonly forceDisabled?: ValueOrRef<boolean | null | undefined>;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -42,11 +46,19 @@ export function useFormState(): UseFormStateResult {
 export function provideFormState(provider: FormStateProvider): UseFormStateResult {
 	const { formState: formStateParent } = useFormState();
 	const formState: FormState = reactive({
-		readonly: computed(() => unref(provider.readonly) ?? formStateParent.readonly),
-		disabled: computed(() => unref(provider.disabled) ?? formStateParent.disabled),
-		shouldValidate: computed(
-			() => unref(provider.shouldValidate) ?? formStateParent.shouldValidate
-		),
+		readonly: computed(() => {
+			const isReadonly = unref(provider.forceReadonly);
+			if (isReadonly != null) return isReadonly;
+			return unref(provider.readonly) || formStateParent.readonly;
+		}),
+		disabled: computed(() => {
+			const isDisabled = unref(provider.forceDisabled);
+			if (isDisabled != null) return isDisabled;
+			return unref(provider.disabled) || formStateParent.disabled;
+		}),
+		shouldValidate: computed(() => {
+			return unref(provider.shouldValidate) ?? formStateParent.shouldValidate;
+		}),
 	});
 	provide(FORM_STATE_KEY, formState);
 	return { formState };
