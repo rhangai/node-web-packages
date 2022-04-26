@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.50](https://github.com/rhangai/node-web-packages/compare/v0.2.49...v0.2.50) (2022-04-26)
+
+
+### Features
+
+* Added force options for readonly/disabled on vue-form-composition ([515fbd7](https://github.com/rhangai/node-web-packages/commit/515fbd73e427648770f581eca1e10c4b20e55cff))
+
+
+
+
+
 ## [0.2.49](https://github.com/rhangai/node-web-packages/compare/v0.2.48...v0.2.49) (2022-01-21)
 
 
