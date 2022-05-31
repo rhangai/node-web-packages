@@ -1,5 +1,5 @@
 import { computed, Ref, reactive, ref } from '@vue/composition-api';
-import { FormState, FormStatePropsType, provideFormState } from './state';
+import { FormStateContext, FormStatePropsType, provideFormState } from './state';
 import { FormDefinition, FormType } from './types';
 
 export type UseFormOptions<T extends Record<string, unknown>> = {
@@ -8,7 +8,7 @@ export type UseFormOptions<T extends Record<string, unknown>> = {
 	onValue?: (value: T) => void;
 };
 
-export type UseFormResult<T extends Record<string, unknown>> = {
+export type UseFormResult<T extends Record<string, unknown>> = FormStateContext & {
 	/**
 	 * The form object, only allows
 	 */
@@ -21,10 +21,6 @@ export type UseFormResult<T extends Record<string, unknown>> = {
 	 * Reset the form
 	 */
 	formReset: () => void;
-	/**
-	 * State of the current form.
-	 */
-	formState: FormState;
 	/**
 	 * Use to disable the form when submitting.
 	 * Calling this function multiple types will disable the form if ANY of the refs are true.
@@ -40,7 +36,8 @@ export type UseFormResult<T extends Record<string, unknown>> = {
 export function useForm<T extends Record<string, unknown>>(
 	options: UseFormOptions<T>
 ): UseFormResult<T> {
-	const { formState, formUseSubmitting } = useFormStateSubmitting(options.props);
+	const { formStateReadonly, formStateDisabled, formStateShouldValidate, formUseSubmitting } =
+		useFormStateSubmitting(options.props);
 	const formValue: FormType<T> = reactive(clone(options.form)) as FormType<T>;
 	if ('seal' in Object) Object.seal(formValue);
 
@@ -80,7 +77,9 @@ export function useForm<T extends Record<string, unknown>>(
 
 	return {
 		form,
-		formState,
+		formStateReadonly,
+		formStateDisabled,
+		formStateShouldValidate,
 		formSet,
 		formReset: () => formSet(null),
 		formUseSubmitting,
@@ -89,7 +88,7 @@ export function useForm<T extends Record<string, unknown>>(
 
 function useFormStateSubmitting(props: FormStatePropsType) {
 	const formSubmittingRefs = ref<Array<Ref<boolean>>>([]);
-	const { formState } = provideFormState({
+	const formState = provideFormState({
 		shouldValidate: computed(() => props.shouldValidate),
 		readonly: computed(() => props.readonly),
 		disabled: computed(() => {
@@ -106,7 +105,10 @@ function useFormStateSubmitting(props: FormStatePropsType) {
 			if (index >= 0) formSubmittingRefs.value.splice(index, 1);
 		};
 	};
-	return { formState, formUseSubmitting };
+	return {
+		...formState,
+		formUseSubmitting,
+	};
 }
 
 function clone<T>(obj: T): T {

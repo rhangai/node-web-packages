@@ -1,22 +1,14 @@
-import {
-	ComputedRef,
-	unref,
-	reactive,
-	computed,
-	inject,
-	provide,
-	InjectionKey,
-} from '@vue/composition-api';
+import { ComputedRef, unref, computed, inject, provide, InjectionKey } from '@vue/composition-api';
 
-export type FormState = {
-	readonly readonly: boolean;
-	readonly disabled: boolean;
-	readonly shouldValidate: boolean;
+export type FormStateContext = {
+	readonly formStateReadonly: ComputedRef<boolean> | boolean;
+	readonly formStateDisabled: ComputedRef<boolean> | boolean;
+	readonly formStateShouldValidate: ComputedRef<boolean> | boolean;
 };
 
 type ValueOrRef<T> = T | ComputedRef<T>;
 
-export type FormStateProvider = {
+export type FormStateProviderOptions = {
 	readonly readonly?: ValueOrRef<boolean | null | undefined>;
 	readonly disabled?: ValueOrRef<boolean | null | undefined>;
 	readonly shouldValidate?: ValueOrRef<boolean | null | undefined>;
@@ -24,42 +16,44 @@ export type FormStateProvider = {
 	readonly forceDisabled?: ValueOrRef<boolean | null | undefined>;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const FORM_STATE_KEY: InjectionKey<FormState> = '@rhangai/vue-form-composition(form-state)' as any;
+const FORM_STATE_KEY: InjectionKey<FormStateContext> =
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	'@rhangai/vue-form-composition(form-state)' as any;
 
-export type UseFormStateResult = {
-	formState: FormState;
-};
-
-export function useFormState(): UseFormStateResult {
+export function injectFormState(): FormStateContext {
 	let formState = inject(FORM_STATE_KEY, null);
 	if (formState == null) {
 		formState = {
-			disabled: false,
-			readonly: false,
-			shouldValidate: true,
+			formStateReadonly: false,
+			formStateDisabled: false,
+			formStateShouldValidate: true,
 		};
 	}
-	return { formState };
+	return formState;
 }
 
-export function provideFormState(provider: FormStateProvider): UseFormStateResult {
-	const { formState: formStateParent } = useFormState();
-	const formState: FormState = reactive({
-		readonly: computed(() => {
-			const isReadonly = unref(provider.forceReadonly);
+export function useFormState(options: FormStateProviderOptions = {}): FormStateContext {
+	const formStateParent = injectFormState();
+	const formState: FormStateContext = {
+		formStateReadonly: computed(() => {
+			const isReadonly = unref(options.forceReadonly);
 			if (isReadonly != null) return isReadonly;
-			return unref(provider.readonly) || formStateParent.readonly;
+			return unref(options.readonly) || unref(formStateParent.formStateReadonly);
 		}),
-		disabled: computed(() => {
-			const isDisabled = unref(provider.forceDisabled);
+		formStateDisabled: computed(() => {
+			const isDisabled = unref(options.forceDisabled);
 			if (isDisabled != null) return isDisabled;
-			return unref(provider.disabled) || formStateParent.disabled;
+			return unref(options.disabled) || unref(formStateParent.formStateDisabled);
 		}),
-		shouldValidate: computed(() => {
-			return unref(provider.shouldValidate) ?? formStateParent.shouldValidate;
+		formStateShouldValidate: computed(() => {
+			return unref(options.shouldValidate) ?? unref(formStateParent.formStateShouldValidate);
 		}),
-	});
+	};
+	return formState;
+}
+
+export function provideFormState(provider: FormStateProviderOptions): FormStateContext {
+	const formState = useFormState(provider);
 	provide(FORM_STATE_KEY, formState);
-	return { formState };
+	return formState;
 }

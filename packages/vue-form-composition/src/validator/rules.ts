@@ -1,4 +1,4 @@
-import { computed, ComputedRef, isRef, Ref } from '@vue/composition-api';
+import { computed, ComputedRef, isRef, Ref, unref } from '@vue/composition-api';
 import { useFormState } from '../state';
 import { FormType } from '../types';
 
@@ -18,9 +18,9 @@ export function useFormRules<T extends Record<string, unknown>>(
 	_form: Ref<FormType<T>>,
 	formRulesParam: ReactiveValue<FormRules<T>>
 ): UseFormRulesResult<T> {
-	const { formState } = useFormState();
+	const { formStateShouldValidate } = useFormState();
 	const formRules = computed<FormRules<T>>(() => {
-		if (!formState.shouldValidate) return {};
+		if (!unref(formStateShouldValidate)) return {};
 		const formRulesValue = resolveValue(formRulesParam);
 		return formRulesValue ?? {};
 	});
