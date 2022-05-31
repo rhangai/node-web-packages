@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/rhangai/node-web-packages/compare/v0.2.51...v0.3.0) (2022-05-31)
+
+
+### chore
+
+* Updated formState to 3 separate computed values ([7a48c00](https://github.com/rhangai/node-web-packages/commit/7a48c0071c579174bcec135741804979b59e68a8))
+
+
+### BREAKING CHANGES
+
+* useForm, useFormState, provideFormState, injectFormState functions affected
+
+
+
+
+
 ## [0.2.51](https://github.com/rhangai/node-web-packages/compare/v0.2.50...v0.2.51) (2022-05-25)
 
 **Note:** Version bump only for package root

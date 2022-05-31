@@ -1,6 +1,6 @@
 {
   "name": "@rhangai/vuetify-components",
-  "version": "0.2.51",
+  "version": "0.3.0",
   "description": "Vuetify utility",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -10,9 +10,9 @@
     "lint:fix": "eslint --ext vue,ts --fix src"
   },
   "dependencies": {
-    "@rhangai/vue-form-composition": "^0.2.50",
-    "@rhangai/vuetify-util": "^0.2.51",
-    "@rhangai/web-common": "^0.2.51",
+    "@rhangai/vue-form-composition": "^0.3.0",
+    "@rhangai/vuetify-util": "^0.3.0",
+    "@rhangai/web-common": "^0.3.0",
     "imask": "^6.0.7",
     "ramda": "^0.27.1"
   },
