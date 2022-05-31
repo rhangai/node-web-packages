@@ -1,4 +1,4 @@
-import { computed, Ref, reactive, ref } from '@vue/composition-api';
+import { computed, Ref, ref } from '@vue/composition-api';
 import { FormStateContext, FormStatePropsType, provideFormState } from './state';
 import { FormDefinition, FormType } from './types';
 
@@ -38,7 +38,8 @@ export function useForm<T extends Record<string, unknown>>(
 ): UseFormResult<T> {
 	const { formStateReadonly, formStateDisabled, formStateShouldValidate, formUseSubmitting } =
 		useFormStateSubmitting(options.props);
-	const formValue: FormType<T> = reactive(clone(options.form)) as FormType<T>;
+
+	const formValue = ref<FormType<T>>(clone(options.form) as FormType<T>);
 	if ('seal' in Object) Object.seal(formValue);
 
 	const formSet = (inputValueParam: unknown | null) => {
@@ -46,7 +47,7 @@ export function useForm<T extends Record<string, unknown>>(
 
 		const newValue = clone(options.form);
 		if (!inputValueParam || typeof inputValueParam !== 'object') {
-			Object.assign(formValue, newValue);
+			Object.assign(formValue.value, newValue);
 			options.onValue?.(formValue as T);
 			return;
 		}
@@ -54,7 +55,7 @@ export function useForm<T extends Record<string, unknown>>(
 		const inputValue = inputValueParam as Record<string, unknown>;
 		for (const key in inputValue) {
 			if (inputValue[key] === undefined) continue;
-			if (key in formValue) {
+			if (key in formValue.value) {
 				let itemValue = inputValue[key];
 				if (Array.isArray(itemValue)) {
 					itemValue = itemValue.slice(0);
@@ -62,13 +63,13 @@ export function useForm<T extends Record<string, unknown>>(
 				(newValue as Record<string, unknown>)[key] = itemValue;
 			}
 		}
-		Object.assign(formValue, newValue);
-		options.onValue?.(formValue as T);
+		Object.assign(formValue.value, newValue);
+		options.onValue?.(formValue.value);
 	};
 
 	const form = computed<FormType<T>>({
 		get() {
-			return formValue;
+			return formValue.value;
 		},
 		set(value: unknown | null) {
 			formSet(value);
