@@ -44,7 +44,7 @@ v-form(ref='formRef', @submit.prevent)
 					slot(name='cadastrar') Cadastrar
 </template>
 <script lang="ts">
-import { defineComponent, ref, computed, unref } from 'vue-demi';
+import { defineComponent, ref, computed, unref, shallowRef } from 'vue-demi';
 import { injectFormState, provideFormState } from '@rhangai/vue-form-composition';
 import { equals } from 'ramda';
 import { useFormBlocoControl } from './form-bloco-control';
@@ -89,7 +89,7 @@ export default defineComponent({
 		},
 	},
 	setup(props, { emit }) {
-		const formRef = ref();
+		const formRef = shallowRef();
 		const formSubmitting = ref(false);
 		const formSubmit = async () => {
 			if (formSubmitting.value) return;

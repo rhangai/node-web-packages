@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { computed, ref, unref, watch } from '@vue/composition-api';
+import { computed, ref, shallowRef, unref, watch } from '@vue/composition-api';
 import IMask, { AnyMaskedOptions } from 'imask';
 
 export type MaskOptions = AnyMaskedOptions;
@@ -29,7 +29,7 @@ export function maskTransform(input: string, mask: AnyMaskedOptions): string {
 
 export function useMaskField(options: UseMaskOptions) {
 	const maskValue = ref('');
-	const maskRef = ref();
+	const maskRef = shallowRef();
 
 	const valueParam = computed(() => {
 		if (!options.value) return '';

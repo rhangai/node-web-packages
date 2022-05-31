@@ -1,4 +1,4 @@
-import { ref, watch, ComputedRef, computed, Ref, isRef } from '@vue/composition-api';
+import { ref, watch, ComputedRef, computed, Ref, isRef, shallowRef } from '@vue/composition-api';
 import { Decimal, DecimalInput, decimalParse } from '@rhangai/web-common';
 import type BigNumber from 'bignumber.js';
 import { useTextFieldModelView } from './util/text-model-view';
@@ -37,7 +37,7 @@ export function useDecimalField(options: UseDecimalFieldOptions): UseDecimalFiel
 		return new Decimal(maxValue);
 	});
 
-	const decimalRef = ref();
+	const decimalRef = shallowRef();
 	const decimalTryParse = (value: DecimalInput) => {
 		try {
 			return decimalParse(value);
