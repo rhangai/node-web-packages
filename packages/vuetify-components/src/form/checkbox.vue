@@ -1,7 +1,7 @@
 <template lang="pug">
 v-checkbox(
-	:disabled='formState.disabled',
-	:readonly='formState.readonly',
+	:disabled='formStateDisabled',
+	:readonly='formStateReadonly',
 	v-bind='$attrs',
 	v-on='$listeners')
 	template(:slot='name', v-for='(_, name) in $slots')
@@ -26,9 +26,10 @@ export default defineComponent({
 		...FormStateProps,
 	},
 	setup(props) {
-		const { formState } = provideFormState(props);
+		const { formStateDisabled, formStateReadonly } = provideFormState(props);
 		return {
-			formState,
+			formStateDisabled,
+			formStateReadonly,
 		};
 	},
 });

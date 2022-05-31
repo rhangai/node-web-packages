@@ -10,7 +10,7 @@ mask-field(
 	v-bind='$attrs')
 	template(#append)
 		v-menu(
-			v-if='!formState.disabled && !formState.readonly',
+			v-if='!formStateDisabled && !formStateReadonly',
 			v-model='datePopup',
 			:close-on-content-click='false',
 			bottom,
@@ -52,7 +52,7 @@ export default defineComponent({
 		viewFormat: { type: String, default: 'DD/MM/YYYY' },
 	},
 	setup(props, { emit }) {
-		const { formState } = provideFormState(props);
+		const { formStateDisabled, formStateReadonly } = provideFormState(props);
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const dateTryParse = (value: any, options: DateParseOptions) => {
 			try {
@@ -108,7 +108,8 @@ export default defineComponent({
 			datePopup.value = false;
 		};
 		return {
-			formState,
+			formStateDisabled,
+			formStateReadonly,
 			dateRules,
 			datePopup,
 			dateModel,

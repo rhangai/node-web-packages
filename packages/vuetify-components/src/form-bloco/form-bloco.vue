@@ -8,14 +8,14 @@ v-form(ref='formRef', @submit.prevent)
 			.form-bloco__header-actions(cols='12', sm='auto')
 				template(v-if='formBlocoEditando')
 					v-btn.mr-2.form-bloco__action-button(
-						:disabled='formState.disabled || formSubmitting',
+						:disabled='formStateDisabled || formSubmitting',
 						@click='edicaoCancelar',
 						color='#222',
 						depressed,
 						text,
 						x-small) Cancelar #[v-icon.ml-2(small) mdi-cancel]
 					v-btn.form-bloco__action-button(
-						:disabled='formState.disabled || edicaoValorInalterado',
+						:disabled='formStateDisabled || edicaoValorInalterado',
 						:loading='formSubmitting || loading',
 						@click='edicaoSalvar',
 						color='primary',
@@ -24,7 +24,7 @@ v-form(ref='formRef', @submit.prevent)
 						x-small) Salvar #[v-icon.ml-2(small) mdi-content-save]
 				template(v-else)
 					v-btn.form-bloco__action-button(
-						:disabled='formState.disabled',
+						:disabled='formStateDisabled',
 						@click='edicaoEditar',
 						color='primary',
 						outlined,
@@ -44,8 +44,8 @@ v-form(ref='formRef', @submit.prevent)
 					slot(name='cadastrar') Cadastrar
 </template>
 <script lang="ts">
-import { defineComponent, ref, computed } from 'vue-demi';
-import { provideFormState, useFormState } from '@rhangai/vue-form-composition';
+import { defineComponent, ref, computed, unref } from 'vue-demi';
+import { injectFormState, provideFormState } from '@rhangai/vue-form-composition';
 import { equals } from 'ramda';
 import { useFormBlocoControl } from './form-bloco-control';
 
@@ -106,12 +106,12 @@ export default defineComponent({
 		const { formBlocoControlDisabled, formBlocoEditando, formBlocoEditar } =
 			useFormBlocoControl();
 
-		const { formState: formStateParent } = useFormState();
+		const formStateParent = injectFormState();
 		const blocoReadonly = computed(() => {
-			return props.readonly ?? formStateParent.readonly;
+			return props.readonly ?? unref(formStateParent.formStateReadonly);
 		});
 
-		const { formState } = provideFormState({
+		const { formStateDisabled } = provideFormState({
 			shouldValidate: computed(() => {
 				if (props.shouldValidate != null) return props.shouldValidate;
 				if (props.readonly || props.disabled) return false;
@@ -165,7 +165,7 @@ export default defineComponent({
 		return {
 			blocoReadonly,
 			formRef,
-			formState,
+			formStateDisabled,
 			formSubmit,
 			formSubmitting,
 			...edicaoSetup(),

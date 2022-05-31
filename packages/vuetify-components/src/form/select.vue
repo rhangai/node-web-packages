@@ -1,7 +1,7 @@
 <template lang="pug">
 v-select(
-	:disabled='formState.disabled',
-	:readonly='formState.readonly',
+	:disabled='formStateDisabled',
+	:readonly='formStateReadonly',
 	:rules='formRules',
 	persistent-placeholder,
 	v-bind='$attrs',
@@ -15,7 +15,7 @@ v-select(
 		slot(:name='slotName', v-bind='props')
 </template>
 <script lang="ts">
-import { computed, defineComponent } from 'vue-demi';
+import { computed, defineComponent, unref } from 'vue-demi';
 import { FormStateProps, provideFormState } from '@rhangai/vue-form-composition';
 
 export default defineComponent({
@@ -28,14 +28,16 @@ export default defineComponent({
 		},
 	},
 	setup(props) {
-		const { formState } = provideFormState(props);
+		const { formStateDisabled, formStateReadonly, formStateShouldValidate } =
+			provideFormState(props);
 		const formRules = computed(() => {
-			if (!formState.shouldValidate) return [];
+			if (!unref(formStateShouldValidate)) return undefined;
 			return props.rules;
 		});
 		return {
+			formStateDisabled,
+			formStateReadonly,
 			formRules,
-			formState,
 		};
 	},
 });

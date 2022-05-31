@@ -1,8 +1,8 @@
 <template lang="pug">
 v-text-field(
 	ref='fieldRef',
-	:disabled='formState.disabled',
-	:readonly='formState.readonly',
+	:disabled='formStateDisabled',
+	:readonly='formStateReadonly',
 	:rules='formRules',
 	persistent-placeholder,
 	v-bind='$attrs',
@@ -16,7 +16,7 @@ v-text-field(
 		slot(:name='name', v-bind='scope')
 </template>
 <script lang="ts">
-import { computed, defineComponent } from 'vue-demi';
+import { computed, defineComponent, unref } from 'vue-demi';
 import { FormStateProps, provideFormState } from '@rhangai/vue-form-composition';
 import { useVuetifyFieldRef } from './vuetify-field';
 
@@ -31,14 +31,16 @@ export default defineComponent({
 	},
 	setup(props) {
 		const fieldRef = useVuetifyFieldRef();
-		const { formState } = provideFormState(props);
+		const { formStateDisabled, formStateReadonly, formStateShouldValidate } =
+			provideFormState(props);
 		const formRules = computed(() => {
-			if (!formState.shouldValidate) return [];
+			if (!unref(formStateShouldValidate)) return undefined;
 			return props.rules;
 		});
 		return {
 			fieldRef,
-			formState,
+			formStateDisabled,
+			formStateReadonly,
 			formRules,
 		};
 	},

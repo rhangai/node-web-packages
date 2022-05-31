@@ -1,7 +1,7 @@
 <template lang="pug">
 v-textarea(
-	:disabled='formState.disabled',
-	:readonly='formState.readonly',
+	:disabled='formStateDisabled',
+	:readonly='formStateReadonly',
 	persistent-placeholder,
 	v-bind='$attrs',
 	v-on='$listeners')
@@ -16,9 +16,10 @@ export default defineComponent({
 		...FormStateProps,
 	},
 	setup(props) {
-		const { formState } = provideFormState(props);
+		const { formStateDisabled, formStateReadonly } = provideFormState(props);
 		return {
-			formState,
+			formStateDisabled,
+			formStateReadonly,
 		};
 	},
 });

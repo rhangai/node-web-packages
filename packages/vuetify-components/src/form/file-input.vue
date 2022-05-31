@@ -19,7 +19,7 @@ v-file-input(
 		slot(:name='name', v-bind='scope')
 </template>
 <script lang="ts">
-import { computed, defineComponent } from 'vue-demi';
+import { computed, defineComponent, unref } from 'vue-demi';
 import { FormStateProps, provideFormState } from '@rhangai/vue-form-composition';
 
 export default defineComponent({
@@ -40,13 +40,15 @@ export default defineComponent({
 		},
 	},
 	setup(props) {
-		const { formState } = provideFormState(props);
+		const { formStateDisabled, formStateReadonly, formStateShouldValidate } =
+			provideFormState(props);
 		const formRules = computed(() => {
-			if (!formState.shouldValidate) return [];
+			if (!unref(formStateShouldValidate)) return undefined;
 			return props.rules;
 		});
 		return {
-			formState,
+			formStateDisabled,
+			formStateReadonly,
 			formRules,
 		};
 	},
