@@ -1,4 +1,4 @@
-import { ref, Ref, reactive, nextTick, UnwrapRef, ComputedRef } from '@vue/composition-api';
+import { ref, Ref, reactive, nextTick, UnwrapRef } from '@vue/composition-api';
 import { TIMEOUT_DELAY } from '../constants';
 import { createUseNotification, CreateUseNotificationResult } from './notification';
 
@@ -11,8 +11,8 @@ export type NotificationRefHandlerItem<TNotification> = {
 
 export type CreateUseNotificationRefResult<TNotification> =
 	CreateUseNotificationResult<TNotification> & {
-		notifications: ComputedRef<
-			ReadonlyArray<Readonly<NotificationRefHandlerItem<TNotification>>>
+		notifications: Readonly<
+			Ref<ReadonlyArray<Readonly<NotificationRefHandlerItem<TNotification>>>>
 		>;
 	};
 

@@ -1,4 +1,4 @@
-import { ref, Ref, reactive, nextTick, UnwrapRef, ComputedRef } from '@vue/composition-api';
+import { ref, Ref, reactive, nextTick, UnwrapRef } from '@vue/composition-api';
 import { TIMEOUT_DELAY } from '../constants';
 import { createUseConfirmation, CreateUseConfirmationResult } from './confirmation';
 
@@ -13,8 +13,8 @@ export type ConfirmationRefHandlerItem<TConfirmation> = {
 
 export type CreateUseConfirmationRefResult<TConfirmation> =
 	CreateUseConfirmationResult<TConfirmation> & {
-		confirmations: ComputedRef<
-			ReadonlyArray<Readonly<ConfirmationRefHandlerItem<TConfirmation>>>
+		confirmations: Readonly<
+			Ref<ReadonlyArray<Readonly<ConfirmationRefHandlerItem<TConfirmation>>>>
 		>;
 	};
 

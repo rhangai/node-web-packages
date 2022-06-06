@@ -1,12 +1,12 @@
-import { ComputedRef, unref, computed, inject, provide, InjectionKey } from '@vue/composition-api';
+import { Ref, unref, computed, inject, provide, InjectionKey } from '@vue/composition-api';
 
 export type FormStateContext = {
-	readonly formStateReadonly: ComputedRef<boolean> | boolean;
-	readonly formStateDisabled: ComputedRef<boolean> | boolean;
-	readonly formStateShouldValidate: ComputedRef<boolean> | boolean;
+	readonly formStateReadonly: Readonly<Ref<boolean>> | boolean;
+	readonly formStateDisabled: Readonly<Ref<boolean>> | boolean;
+	readonly formStateShouldValidate: Readonly<Ref<boolean>> | boolean;
 };
 
-type ValueOrRef<T> = T | ComputedRef<T>;
+type ValueOrRef<T> = T | Readonly<Ref<T>>;
 
 export type FormStateProviderOptions = {
 	readonly readonly?: ValueOrRef<boolean | null | undefined>;

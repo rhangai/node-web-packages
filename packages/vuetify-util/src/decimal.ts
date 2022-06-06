@@ -1,10 +1,10 @@
-import { ref, watch, ComputedRef, computed, Ref, isRef, shallowRef } from '@vue/composition-api';
+import { watch, computed, Ref, isRef, shallowRef } from '@vue/composition-api';
 import { Decimal, DecimalInput, decimalParse } from '@rhangai/web-common';
 import type BigNumber from 'bignumber.js';
 import { useTextFieldModelView } from './util/text-model-view';
 import { useTextFieldSyncCursor } from './util/text-sync';
 
-type Option<T> = T | (() => T) | ComputedRef<T>;
+type Option<T> = T | (() => T) | Readonly<Ref<T>>;
 export type UseDecimalFieldOptions = {
 	value?: Option<unknown>;
 	min?: Option<number | string | null | undefined>;
@@ -99,9 +99,9 @@ function optionUnref<T>(value: Option<T | null | undefined> | null | undefined):
 	return value ?? null;
 }
 
-function optionToRef<T>(value: Option<T>): ComputedRef<T>;
-function optionToRef<T>(value: Option<T> | undefined | null, defaultValue: T): ComputedRef<T>;
-function optionToRef<T>(value: Option<T>, defaultValue?: unknown): ComputedRef<unknown> {
+function optionToRef<T>(value: Option<T>): Readonly<Ref<T>>;
+function optionToRef<T>(value: Option<T> | undefined | null, defaultValue: T): Readonly<Ref<T>>;
+function optionToRef<T>(value: Option<T>, defaultValue?: unknown): Readonly<Ref<unknown>> {
 	if (isRef(value)) return value;
 	return computed(() => optionUnref(value) ?? defaultValue ?? null);
 }

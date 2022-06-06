@@ -1,4 +1,4 @@
-import { computed, ComputedRef, isRef, Ref, unref } from '@vue/composition-api';
+import { computed, isRef, Ref, unref } from '@vue/composition-api';
 import { useFormState } from '../state';
 import { FormType } from '../types';
 
@@ -11,7 +11,7 @@ export type FormRules<T> = {
 };
 
 export type UseFormRulesResult<T> = {
-	formRules: ComputedRef<FormRules<T>>;
+	formRules: Readonly<Ref<FormRules<T>>>;
 };
 
 export function useFormRules<T extends Record<string, unknown>>(
@@ -29,8 +29,8 @@ export function useFormRules<T extends Record<string, unknown>>(
 	};
 }
 
-type ReactiveValue<T> = T | (() => T) | ComputedRef<T>;
-function resolveValue<T>(param: T | (() => T) | ComputedRef<T>): T {
+type ReactiveValue<T> = T | (() => T) | Readonly<Ref<T>>;
+function resolveValue<T>(param: T | (() => T) | Readonly<Ref<T>>): T {
 	if (isRef(param)) return param.value;
 	else if (typeof param === 'function') {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any

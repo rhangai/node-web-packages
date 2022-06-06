@@ -1,4 +1,4 @@
-import { ComputedRef, watch, computed, unref, reactive } from '@vue/composition-api';
+import { Ref, watch, computed, unref, reactive } from '@vue/composition-api';
 
 export type UseSelectOptions<T, TId> = {
 	props: { value: T | TId | null };
@@ -8,7 +8,7 @@ export type UseSelectOptions<T, TId> = {
 		| undefined
 		| T[]
 		| ReadonlyArray<T>
-		| ComputedRef<null | undefined | T[] | ReadonlyArray<T>>;
+		| Readonly<Ref<null | undefined | T[] | ReadonlyArray<T>>>;
 	itemValue: (v: T) => TId;
 };
 

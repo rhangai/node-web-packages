@@ -1,8 +1,8 @@
-import { ComputedRef, isRef } from '@vue/composition-api';
+import { Ref, isRef } from '@vue/composition-api';
 
 export type SubmitReactiveOption<T, TParams extends unknown[]> =
 	| T
-	| ComputedRef<T>
+	| Readonly<Ref<T>>
 	| ((...params: TParams) => T);
 export type SubmitPromiseOrValue<T> = T | Promise<T>;
 

@@ -1,13 +1,4 @@
-import {
-	inject,
-	provide,
-	Ref,
-	ref,
-	shallowRef,
-	ComputedRef,
-	computed,
-	InjectionKey,
-} from 'vue-demi';
+import { inject, provide, Ref, ref, shallowRef, computed, InjectionKey } from 'vue-demi';
 
 export type FormBlocoControl = {
 	formBlocoEditando: Ref<unknown>;
@@ -40,7 +31,7 @@ export function useFormBlocoControl() {
 	};
 	return {
 		formBlocoKey,
-		formBlocoEditando: formBlocoEditando as ComputedRef<boolean>,
+		formBlocoEditando,
 		formBlocoControlDisabled: computed(() => {
 			if (!formBlocoControl) return false;
 			return (
