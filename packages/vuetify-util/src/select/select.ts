@@ -1,7 +1,7 @@
 import { Ref, watch, computed, unref, reactive } from '@vue/composition-api';
 
 export type UseSelectOptions<T, TId> = {
-	props: { value: T | TId | null };
+	props: { value: unknown };
 	emit: (event: string, value: unknown) => void;
 	items:
 		| null
@@ -67,7 +67,11 @@ export function useSelect<T, TId extends string | number>(options: UseSelectOpti
 		return selectItemsData.value.items;
 	});
 
-	const updateValue = (value: T | TId | null | undefined, itemsData: ItemsData) => {
+	const isObject = (value: unknown): value is T => {
+		return typeof value === 'object';
+	};
+
+	const updateValue = (value: unknown, itemsData: ItemsData) => {
 		const { itemsMap } = itemsData;
 		if (value == null) {
 			selectState.value = null;
@@ -76,7 +80,7 @@ export function useSelect<T, TId extends string | number>(options: UseSelectOpti
 			options.emit('update:selected', selectState.object);
 			return;
 		}
-		if (typeof value === 'object') {
+		if (isObject(value)) {
 			selectState.object = value;
 			selectState.value = options.itemValue(value);
 			options.emit('input', selectState.value);
