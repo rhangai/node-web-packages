@@ -96,7 +96,6 @@ export function useSelect<T, TId extends string | number>(options: UseSelectOpti
 			selectState.object = null;
 			selectState.value = null;
 		}
-		options.emit('input', selectState.value);
 		options.emit('update:selected', selectState.object);
 	};
 
@@ -104,6 +103,7 @@ export function useSelect<T, TId extends string | number>(options: UseSelectOpti
 		get: () => selectState.object,
 		set(valueParam: T | TId | null) {
 			updateValue(valueParam, selectItemsData.value);
+			options.emit('input', selectState.value);
 		},
 	});
 
