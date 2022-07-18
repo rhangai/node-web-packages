@@ -40,17 +40,10 @@ export async function submitValidate(
 				}
 			})
 		);
-		const error =
-			// eslint-disable-next-line no-nested-ternary
-			errors.length <= 0
-				? undefined
-				: errors.length <= 1
-				? errors[0]
-				: new AggregateError(errors);
 		return {
 			[VALIDATE_SYMBOL]: true,
 			valid: isValid,
-			error,
+			error: createError(errors),
 		};
 	} else if (isRef(rule)) {
 		return submitValidate(rule.value);
@@ -72,4 +65,17 @@ export async function submitValidate(
 		[VALIDATE_SYMBOL]: true,
 		valid: rule !== false,
 	};
+}
+
+/**
+ * Create the error
+ *
+ * If the error array is of length 0, returns undefined
+ * If the error array is of length 1, return the element
+ * If the error array has more than 1 item, return a new AggregateError
+ */
+function createError(errors: Error[]): Error | undefined {
+	if (errors.length <= 0) return undefined;
+	if (errors.length === 1) return errors[0];
+	return new AggregateError(errors);
 }
