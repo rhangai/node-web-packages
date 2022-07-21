@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.7](https://github.com/rhangai/node-web-packages/compare/v0.3.6...v0.3.7) (2022-07-21)
+
+
+### Bug Fixes
+
+* Import order (internal after external) ([4b6ff8d](https://github.com/rhangai/node-web-packages/commit/4b6ff8db1d4c15d7c46b2ac2b9df33c75c889a6b))
+
+
+
+
+
 ## [0.3.6](https://github.com/rhangai/node-web-packages/compare/v0.3.5...v0.3.6) (2022-07-18)
 
 **Note:** Version bump only for package root
