@@ -13,8 +13,8 @@ module.exports = {
 				groups: [
 					//
 					'builtin',
-					'internal',
 					'external',
+					'internal',
 					'parent',
 					'sibling',
 					'index',
