@@ -1,4 +1,4 @@
-import { ref, Ref, reactive, nextTick, UnwrapRef } from '@vue/composition-api';
+import { ref, Ref, reactive, nextTick, UnwrapRef } from 'vue-demi';
 import { TIMEOUT_DELAY } from '../constants';
 import { createUseNotification, CreateUseNotificationResult } from './notification';
 
