@@ -1,4 +1,4 @@
-import { Ref, isRef } from '@vue/composition-api';
+import { Ref, isRef } from 'vue-demi';
 
 export type SubmitReactiveOption<T, TParams extends unknown[]> =
 	| T

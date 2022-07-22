@@ -1,5 +1,5 @@
 /* eslint-disable arrow-body-style */
-import { computed, ref, set } from '@vue/composition-api';
+import { computed, ref, set } from 'vue-demi';
 import { SubmitReactiveOption, submitReactiveOptionResolve } from './utils';
 import { validateItem, ValidateItem } from './validate';
 
@@ -93,7 +93,7 @@ export function createUseSubmit<TNotification, TConfirmation>(
 				const result = await options.request();
 				await options.onSuccess?.(result);
 				await submitNotify([result], options.notifySuccess, defaults.notifySuccess);
-			} catch (err) {
+			} catch (err: any) {
 				if (!err[VUE_SUBMIT_ERROR_HANDLED]) {
 					await options.onError?.(err);
 					await submitNotify([err], options.notifyError, defaults.notifyError);

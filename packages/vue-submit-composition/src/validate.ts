@@ -1,4 +1,4 @@
-import { isRef, Ref } from '@vue/composition-api';
+import { isRef, Ref } from 'vue-demi';
 
 type ValidateLikeObject = { validate(): ValidateItem | Promise<ValidateItem> };
 
