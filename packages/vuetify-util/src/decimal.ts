@@ -1,4 +1,4 @@
-import { watch, computed, Ref, isRef, shallowRef } from '@vue/composition-api';
+import { watch, computed, Ref, isRef, shallowRef } from 'vue-demi';
 import { Decimal, DecimalInput, decimalParse } from '@rhangai/web-common';
 import type BigNumber from 'bignumber.js';
 import { useTextFieldModelView } from './util/text-model-view';

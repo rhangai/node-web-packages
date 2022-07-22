@@ -1,4 +1,4 @@
-import { Ref, watch, computed, unref, reactive } from '@vue/composition-api';
+import { Ref, watch, computed, unref, reactive } from 'vue-demi';
 
 export type UseSelectOptions<T, TId> = {
 	props: { value: unknown };

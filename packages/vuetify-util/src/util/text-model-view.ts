@@ -1,4 +1,4 @@
-import { computed, shallowRef } from '@vue/composition-api';
+import { computed, shallowRef } from 'vue-demi';
 
 export type UseTextFieldModelViewOptions<T> = {
 	modelParse(modelValue: unknown): T | null;

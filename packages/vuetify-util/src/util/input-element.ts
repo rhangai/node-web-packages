@@ -1,4 +1,4 @@
-import { computed, Ref } from '@vue/composition-api';
+import { computed, Ref } from 'vue-demi';
 
 export function useHtmlInputElement(inputElementRef: Ref<any>) {
 	const inputElementGetCursor = (element: HTMLInputElement) => element.selectionEnd ?? 0;

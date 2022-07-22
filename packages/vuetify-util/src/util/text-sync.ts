@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { Ref } from '@vue/composition-api';
+import { Ref } from 'vue-demi';
 import { useHtmlInputElement } from './input-element';
 
 export function useTextFieldSyncCursor(textFieldRef: Ref<any>, view: Ref<string | null>) {

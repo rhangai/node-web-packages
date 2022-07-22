@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { computed, ref, shallowRef, unref, watch } from '@vue/composition-api';
+import { computed, ref, shallowRef, unref, watch } from 'vue-demi';
 import IMask, { AnyMaskedOptions } from 'imask';
 
 export type MaskOptions = AnyMaskedOptions;
