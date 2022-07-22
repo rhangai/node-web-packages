@@ -1,4 +1,4 @@
-import { computed, isRef, Ref, unref } from '@vue/composition-api';
+import { computed, isRef, Ref, unref } from 'vue-demi';
 import { useFormState } from '../state';
 import { FormType } from '../types';
 

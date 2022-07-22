@@ -1,4 +1,4 @@
-import { computed, reactive, Ref, ref } from '@vue/composition-api';
+import { computed, reactive, Ref, ref } from 'vue-demi';
 import { FormStateContext, FormStatePropsType, provideFormState } from './state';
 import { FormDefinition, FormType } from './types';
 

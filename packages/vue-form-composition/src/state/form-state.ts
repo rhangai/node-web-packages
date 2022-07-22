@@ -1,4 +1,4 @@
-import { Ref, unref, computed, inject, provide, InjectionKey } from '@vue/composition-api';
+import { Ref, unref, computed, inject, provide, InjectionKey } from 'vue-demi';
 
 export type FormStateContext = {
 	readonly formStateReadonly: Readonly<Ref<boolean>> | boolean;
