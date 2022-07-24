@@ -4,6 +4,15 @@
   "description": "Framework agnostic notification for vue",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
+  "keywords": [
+    "vue",
+    "notification",
+    "confirmation",
+    "notify",
+    "confirm",
+    "helper",
+    "composition"
+  ],
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf lib",
