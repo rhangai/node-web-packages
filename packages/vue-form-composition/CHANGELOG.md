@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.2](https://github.com/rhangai/node-web-packages/compare/v0.4.1...v0.4.2) (2022-07-27)
+
+
+### Bug Fixes
+
+* FormDefinition fields may be null ([c0c8308](https://github.com/rhangai/node-web-packages/commit/c0c83086307d7b597a5308c2b99ea609fe52873f))
+* formSet now accepts a FormDefinition instead of the form itself ([0130723](https://github.com/rhangai/node-web-packages/commit/0130723392a629adf43e2e5892dba5ac4aec3f05))
+
+
+
+
+
 # [0.4.0](https://github.com/rhangai/node-web-packages/compare/v0.3.7...v0.4.0) (2022-07-22)
 
 **Note:** Version bump only for package @rhangai/vue-form-composition
