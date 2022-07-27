@@ -1,12 +1,12 @@
 // prettier-ignore
 type FormDefinitionValue<T> =
-	T extends ReadonlyArray<infer U> ? Array<Exclude<FormDefinitionValue<U>, null>> :
-	T extends Array<infer U> ? Array<Exclude<FormDefinitionValue<U>, null>> :
-	T extends Record<string, unknown> ? (T | null) :
+	T extends ReadonlyArray<infer U> ? Array<FormDefinitionValue<U>> :
+	T extends Array<infer U> ? Array<FormDefinitionValue<U>> :
+	T extends Record<string, unknown> ? Partial<FormDefinition<T>> :
 	T;
 
 export type FormDefinition<T extends Record<string, unknown>> = {
-	-readonly [K in keyof T]-?: FormDefinitionValue<T[K]>;
+	-readonly [K in keyof T]-?: FormDefinitionValue<T[K]> | null;
 };
 
 // prettier-ignore
