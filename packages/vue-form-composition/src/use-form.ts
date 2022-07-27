@@ -16,7 +16,7 @@ export type UseFormResult<T extends Record<string, unknown>> = FormStateContext 
 	/**
 	 * Set a value on the form
 	 */
-	formSet: <TInput = Partial<T>>(inputValue: TInput) => void;
+	formSet(inputValue: Partial<FormDefinition<T>> | null): void;
 	/**
 	 * Reset the form
 	 */
