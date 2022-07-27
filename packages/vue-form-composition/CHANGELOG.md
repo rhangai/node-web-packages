@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.3](https://github.com/rhangai/node-web-packages/compare/v0.4.2...v0.4.3) (2022-07-27)
+
+
+### Bug Fixes
+
+* useFormRules now accepts a ref for an undefined or null value ([14a8b6d](https://github.com/rhangai/node-web-packages/commit/14a8b6d2aef93c98198ae231726e0803a1603bdb))
+
+
+
+
+
 ## [0.4.2](https://github.com/rhangai/node-web-packages/compare/v0.4.1...v0.4.2) (2022-07-27)
 
 
