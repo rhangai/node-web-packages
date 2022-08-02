@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.6](https://github.com/rhangai/node-web-packages/compare/v0.4.5...v0.4.6) (2022-08-02)
+
+
+### Bug Fixes
+
+* PropType unknown ([6e56f22](https://github.com/rhangai/node-web-packages/commit/6e56f22a4d2fde355c635dfb7b3bfe4a1d965a1c))
+
+
+
+
+
 ## [0.4.5](https://github.com/rhangai/node-web-packages/compare/v0.4.4...v0.4.5) (2022-08-02)
 
 
