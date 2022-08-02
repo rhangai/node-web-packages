@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.5](https://github.com/rhangai/node-web-packages/compare/v0.4.4...v0.4.5) (2022-08-02)
+
+
+### Bug Fixes
+
+* vue-demi PropType ([8e397db](https://github.com/rhangai/node-web-packages/commit/8e397db6d1b6bc72e7d97e1ad237fe4a785eac86))
+
+
+
+
+
 ## [0.4.4](https://github.com/rhangai/node-web-packages/compare/v0.4.3...v0.4.4) (2022-08-02)
 
 
