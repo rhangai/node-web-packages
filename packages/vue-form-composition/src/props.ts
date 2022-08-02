@@ -8,7 +8,7 @@ export const FormProps = {
 export const FormModelProps = {
 	...FormStateProps,
 	value: {
-		type: Object as PropType<unknown>,
+		type: Object,
 		default: null,
-	},
+	} as unknown as PropType<unknown>,
 };

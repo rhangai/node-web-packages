@@ -1,5 +1,3 @@
-import { PropOptions } from 'vue-demi';
-
 export type FormStatePropsType = {
 	readonly readonly?: boolean | null;
 	readonly disabled?: boolean | null;
