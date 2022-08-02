@@ -1,3 +1,4 @@
+import { PropOptions } from 'vue-demi';
 import { FormStateProps } from './state/form-state-props';
 
 export const FormProps = {
@@ -9,5 +10,5 @@ export const FormModelProps = {
 	value: {
 		type: Object,
 		default: null,
-	},
+	} as PropOptions<unknown>,
 };
