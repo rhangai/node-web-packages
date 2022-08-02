@@ -1,6 +1,6 @@
 {
   "name": "@rhangai/vuetify-components",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "Vuetify utility",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -10,7 +10,7 @@
     "lint:fix": "eslint --ext vue,ts --fix src"
   },
   "dependencies": {
-    "@rhangai/vue-form-composition": "^0.4.3",
+    "@rhangai/vue-form-composition": "^0.4.4",
     "@rhangai/vuetify-util": "^0.4.0",
     "@rhangai/web-common": "^0.4.0",
     "imask": "^6.0.7",

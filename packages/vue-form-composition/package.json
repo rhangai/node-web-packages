@@ -1,6 +1,6 @@
 {
   "name": "@rhangai/vue-form-composition",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "Form controls using vue composition",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",

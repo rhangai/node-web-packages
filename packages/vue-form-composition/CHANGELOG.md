@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.4](https://github.com/rhangai/node-web-packages/compare/v0.4.3...v0.4.4) (2022-08-02)
+
+
+### Bug Fixes
+
+* FormProps and FormModelProps ([0367034](https://github.com/rhangai/node-web-packages/commit/03670349588fe032e7781582ecfba45f9b62e958))
+
+
+
+
+
 ## [0.4.3](https://github.com/rhangai/node-web-packages/compare/v0.4.2...v0.4.3) (2022-07-27)
 
 
