@@ -79,9 +79,9 @@ export function provideConfirmationHandlerArray<
 }
 
 /**
- * Get the notifications array from a sub component
+ * Inject the confirmation handler array if provided by a parent context
  */
-export function injectNotificationHandlerArray<
+export function injectConfirmationHandlerArray<
 	TConfirmation
 >(): ProvideConfirmationHandlerArrayResult<TConfirmation> {
 	const confirmations = inject(CONFIRMATION_ARRAY_KEY, null);

@@ -68,7 +68,7 @@ export function provideNotificationHandlerArray<
 }
 
 /**
- * Get the notifications array from a sub component
+ * Inject the notification handler array if provided by a parent context
  */
 export function injectNotificationHandlerArray<
 	TNotification
