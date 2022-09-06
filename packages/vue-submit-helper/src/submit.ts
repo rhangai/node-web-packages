@@ -45,10 +45,10 @@ export function useSubmitHelper<TArg = void, TResult = unknown>(
  */
 export function useSubmitHelperMultiple<TArg, TResult = unknown>(
 	request: (arg: TArg) => TResult | Promise<TResult>,
-	keyGetter: (arg: TArg) => string,
+	keyGetter: (arg: TArg) => string | number,
 	options: UseSubmitHelperOptions<TArg, TResult> = {}
 ): UseSubmitHelperMultipleResult<TArg, TResult> {
-	const submittingMap = ref<Record<string, boolean>>({});
+	const submittingMap = ref<Record<string | number, boolean>>({});
 	const submittingAny = computed(() => {
 		const values = Object.values(submittingMap.value);
 		if (values.length <= 0) return false;
