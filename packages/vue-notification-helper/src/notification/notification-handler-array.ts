@@ -1,7 +1,10 @@
-import { ref, Ref, reactive, nextTick, UnwrapRef } from 'vue-demi';
+import { ref, Ref, reactive, nextTick, UnwrapRef, provide, InjectionKey, inject } from 'vue-demi';
 import { TIMEOUT_DELAY } from '../constants';
 import { provideNotificationHandler } from './notification-handler';
 
+const NOTIFICATION_ARRAY_KEY: InjectionKey<Ref<NotificationHandlerArrayItem<unknown>[]>> = Symbol(
+	'@rhangai/vue-notification-helper/notification-handler-array'
+);
 /**
  * Type for the notification handler
  */
@@ -58,7 +61,21 @@ export function provideNotificationHandlerArray<
 		});
 	};
 	provideNotificationHandler<TNotification>(notify);
+	provide(NOTIFICATION_ARRAY_KEY, notifications);
 	return {
 		notifications,
+	};
+}
+
+/**
+ * Get the notifications array from a sub component
+ */
+export function injectNotificationHandlerArray<
+	TNotification
+>(): ProvideNotificationHandlerArrayResult<TNotification> {
+	const notifications = inject(NOTIFICATION_ARRAY_KEY, null);
+	if (!notifications) throw new Error(`provideNotificationHandlerArray was not called`);
+	return {
+		notifications: notifications as Ref<NotificationHandlerArrayItem<TNotification>[]>,
 	};
 }

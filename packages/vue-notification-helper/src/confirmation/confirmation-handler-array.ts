@@ -1,6 +1,10 @@
-import { ref, Ref, reactive, nextTick, UnwrapRef } from 'vue-demi';
+import { ref, Ref, reactive, nextTick, UnwrapRef, InjectionKey, inject, provide } from 'vue-demi';
 import { TIMEOUT_DELAY } from '../constants';
 import { provideConfirmationHandler } from './confirmation-handler';
+
+const CONFIRMATION_ARRAY_KEY: InjectionKey<Ref<ConfirmationHandlerArrayItem<unknown>[]>> = Symbol(
+	'@rhangai/vue-notification-helper/confirmation-handler-array'
+);
 
 /**
  * Type for the confirmation handler
@@ -68,7 +72,21 @@ export function provideConfirmationHandlerArray<
 		});
 	};
 	provideConfirmationHandler<TConfirmation>(confirm);
+	provide(CONFIRMATION_ARRAY_KEY, confirmations);
 	return {
 		confirmations,
+	};
+}
+
+/**
+ * Get the notifications array from a sub component
+ */
+export function injectNotificationHandlerArray<
+	TConfirmation
+>(): ProvideConfirmationHandlerArrayResult<TConfirmation> {
+	const confirmations = inject(CONFIRMATION_ARRAY_KEY, null);
+	if (!confirmations) throw new Error(`provideConfirmationHandlerArray was not called`);
+	return {
+		confirmations: confirmations as Ref<ConfirmationHandlerArrayItem<TConfirmation>[]>,
 	};
 }
