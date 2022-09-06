@@ -20,6 +20,7 @@ export type UseSubmitHelperMultipleResult<TArg, TResult> = {
 	submittingAny: ComputedRef<boolean>;
 	submittingMap: ComputedRef<Readonly<Record<string, boolean>>>;
 	isSubmitting(args: TArg): boolean;
+	isSubmitDisabled(args: TArg): boolean;
 };
 
 /**
@@ -97,10 +98,16 @@ export function useSubmitHelperMultiple<TArg, TResult = unknown>(
 		return !!submittingMap.value[key];
 	};
 
+	const isSubmitDisabled = (arg: TArg) => {
+		const key = keyGetter(arg);
+		return submittingAny.value && !submittingMap.value[key];
+	};
+
 	return {
 		submit,
 		submittingAny,
 		submittingMap,
 		isSubmitting,
+		isSubmitDisabled,
 	};
 }
