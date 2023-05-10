@@ -5,7 +5,7 @@
   "main": "index.js",
   "license": "MIT",
   "peerDependencies": {
-    "@rhangai/eslint-config-typescript": "^0.4.16",
+    "@rhangai/eslint-config-typescript": "^0.9",
     "@vue/eslint-config-prettier": "^7",
     "@vue/eslint-config-typescript": "^11",
     "eslint": "^7.27.0",
@@ -13,7 +13,7 @@
     "prettier": "^2.3.0"
   },
   "devDependencies": {
-    "@rhangai/eslint-config-typescript": "^0.4.16",
+    "@rhangai/eslint-config-typescript": "^0.9",
     "@typescript-eslint/eslint-plugin": "^4.26.1",
     "@typescript-eslint/parser": "^4.26.1",
     "@vue/eslint-config-prettier": "^7",

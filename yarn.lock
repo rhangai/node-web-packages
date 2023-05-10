@@ -130,10 +130,10 @@
   dependencies:
     pug-lexer "^5.0.0"
 
-"@rhangai/eslint-config-typescript@^0.4.16":
-  version "0.4.16"
-  resolved "https://registry.yarnpkg.com/@rhangai/eslint-config-typescript/-/eslint-config-typescript-0.4.16.tgz#5fecde0471aa817586e515e5cc2139198e41402d"
-  integrity sha512-2/fX/QeN262ch+8YpVvtFJ2yMXBIoO82g83U3/tzb2wfAhnVUlDc85LTRW0iViRObfxig2bVOpl2Y6DE5/lDMg==
+"@rhangai/eslint-config-typescript@^0.9":
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/@rhangai/eslint-config-typescript/-/eslint-config-typescript-0.9.0.tgz#939f92a8c37f31eb4dec68d60059151e8cbe9538"
+  integrity sha512-XqTO1cJ0T6gI5+lzjgOiG52sW5fgmA0sEg3di3kVawvWA9BwO6szvIly/0uV/o7AmhTUnKKueBLj+FrkGTghAw==
 
 "@types/anymatch@*":
   version "3.0.0"
