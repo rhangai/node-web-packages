@@ -2,9 +2,8 @@ module.exports = {
 	extends: [
 		'plugin:vue/essential',
 		'@rhangai/typescript',
-		'@vue/typescript/recommended',
-		'@vue/prettier',
-		'@vue/prettier/@typescript-eslint',
+		'@vue/eslint-config-typescript/recommended',
+		'@vue/eslint-config-prettier',
 	],
 	rules: {
 		'import/order': [
