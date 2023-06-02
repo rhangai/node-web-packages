@@ -1,32 +1,21 @@
-import { computed, reactive, Ref, ref } from 'vue-demi';
+import { computed, Ref, ref } from 'vue-demi';
 import { FormStateContext, FormStatePropsType, provideFormState } from './state';
-import { FormDefinition, FormType } from './types';
+import { FormDefinition } from './types';
+import { useFormValue, UseFormValueOptions, UseFormValueResult } from './use-form-value';
 
-export type UseFormOptions<T extends Record<string, unknown>> = {
+export type UseFormOptions<T extends Record<string, unknown>> = UseFormValueOptions<T> & {
 	props: FormStatePropsType;
 	form: FormDefinition<T>;
-	onValue?: (value: T) => void;
 };
 
-export type UseFormResult<T extends Record<string, unknown>> = FormStateContext & {
-	/**
-	 * The form object, only allows
-	 */
-	form: Ref<FormType<T>>;
-	/**
-	 * Set a value on the form
-	 */
-	formSet(inputValue: Partial<FormDefinition<T>> | null): void;
-	/**
-	 * Reset the form
-	 */
-	formReset: () => void;
-	/**
-	 * Use to disable the form when submitting.
-	 * Calling this function multiple types will disable the form if ANY of the refs are true.
-	 */
-	formUseSubmitting: (submitting: Ref<boolean>) => () => void;
-};
+export type UseFormResult<T extends Record<string, unknown>> = FormStateContext &
+	UseFormValueResult<T> & {
+		/**
+		 * Use to disable the form when submitting.
+		 * Calling this function multiple types will disable the form if ANY of the refs are true.
+		 */
+		formUseSubmitting: (submitting: Ref<boolean>) => () => void;
+	};
 
 /**
  * Create a form to use
@@ -39,42 +28,7 @@ export function useForm<T extends Record<string, unknown>>(
 	const { formStateReadonly, formStateDisabled, formStateShouldValidate, formUseSubmitting } =
 		useFormStateSubmitting(options.props);
 
-	const formValue = reactive(clone(options.form)) as FormType<T>;
-	if ('seal' in Object) Object.seal(formValue);
-
-	const formSet = (inputValueParam: unknown | null) => {
-		if (inputValueParam === formValue) return;
-
-		const newValue = clone(options.form);
-		if (!inputValueParam || typeof inputValueParam !== 'object') {
-			Object.assign(formValue, newValue);
-			options.onValue?.(formValue as T);
-			return;
-		}
-
-		const inputValue = inputValueParam as Record<string, unknown>;
-		for (const key in inputValue) {
-			if (inputValue[key] === undefined) continue;
-			if (key in formValue) {
-				let itemValue = inputValue[key];
-				if (Array.isArray(itemValue)) {
-					itemValue = itemValue.slice(0);
-				}
-				(newValue as Record<string, unknown>)[key] = itemValue;
-			}
-		}
-		Object.assign(formValue, newValue);
-		options.onValue?.(formValue as T);
-	};
-
-	const form = computed<FormType<T>>({
-		get() {
-			return formValue;
-		},
-		set(value: unknown | null) {
-			formSet(value);
-		},
-	});
+	const { form, formSet, formReset } = useFormValue(options.form, options);
 
 	return {
 		form,
@@ -82,7 +36,7 @@ export function useForm<T extends Record<string, unknown>>(
 		formStateDisabled,
 		formStateShouldValidate,
 		formSet,
-		formReset: () => formSet(null),
+		formReset,
 		formUseSubmitting,
 	};
 }
@@ -110,8 +64,4 @@ function useFormStateSubmitting(props: FormStatePropsType) {
 		...formState,
 		formUseSubmitting,
 	};
-}
-
-function clone<T>(obj: T): T {
-	return JSON.parse(JSON.stringify(obj));
 }
