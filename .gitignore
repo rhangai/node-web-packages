@@ -4,3 +4,9 @@ node_modules
 # Build
 packages/*/lib
 /coverage
+
+# Yarn
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+.pnp*

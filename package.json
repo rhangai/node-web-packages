@@ -1,5 +1,6 @@
 {
   "version": "0.1.0",
+  "packageManager": "yarn@3.6.0",
   "name": "root",
   "private": true,
   "workspaces": [
