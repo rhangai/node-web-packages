@@ -10,6 +10,12 @@ module.exports = {
 		'@vue/eslint-config-prettier',
 	],
 	rules: {
+		'vue/valid-v-slot': [
+			'error',
+			{
+				allowModifiers: true,
+			},
+		],
 		'import/order': [
 			'error',
 			{
