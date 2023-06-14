@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.1](https://github.com/rhangai/node-web-packages/compare/@rhangai/eslint-config-vue-typescript@0.5.0...@rhangai/eslint-config-vue-typescript@0.5.1) (2023-06-14)
+
+**Note:** Version bump only for package @rhangai/eslint-config-vue-typescript
+
 # 0.5.0 (2023-06-14)
 
 ## 0.4.11 (2023-05-10)
