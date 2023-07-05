@@ -4,10 +4,9 @@ module.exports = {
 		parser: '@typescript-eslint/parser',
 	},
 	extends: [
-		'plugin:vue/essential',
+		'plugin:eslint-plugin-vue/strongly-recommended',
 		'@rhangai/typescript',
 		'@vue/eslint-config-typescript/recommended',
-		'@vue/eslint-config-prettier',
 	],
 	rules: {
 		'vue/valid-v-slot': [
