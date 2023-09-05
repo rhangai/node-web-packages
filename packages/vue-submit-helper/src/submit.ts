@@ -1,4 +1,4 @@
-import { computed, ref, set, del, ComputedRef } from 'vue-demi';
+import { computed, ref, set, del, Ref } from 'vue-demi';
 import { submitValidate, VueSubmitValidateItem } from './validate';
 
 export type UseSubmitHelperOptions<TArg, TResult> = {
@@ -9,16 +9,20 @@ export type UseSubmitHelperOptions<TArg, TResult> = {
 	onValidateError?: (error: unknown, arg: TArg) => void | Promise<void>;
 };
 
+type Fn<TArg, TResult> = TArg extends void | never ? () => TResult : (arg: TArg) => TResult;
+
 export type UseSubmitHelperResult<TArg, TResult> = {
-	submit(arg: TArg): Promise<TResult>;
-	submitting: ComputedRef<boolean>;
+	submit: Fn<TArg, void>;
+	submitAsync: Fn<TArg, Promise<TResult>>;
+	submitting: Readonly<Ref<boolean>>;
 };
 
 // prettier-ignore
 export type UseSubmitHelperMultipleResult<TArg, TResult> = {
-	submit(arg: TArg): Promise<TResult>;
-	submittingAny: ComputedRef<boolean>;
-	submittingMap: ComputedRef<Readonly<Record<string, boolean>>>;
+	submit: Fn<TArg, void>;
+	submitAsync: Fn<TArg, Promise<TResult>>;
+	submittingAny: Readonly<Ref<boolean>>;
+	submittingMap: Readonly<Ref<Readonly<Record<string, boolean>>>>;
 	isSubmitting(args: TArg): boolean;
 	isSubmitDisabled(args: TArg): boolean;
 };
@@ -30,11 +34,12 @@ export function useSubmitHelper<TArg = void, TResult = unknown>(
 	request: (arg: TArg) => TResult | Promise<TResult>,
 	options?: UseSubmitHelperOptions<TArg, TResult>
 ): UseSubmitHelperResult<TArg, TResult> {
-	const { submit, submittingAny } = useSubmitHelperMultiple(request, () => '', {
+	const { submit, submitAsync, submittingAny } = useSubmitHelperMultiple(request, () => '', {
 		...options,
 	});
 	return {
 		submit,
+		submitAsync,
 		submitting: submittingAny,
 	};
 }
@@ -81,7 +86,7 @@ export function useSubmitHelperMultiple<TArg, TResult = unknown>(
 			return { error };
 		}
 	};
-	const submit = async (arg: TArg): Promise<TResult> => {
+	const submitAsync = async (arg: TArg): Promise<TResult> => {
 		const key = keyGetter(arg);
 		if (submittingMap.value[key]) throw new Error(`Already submitting`);
 		set(submittingMap.value, key, true);
@@ -92,6 +97,9 @@ export function useSubmitHelperMultiple<TArg, TResult = unknown>(
 		} finally {
 			del(submittingMap.value, key);
 		}
+	};
+	const submit = (arg: TArg): void => {
+		void submitAsync(arg);
 	};
 	const isSubmitting = (arg: TArg) => {
 		const key = keyGetter(arg);
@@ -104,7 +112,8 @@ export function useSubmitHelperMultiple<TArg, TResult = unknown>(
 	};
 
 	return {
-		submit,
+		submit: submit as Fn<TArg, void>,
+		submitAsync: submitAsync as Fn<TArg, Promise<TResult>>,
 		submittingAny,
 		submittingMap,
 		isSubmitting,
