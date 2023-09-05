@@ -6,7 +6,7 @@
   "typings": "lib/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "clean": "rm -rf lib",
+    "clean": "rimraf -rf lib",
     "prebuild": "yarn run clean",
     "build": "tsc -p tsconfig.build.json",
     "lint": "eslint src",
@@ -14,7 +14,9 @@
     "preversion": "yarn run build"
   },
   "devDependencies": {
-    "rimraf": "^3.0.2",
+    "eslint": "*",
+    "rimraf": "*",
+    "typescript": "*",
     "vue-demi": "^0.12.4"
   },
   "peerDependencies": {
