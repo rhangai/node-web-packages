@@ -19,13 +19,14 @@ export type VueSubmitValidateResult = {
 };
 
 export async function submitValidate(
-	rule: VueSubmitValidateItem
+	rule: VueSubmitValidateItem | null | undefined
 ): Promise<VueSubmitValidateResult> {
-	if (rule == null)
+	if (rule == null) {
 		return {
 			[VALIDATE_SYMBOL]: true,
 			valid: true,
 		};
+	}
 	if (Array.isArray(rule)) {
 		let isValid = true;
 		const errors: Error[] = [];
