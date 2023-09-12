@@ -12,14 +12,14 @@ export type UseSubmitHelperOptions<TArg, TResult> = {
 type Fn<TArg, TResult> = TArg extends void | never ? () => TResult : (arg: TArg) => TResult;
 
 export type UseSubmitHelperResult<TArg, TResult> = {
-	submit: Fn<TArg, void>;
+	handleSubmit: Fn<TArg, void>;
 	submitAsync: Fn<TArg, Promise<TResult>>;
 	submitting: Readonly<Ref<boolean>>;
 };
 
 // prettier-ignore
 export type UseSubmitHelperMultipleResult<TArg, TResult> = {
-	submit: Fn<TArg, void>;
+	handleSubmit: Fn<TArg, void>;
 	submitAsync: Fn<TArg, Promise<TResult>>;
 	submittingAny: Readonly<Ref<boolean>>;
 	submittingMap: Readonly<Ref<Readonly<Record<string, boolean>>>>;
@@ -34,11 +34,15 @@ export function useSubmitHelper<TArg = void, TResult = unknown>(
 	request: (arg: TArg) => TResult | Promise<TResult>,
 	options?: UseSubmitHelperOptions<TArg, TResult>
 ): UseSubmitHelperResult<TArg, TResult> {
-	const { submit, submitAsync, submittingAny } = useSubmitHelperMultiple(request, () => '', {
-		...options,
-	});
+	const { handleSubmit, submitAsync, submittingAny } = useSubmitHelperMultiple(
+		request,
+		() => '',
+		{
+			...options,
+		}
+	);
 	return {
-		submit,
+		handleSubmit,
 		submitAsync,
 		submitting: submittingAny,
 	};
@@ -98,7 +102,7 @@ export function useSubmitHelperMultiple<TArg, TResult = unknown>(
 			del(submittingMap.value, key);
 		}
 	};
-	const submit = (arg: TArg): void => {
+	const handleSubmit = (arg: TArg): void => {
 		void submitAsync(arg);
 	};
 	const isSubmitting = (arg: TArg) => {
@@ -112,7 +116,7 @@ export function useSubmitHelperMultiple<TArg, TResult = unknown>(
 	};
 
 	return {
-		submit: submit as Fn<TArg, void>,
+		handleSubmit: handleSubmit as Fn<TArg, void>,
 		submitAsync: submitAsync as Fn<TArg, Promise<TResult>>,
 		submittingAny,
 		submittingMap,
