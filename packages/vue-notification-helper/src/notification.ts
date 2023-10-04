@@ -7,6 +7,7 @@ import {
 	InjectionKey,
 	inject,
 	isVue2,
+	type Plugin,
 } from 'vue-demi';
 import { TIMEOUT_DELAY } from './constants';
 
@@ -17,8 +18,7 @@ export type NotificationItem<TNotification> = {
 	resolve: () => void;
 };
 
-type NotificationHelper<TNotification> = {
-	install(app: unknown): void;
+type NotificationHelper<TNotification> = Plugin & {
 	provideNotifications(): void;
 	useNotificationsHandlers(): Ref<NotificationItem<TNotification>[]>;
 	useNotification(): {

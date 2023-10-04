@@ -7,6 +7,7 @@ import {
 	ref,
 	shallowReactive,
 	isVue2,
+	type Plugin,
 } from 'vue-demi';
 import { TIMEOUT_DELAY } from './constants';
 
@@ -21,8 +22,7 @@ export type ConfirmationItem<TConfirmation> = {
 	reject: () => void;
 };
 
-type ConfirmationHelper<TConfirmation> = {
-	install(app: unknown): void;
+type ConfirmationHelper<TConfirmation> = Plugin & {
 	provideConfirmations(): void;
 	useConfirmationsHandlers(): Ref<ConfirmationItem<TConfirmation>[]>;
 	useConfirmation(): {
