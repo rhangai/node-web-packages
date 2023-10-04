@@ -10,10 +10,13 @@ yarn add @rhangai/vue-notification-helper
 
 ## Basic Usage
 
-Create a `notification.ts` composable file
+Create a composable file. Ex: `notification.ts`
 
 ```ts
-import { useNotificationHelper, useConfirmationHelper } from '@rhangai/vue-notification-helper';
+import {
+	createNotificationHelper,
+	createConfirmationHelper,
+} from '@rhangai/vue-notification-helper';
 
 export type Notification = {
 	title?: string;
@@ -25,70 +28,54 @@ export type Confirmation = {
 	message: string;
 };
 
-export function useNotification() {
-	return useNotificationHelper<Notification>();
-}
+export const { useNotification, useNotificationsHandlers } =
+	createNotificationHelper<Notification>();
 
-export function useConfirmation() {
-	return useConfirmationHelper<Confirmation>();
-}
+export const { useConfirmation, useConfirmationsHandlers } =
+	createConfirmationHelper<Confirmation>();
 ```
 
-And a `notification-provider.vue`
+## Handle the notifications
 
 ```vue
 <script lang="ts" setup>
-import {
-	provideNotificationHelper,
-	provideConfirmationHelper,
-} from '@rhangai/vue-notification-helper';
-import type { Confirmation, Notification } from './my/notification';
+import { useNotificationsHandlers, useConfirmationsHandlers } from './my/notification';
 
-provideNotificationHelper((notification: Notification) => {
-	window.alert(confirmation.message);
-});
-provideConfirmationHelper((confirmation: Confirmation) => {
-	return window.confirm(confirmation.message);
-});
-</script>
-<template>
-	<div><slot /></div>
-</template>
-```
+/*
+ * Array of notification handlers
+ * Each item has a
+ *   - id: string
+ *   - resolve(): void // To be called when
+ *   - confirmation
+ */
+const notifications = useNotificationsHandlers();
 
-## Better approach
-
-```vue
-<script lang="ts" setup>
-import {
-	provideNotificationHelperArray,
-	provideConfirmationHelperArray,
-} from '@rhangai/vue-notification-helper';
-import type { Confirmation, Notification } from './my/notification';
-
-const { notifications } = provideNotificationHelperArray((notification: Notification) => {
-	window.alert(confirmation.message);
-});
-const { confirmations } = provideConfirmationHelperArray((confirmation: Confirmation) => {
-	return window.confirm(confirmation.message);
-});
+/*
+ * Array of confirmation handlers
+ * Each item has a
+ *   - id: string
+ *   - confirm()
+ *   - reject()
+ *   - confirmation
+ */
+const confirmations = useConfirmationsHandlers();
 </script>
 <template>
 	<div>
 		<div class="notification-container">
-			<div v-for="notification in notifications" :key="notification.id">
+			<div v-for="{ notification, id, resolve } in notifications" :key="id">
 				<p>{{ notification.message }}</p>
-				<button @click="notification.resolve()">Ok</button>
+				<button @click="resolve()">Ok</button>
 			</div>
 		</div>
 		<div class="confirmations-container">
-			<div v-for="confirmation in confirmations" :key="confirmation.id">
+			<div v-for="{ confirmation, id, confirm, reject } in confirmations" :key="id">
 				<p>{{ confirmation.message }}</p>
-				<button @click="confirmation.confirm()">Yes</button>
-				<button @click="confirmation.reject()">No</button>
+				<button @click="confirm()">Yes</button>
+				<button @click="reject()">No</button>
 			</div>
 		</div>
-		<slot />
+		<slot></slot>
 	</div>
 </template>
 ```
