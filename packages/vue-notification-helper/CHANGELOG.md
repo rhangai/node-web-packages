@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.1](https://github.com/rhangai/node-web-packages/compare/@rhangai/vue-notification-helper@0.5.0...@rhangai/vue-notification-helper@0.5.1) (2023-10-04)
+
+**Note:** Version bump only for package @rhangai/vue-notification-helper
+
+
+
+
+
 # 0.5.0 (2023-10-04)
 
 
