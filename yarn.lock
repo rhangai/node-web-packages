@@ -311,6 +311,7 @@ __metadata:
   resolution: "@rhangai/vue-notification-helper@workspace:packages/vue-notification-helper"
   dependencies:
     rimraf: ^3.0.2
+    typescript: "*"
     vue: ^2.6.14
     vue-demi: ^0.13
   peerDependencies:
