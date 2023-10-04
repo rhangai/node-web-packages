@@ -7,7 +7,6 @@ import {
 	ref,
 	shallowReactive,
 	isVue2,
-	type Plugin,
 } from 'vue-demi';
 import { TIMEOUT_DELAY } from './constants';
 
@@ -23,7 +22,7 @@ export type ConfirmationItem<TConfirmation> = {
 };
 
 type ConfirmationHelper<TConfirmation> = {
-	confirmationsPlugin: Plugin;
+	install(app: unknown): void;
 	provideConfirmations(): void;
 	useConfirmationsHandlers(): Ref<ConfirmationItem<TConfirmation>[]>;
 	useConfirmation(): {
@@ -87,14 +86,12 @@ export function createConfirmationHelper<TConfirmation>(): ConfirmationHelper<TC
 		};
 	}
 	return {
-		confirmationsPlugin: {
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			install(app: any) {
-				if (isVue2) throw new Error(`Using vue2. Please use provideConfirmations instead`);
-				if ('provide' in app) {
-					app.provide(CONFIRMATIONS_KEY, createProvider());
-				}
-			},
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		install(app: any) {
+			if (isVue2) throw new Error(`Using vue2. Please use provideConfirmations instead`);
+			if ('provide' in app) {
+				app.provide(CONFIRMATIONS_KEY, createProvider());
+			}
 		},
 		provideConfirmations() {
 			if (!isVue2) throw new Error(`Not using vue2. Please install the plugin instead`);

@@ -7,7 +7,6 @@ import {
 	InjectionKey,
 	inject,
 	isVue2,
-	type Plugin,
 } from 'vue-demi';
 import { TIMEOUT_DELAY } from './constants';
 
@@ -19,7 +18,7 @@ export type NotificationItem<TNotification> = {
 };
 
 type NotificationHelper<TNotification> = {
-	notificationsPlugin: Plugin;
+	install(app: unknown): void;
 	provideNotifications(): void;
 	useNotificationsHandlers(): Ref<NotificationItem<TNotification>[]>;
 	useNotification(): {
@@ -76,13 +75,11 @@ export function createNotificationHelper<TNotification>(): NotificationHelper<TN
 	}
 
 	return {
-		notificationsPlugin: {
-			install(app: any) {
-				if (isVue2) throw new Error(`Using vue2. Please use provideNotifications instead`);
-				if ('provide' in app) {
-					app.provide(NOTIFICATIONS_KEY, createProvider());
-				}
-			},
+		install(app: any) {
+			if (isVue2) throw new Error(`Using vue2. Please use provideNotifications instead`);
+			if ('provide' in app) {
+				app.provide(NOTIFICATIONS_KEY, createProvider());
+			}
 		},
 		provideNotifications() {
 			if (!isVue2) throw new Error(`Not using vue2. Please use the plugin instead`);
