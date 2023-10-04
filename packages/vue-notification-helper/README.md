@@ -28,10 +28,10 @@ export type Confirmation = {
 	message: string;
 };
 
-export const { useNotification, useNotificationsHandlers } =
+export const { useNotification, useNotificationsHandlers, notificationsPlugin } =
 	createNotificationHelper<Notification>();
 
-export const { useConfirmation, useConfirmationsHandlers } =
+export const { useConfirmation, useConfirmationsHandlers, confirmationsPlugin } =
 	createConfirmationHelper<Confirmation>();
 ```
 
