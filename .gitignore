@@ -4,6 +4,8 @@ node_modules
 # Build
 packages/*/lib
 /coverage
+dist/
+package.tgz
 
 # Yarn
 .yarn/*

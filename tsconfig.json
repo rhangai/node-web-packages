@@ -1,16 +1,15 @@
 {
 	"compilerOptions": {
-		"target": "es2018",
-		"module": "commonjs",
-		"moduleResolution": "node",
+		"target": "es2022",
+		"module": "esnext",
+		"moduleResolution": "bundler",
 		"lib": ["esnext", "esnext.asynciterable", "dom"],
-		"strict": true,
 		"esModuleInterop": true,
-		"sourceMap": true,
-		"declaration": true,
+		"strict": true,
+		"noUncheckedIndexedAccess": true,
+		"experimentalDecorators": true,
 		"skipLibCheck": true,
-		"baseUrl": ".",
-		"outDir": "lib"
-	},
-	"exclude": ["**/lib"]
+		"verbatimModuleSyntax": true,
+		"paths": {}
+	}
 }

@@ -1,26 +1,13 @@
 {
-  "version": "0.1.0",
-  "packageManager": "yarn@3.6.0",
-  "name": "root",
-  "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
+  "packageManager": "yarn@4.1.1",
+  "type": "module",
   "devDependencies": {
-    "@prettier/plugin-pug": "^2.5.1",
-    "@typescript-eslint/eslint-plugin": "^5.59",
-    "@vue/composition-api": "^1.7.1",
-    "eslint": "^8",
-    "eslint-plugin-import": "^2.27",
-    "eslint-plugin-prettier": "^4.2",
-    "eslint-plugin-vue": "^9.14.1",
-    "prettier": "^2.8.8",
-    "rimraf": "^5.0.1",
-    "sass": "^1.63.4",
-    "typescript": "~5.0"
+    "eslint": "^9.1.1",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.10"
   },
-  "resolutions": {
-    "eslint": "^8",
-    "typescript": "~5.0"
-  }
+  "workspaces": [
+    "packages/eslint-config-vue-typescript"
+  ]
 }
