@@ -14,7 +14,7 @@
     "packages/*"
   ],
   "scripts": {
-    "release": "yarn workspaces foreach -A run clean && yarn workspaces foreach -A run build && yarn changeset",
+    "release": "yarn workspaces foreach -A run clean && yarn workspaces foreach -A run typecheck && yarn workspaces foreach -A run build && yarn changeset",
     "build:all": "yarn workspaces foreach -A run build"
   }
 }

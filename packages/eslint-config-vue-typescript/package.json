@@ -1,6 +1,6 @@
 {
   "name": "@rhangai/eslint-config-vue-typescript",
-  "version": "0.7.0",
+  "version": "1.0.0",
   "description": "Eslint config for vue-typescript projects",
   "publishConfig": {
     "access": "public"
@@ -32,13 +32,14 @@
   },
   "devDependencies": {
     "eslint": "*",
-    "tsup": "*"
+    "tsup": "*",
+    "typescript": "*"
   },
   "scripts": {
     "clean": "rm -rf dist",
     "build": "yarn build:ts && yarn build:types",
     "build:ts": "tsup-node --format esm,cjs",
     "build:types": "tsup-node --dts-only",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc -p tsconfig.lib.json --noEmit"
   }
 }

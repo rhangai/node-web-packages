@@ -1,6 +1,6 @@
 {
   "name": "@rhangai/vue-notification-helper",
-  "version": "0.5.2",
+  "version": "1.0.0",
   "description": "Framework agnostic notification for vue",
   "publishConfig": {
     "access": "public"
@@ -34,6 +34,7 @@
   "devDependencies": {
     "eslint": "*",
     "tsup": "*",
+    "typescript": "*",
     "vue": "*"
   },
   "peerDependencies": {
@@ -44,6 +45,6 @@
     "build": "yarn build:ts && yarn build:types",
     "build:ts": "tsup-node --format esm,cjs",
     "build:types": "tsup-node --dts-only",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc -p tsconfig.lib.json --noEmit"
   }
 }
