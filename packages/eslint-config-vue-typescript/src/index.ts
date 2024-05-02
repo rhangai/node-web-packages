@@ -1,4 +1,8 @@
-import configs, { type ConfigOptions, type EslintConfig, type EslintConfigRules } from '@rhangai/eslint-config-typescript';
+import configs, {
+	type ConfigOptions,
+	type EslintConfig,
+	type EslintConfigRules,
+} from '@rhangai/eslint-config-typescript';
 // @ts-expect-error Types are not defined
 import pluginVue from 'eslint-plugin-vue';
 // @ts-expect-error Types are not defined
@@ -17,7 +21,7 @@ const RULES = {
 			},
 		],
 	},
-	vueFiles: {
+	vueOnlyFiles: {
 		'@typescript-eslint/prefer-function-type': 'off',
 		'no-useless-assignment': 'off',
 	},
@@ -45,7 +49,7 @@ const RULES = {
 	},
 } satisfies Record<string, EslintConfigRules>;
 
- function createConfig(options: VueConfigOptions): EslintConfig[] {
+function createConfig(options: VueConfigOptions): EslintConfig[] {
 	return [
 		...configs.ts({
 			...options,
@@ -71,7 +75,7 @@ const RULES = {
 			name: '@rhangai/esling-config-vue-typescript/vue-only',
 			files: ['**/*.vue'],
 			rules: {
-				...RULES.vueFiles,
+				...RULES.vueOnlyFiles,
 			},
 		},
 		{
