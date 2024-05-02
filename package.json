@@ -2,6 +2,7 @@
   "packageManager": "yarn@4.1.1",
   "type": "module",
   "devDependencies": {
+    "@changesets/cli": "^2.27.1",
     "eslint": "^9.1.1",
     "prettier": "^3.2.5",
     "tsup": "^8.0.2",
@@ -13,6 +14,7 @@
     "packages/*"
   ],
   "scripts": {
+    "release": "yarn workspaces foreach -A run clean && yarn workspaces foreach -A run build && yarn changeset",
     "build:all": "yarn workspaces foreach -A run build"
   }
 }
