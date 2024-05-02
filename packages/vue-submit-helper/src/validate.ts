@@ -1,4 +1,4 @@
-import { isRef, Ref } from 'vue-demi';
+import { isRef, type Ref } from 'vue';
 
 type ValidateLikeObject = { validate(): VueSubmitValidateItem | Promise<VueSubmitValidateItem> };
 
@@ -8,7 +8,7 @@ export type VueSubmitValidateItem =
 	| boolean
 	| (() => VueSubmitValidateItem | Promise<VueSubmitValidateItem>)
 	| Ref<VueSubmitValidateItem>
-	| Array<VueSubmitValidateItem>
+	| VueSubmitValidateItem[]
 	| VueSubmitValidateResult
 	| ValidateLikeObject;
 
@@ -52,7 +52,7 @@ export async function submitValidate(
 		return submitValidate(await rule());
 	} else if (typeof rule === 'object') {
 		if (VALIDATE_SYMBOL in rule) {
-			return rule as VueSubmitValidateResult;
+			return rule;
 		}
 		if ('validate' in rule) {
 			return submitValidate(await rule.validate());
@@ -64,7 +64,7 @@ export async function submitValidate(
 	}
 	return {
 		[VALIDATE_SYMBOL]: true,
-		valid: rule !== false,
+		valid: rule,
 	};
 }
 
@@ -76,7 +76,11 @@ export async function submitValidate(
  * If the error array has more than 1 item, return a new AggregateError
  */
 function createError(errors: Error[]): Error | undefined {
-	if (errors.length <= 0) return undefined;
-	if (errors.length === 1) return errors[0];
+	if (errors.length <= 0) {
+		return undefined;
+	}
+	if (errors.length === 1) {
+		return errors[0];
+	}
 	return new AggregateError(errors);
 }

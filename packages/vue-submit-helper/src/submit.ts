@@ -1,5 +1,5 @@
-import { computed, ref, set, del, Ref } from 'vue-demi';
-import { submitValidate, VueSubmitValidateItem } from './validate';
+import { computed, ref, type Ref } from 'vue';
+import { submitValidate, type VueSubmitValidateItem } from './validate';
 
 export type UseSubmitHelperOptions<TArg, TResult> = {
 	validate?: VueSubmitValidateItem;
@@ -9,6 +9,7 @@ export type UseSubmitHelperOptions<TArg, TResult> = {
 	onValidateError?: (error: unknown, arg: TArg) => void | Promise<void>;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
 type Fn<TArg, TResult> = TArg extends void | never ? () => TResult : (arg: TArg) => TResult;
 
 export type UseSubmitHelperResult<TArg, TResult> = {
@@ -60,8 +61,10 @@ export function useSubmitHelperMultiple<TArg, TResult = unknown>(
 	const submittingMap = ref<Record<string | number, boolean>>({});
 	const submittingAny = computed(() => {
 		const values = Object.values(submittingMap.value);
-		if (values.length <= 0) return false;
-		return values.findIndex((c) => c === true) >= 0;
+		if (values.length <= 0) {
+			return false;
+		}
+		return values.findIndex((c) => c) >= 0;
 	});
 	const doSubmit = async (arg: TArg): Promise<{ result: TResult } | { error: unknown }> => {
 		try {
@@ -77,7 +80,9 @@ export function useSubmitHelperMultiple<TArg, TResult = unknown>(
 
 			if (options.prepare) {
 				const prepareResult = await options.prepare(arg);
-				if (prepareResult === false) return { error: new Error(`Aborted`) };
+				if (prepareResult === false) {
+					return { error: new Error(`Aborted`) };
+				}
 			}
 
 			const result = await request(arg);
@@ -92,14 +97,19 @@ export function useSubmitHelperMultiple<TArg, TResult = unknown>(
 	};
 	const submitAsync = async (arg: TArg): Promise<TResult> => {
 		const key = keyGetter(arg);
-		if (submittingMap.value[key]) throw new Error(`Already submitting`);
-		set(submittingMap.value, key, true);
+		if (submittingMap.value[key]) {
+			throw new Error(`Already submitting`);
+		}
+		submittingMap.value[key] = true;
 		try {
 			const submitResult = await doSubmit(arg);
-			if ('error' in submitResult) throw submitResult.error;
+			if ('error' in submitResult) {
+				throw submitResult.error;
+			}
 			return submitResult.result;
 		} finally {
-			del(submittingMap.value, key);
+			// eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+			delete submittingMap.value[key];
 		}
 	};
 	const handleSubmit = (arg: TArg): void => {

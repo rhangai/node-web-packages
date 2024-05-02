@@ -3,11 +3,16 @@
   "type": "module",
   "devDependencies": {
     "eslint": "^9.1.1",
+    "prettier": "^3.2.5",
     "tsup": "^8.0.2",
     "typescript": "^5.4.5",
-    "vite": "^5.2.10"
+    "vite": "^5.2.10",
+    "vue": "^3.4.26"
   },
   "workspaces": [
-    "packages/eslint-config-vue-typescript"
-  ]
+    "packages/*"
+  ],
+  "scripts": {
+    "build:all": "yarn workspaces foreach -A run build"
+  }
 }

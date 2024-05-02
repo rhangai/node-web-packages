@@ -5,10 +5,17 @@
   "publishConfig": {
     "access": "public"
   },
+  "license": "MIT",
   "keywords": [],
   "author": "rhangai <hangai.renan@gmail.com>",
-  "homepage": "https://github.com/rhangai/node-web-packages/tree/main/packages/eslint-config-vue-typescript#readme",
-  "license": "MIT",
+  "homepage": "https://github.com/rhangai/node-web-packages/tree/main/packages/vue-notification-helper#readme",
+  "bugs": {
+    "url": "https://github.com/rhangai/node-web-packages/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rhangai/node-web-packages.git"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",

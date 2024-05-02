@@ -2,27 +2,48 @@
   "name": "@rhangai/vue-submit-helper",
   "version": "0.6.0",
   "description": "Wrapper to handle requests",
-  "main": "lib/index.js",
-  "typings": "lib/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
   "license": "MIT",
-  "scripts": {
-    "clean": "rimraf -rf lib",
-    "prebuild": "yarn run clean",
-    "build": "tsc -p tsconfig.build.json",
-    "lint": "eslint src",
-    "lint:fix": "eslint --fix src",
-    "preversion": "yarn run build"
+  "keywords": [
+    "vue",
+    "notification",
+    "confirmation",
+    "notify",
+    "confirm",
+    "helper",
+    "composition"
+  ],
+  "author": "rhangai <hangai.renan@gmail.com>",
+  "homepage": "https://github.com/rhangai/node-web-packages/tree/main/packages/vue-submit-helper#readme",
+  "bugs": {
+    "url": "https://github.com/rhangai/node-web-packages/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rhangai/node-web-packages.git"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.js"
+    }
   },
   "devDependencies": {
     "eslint": "*",
-    "rimraf": "*",
-    "typescript": "*",
-    "vue-demi": "^0.12.4"
+    "tsup": "*",
+    "vue": "*"
   },
   "peerDependencies": {
-    "vue-demi": "*"
+    "vue": "^3"
   },
-  "publishConfig": {
-    "access": "public"
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "yarn build:ts && yarn build:types",
+    "build:ts": "tsup-node --format esm,cjs",
+    "build:types": "tsup-node --dts-only",
+    "typecheck": "tsc --noEmit"
   }
 }

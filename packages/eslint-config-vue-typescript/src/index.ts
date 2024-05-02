@@ -50,19 +50,22 @@ const RULES = {
 } satisfies Record<string, EslintConfigRules>;
 
 function createConfig(options: VueConfigOptions): EslintConfig[] {
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+	const recommendedVue = pluginVue.configs['flat/recommended'] as EslintConfig[];
 	return [
 		...configs.ts({
 			...options,
 			parserOptions: {
 				parser: '@typescript-eslint/parser',
 				extraFileExtensions: ['.vue'],
-				...options?.parserOptions,
+				...options.parserOptions,
 			},
 		}),
-		...pluginVue.configs['flat/recommended'],
+		...recommendedVue,
 		{
 			name: '@rhangai/esling-config-vue-typescript/vue',
 			plugins: {
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 				'vue-scoped-css': pluginVueScopedCss,
 			},
 			rules: {

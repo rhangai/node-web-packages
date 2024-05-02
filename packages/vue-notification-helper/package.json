@@ -2,8 +2,10 @@
   "name": "@rhangai/vue-notification-helper",
   "version": "0.5.2",
   "description": "Framework agnostic notification for vue",
-  "main": "lib/index.js",
-  "typings": "lib/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
   "keywords": [
     "vue",
     "notification",
@@ -13,24 +15,35 @@
     "helper",
     "composition"
   ],
-  "license": "MIT",
-  "scripts": {
-    "clean": "rm -rf lib",
-    "build": "tsc",
-    "lint": "eslint src",
-    "lint:fix": "eslint --fix src",
-    "preversion": "yarn run clean && yarn run build"
+  "author": "rhangai <hangai.renan@gmail.com>",
+  "homepage": "https://github.com/rhangai/node-web-packages/tree/main/packages/vue-notification-helper#readme",
+  "bugs": {
+    "url": "https://github.com/rhangai/node-web-packages/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rhangai/node-web-packages.git"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.js"
+    }
   },
   "devDependencies": {
-    "rimraf": "^3.0.2",
-    "typescript": "*",
-    "vue": "^2.6.14",
-    "vue-demi": "^0.13"
+    "eslint": "*",
+    "tsup": "*",
+    "vue": "*"
   },
   "peerDependencies": {
-    "vue-demi": "*"
+    "vue": "^3"
   },
-  "publishConfig": {
-    "access": "public"
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "yarn build:ts && yarn build:types",
+    "build:ts": "tsup-node --format esm,cjs",
+    "build:types": "tsup-node --dts-only",
+    "typecheck": "tsc --noEmit"
   }
 }
