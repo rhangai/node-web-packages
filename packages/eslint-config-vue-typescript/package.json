@@ -1,6 +1,6 @@
 {
   "name": "@rhangai/eslint-config-vue-typescript",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Eslint config for vue-typescript projects",
   "publishConfig": {
     "access": "public"
