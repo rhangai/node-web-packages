@@ -24,7 +24,7 @@
     }
   },
   "dependencies": {
-    "@rhangai/eslint-config-typescript": "^1.0.2",
+    "@rhangai/eslint-config-typescript": "^1.1.1",
     "eslint-plugin-vue": "^9.25.0",
     "eslint-plugin-vue-scoped-css": "^2.8.0",
     "vue-eslint-parser": "^9.4.2",

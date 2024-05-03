@@ -839,9 +839,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rhangai/eslint-config-typescript@npm:^1.0.2":
-  version: 1.0.2
-  resolution: "@rhangai/eslint-config-typescript@npm:1.0.2"
+"@rhangai/eslint-config-typescript@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "@rhangai/eslint-config-typescript@npm:1.1.1"
   dependencies:
     "@eslint/js": "npm:^9.1.1"
     eslint-plugin-import: "npm:^2.29.1"
@@ -849,7 +849,7 @@ __metadata:
     typescript-eslint: "npm:^7.7.1"
   peerDependencies:
     eslint: ">=9"
-  checksum: 10c0/42470648a2cece7ead9e43b622852c40abc0f2d2d940837c2e4dd38b233c5b8cc6b813dfa7e3aa0adafd8624bd8ab96e956c6bb805b593cb575bdd3f2c42bf26
+  checksum: 10c0/05261007545953005b54a0841df1b9c7d5df87b0bf988e899a737ac6d4e71ef5f9e55c5028552c44eea30584f202d9181171a3bf42eead55eeb0850d2ed74a98
   languageName: node
   linkType: hard
 
@@ -857,7 +857,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@rhangai/eslint-config-vue-typescript@workspace:packages/eslint-config-vue-typescript"
   dependencies:
-    "@rhangai/eslint-config-typescript": "npm:^1.0.2"
+    "@rhangai/eslint-config-typescript": "npm:^1.1.1"
     eslint: "npm:*"
     eslint-plugin-vue: "npm:^9.25.0"
     eslint-plugin-vue-scoped-css: "npm:^2.8.0"
