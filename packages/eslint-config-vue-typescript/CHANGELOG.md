@@ -1,5 +1,11 @@
 # @rhangai/eslint-config-vue-typescript
 
+## 1.1.0
+
+### Minor Changes
+
+- New rules for vue
+
 ## 1.0.1
 
 ### Patch Changes
