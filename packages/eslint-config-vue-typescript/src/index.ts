@@ -9,7 +9,7 @@ import pluginVue from 'eslint-plugin-vue';
 import pluginVueScopedCss from 'eslint-plugin-vue-scoped-css';
 
 export type VueConfigOptions = ConfigOptions & {
-	pug?: boolean;
+	multiWordComponentNameIgnores?: string[];
 };
 
 const RULES = {
@@ -72,6 +72,10 @@ function createConfig(options: VueConfigOptions): EslintConfig[] {
 				...RULES.vue,
 				...RULES.scoped,
 				...RULES.prettier,
+				'vue/multi-word-component-names': [
+					'warn',
+					{ ignores: options.multiWordComponentNameIgnores },
+				],
 			},
 		},
 		{
