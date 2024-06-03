@@ -1,5 +1,11 @@
 # @rhangai/eslint-config-vue-typescript
 
+## 1.2.0
+
+### Minor Changes
+
+- Improved scoped css support
+
 ## 1.1.1
 
 ### Patch Changes
