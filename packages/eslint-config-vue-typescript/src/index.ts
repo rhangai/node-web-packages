@@ -29,7 +29,7 @@ const RULES = {
 		'vue-scoped-css/enforce-style-type': ['error', { allows: ['scoped'] }],
 		'vue-scoped-css/no-deprecated-deep-combinator': 'error',
 		'vue-scoped-css/no-deprecated-v-enter-v-leave-class': 'error',
-		'vue-scoped-css/no-parent-of-v-global ': 'error',
+		'vue-scoped-css/no-parent-of-v-global': 'error',
 		'vue-scoped-css/no-unused-keyframes': 'warn',
 		'vue-scoped-css/no-unused-selector': 'warn',
 		'vue-scoped-css/require-selector-used-inside': 'warn',
