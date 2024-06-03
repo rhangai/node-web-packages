@@ -3,31 +3,5 @@
 	"useTabs": true,
 	"singleQuote": true,
 	"trailingComma": "es5",
-	"printWidth": 100,
-	"pugClosingBracketPosition": "last-line",
-	"pugSortAttributesBeginning": [
-		"^\\:?is$",
-		"^ref$",
-		"^v-(if|else|else-if)$",
-		"^v-model$",
-		"^\\:?value$",
-		"^cols$",
-		"^xs$",
-		"^sm$",
-		"^md$",
-		"^lg$",
-		"^xl$"
-	],
-	"pugSortAttributes": "asc",
-	"pugSortAttributesEnd": ["^v-(bind|on)$"],
-	"pugWrapAttributesThreshold": 2,
-	"overrides": [
-		{
-			"files": ["package.json", "*.yml"],
-			"options": {
-				"useTabs": false,
-				"tabWidth": 2
-			}
-		}
-	]
+	"printWidth": 100
 }
