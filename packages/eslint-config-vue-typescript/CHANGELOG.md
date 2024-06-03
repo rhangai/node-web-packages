@@ -1,5 +1,11 @@
 # @rhangai/eslint-config-vue-typescript
 
+## 1.2.2
+
+### Patch Changes
+
+- Fixed eslint rules for scoped-css
+
 ## 1.2.1
 
 ### Patch Changes
