@@ -1,5 +1,11 @@
 # @rhangai/eslint-config-vue-typescript
 
+## 1.1.1
+
+### Patch Changes
+
+- Fixed prettier config
+
 ## 1.1.0
 
 ### Minor Changes
