@@ -27,8 +27,7 @@
     "@rhangai/eslint-config-typescript": "^1.2.0",
     "eslint-plugin-vue": "^9.25.0",
     "eslint-plugin-vue-scoped-css": "^2.8.0",
-    "vue-eslint-parser": "^9.4.2",
-    "vue-eslint-parser-template-tokenizer-pug": "^0.4.11"
+    "vue-eslint-parser": "^9.4.2"
   },
   "devDependencies": {
     "eslint": "*",
