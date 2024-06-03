@@ -36,10 +36,8 @@ const RULES = {
 		'vue-scoped-css/v-slotted-pseudo-style': ['error', ':slotted'],
 	},
 	prettier: {
-		'vue/attributes-order': 'off',
 		'vue/html-quotes': 'off',
 		'vue/max-attributes-per-line': 'off',
-		'vue/html-self-closing': 'off',
 		'vue/html-end-tags': 'off',
 		'vue/html-indent': 'off',
 		'vue/html-closing-bracket-newline': 'off',
