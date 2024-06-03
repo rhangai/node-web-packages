@@ -1,5 +1,11 @@
 # @rhangai/eslint-config-vue-typescript
 
+## 1.2.1
+
+### Patch Changes
+
+- Fixed self closing tags
+
 ## 1.2.0
 
 ### Minor Changes
