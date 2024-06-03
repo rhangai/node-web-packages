@@ -4,7 +4,7 @@ export default [
 	{
 		ignores: ['**/dist/'],
 	},
-	...config.vuePug({
+	...config.vue({
 		meta: import.meta,
 		devFiles: ['**/tsup.config.ts'],
 	}),
