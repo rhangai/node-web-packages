@@ -1,5 +1,11 @@
 # @rhangai/eslint-config-vue-typescript
 
+## 1.2.3
+
+### Patch Changes
+
+- Fixed self-closing to warn
+
 ## 1.2.2
 
 ### Patch Changes
