@@ -49,6 +49,18 @@ const RULES = {
 		'vue/html-closing-bracket-spacing': 'off',
 		'vue/multiline-html-element-content-newline': 'off',
 		'vue/singleline-html-element-content-newline': 'off',
+		'vue/html-self-closing': [
+			'error',
+			{
+				html: {
+					void: 'any',
+					normal: 'always',
+					component: 'always',
+				},
+				svg: 'always',
+				math: 'always',
+			},
+		],
 	},
 } satisfies Record<string, EslintConfigRules>;
 
