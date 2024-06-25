@@ -1,5 +1,11 @@
 # @rhangai/eslint-config-vue-typescript
 
+## 1.2.4
+
+### Patch Changes
+
+- Updated some dependencies
+
 ## 1.2.3
 
 ### Patch Changes
