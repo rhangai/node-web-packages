@@ -1,6 +1,6 @@
 {
   "name": "@rhangai/vue-notification-helper",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Framework agnostic notification for vue",
   "publishConfig": {
     "access": "public"
