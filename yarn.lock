@@ -883,7 +883,7 @@ __metadata:
     typescript: "npm:*"
     vue: "npm:*"
   peerDependencies:
-    vue: ^3
+    vue: ^2.7 || ^3
   languageName: unknown
   linkType: soft
 

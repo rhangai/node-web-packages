@@ -1,12 +1,13 @@
 import {
+	type App,
 	inject,
+	type InjectionKey,
 	nextTick,
+	type Plugin,
+	provide,
+	type Ref,
 	ref,
 	shallowReactive,
-	type App,
-	type InjectionKey,
-	type Ref,
-	type Plugin,
 } from 'vue';
 import { TIMEOUT_DELAY } from './constants';
 
@@ -27,12 +28,13 @@ type UseConfirmationResult<TConfirmation> = {
 
 type ConfirmationHelper<TConfirmation> = {
 	ConfirmationPlugin: Plugin;
-	useConfirmationsHandlers(this: void): Ref<ConfirmationItem<TConfirmation>[]>;
+	provideConfirmations(): void;
+	useConfirmationsHandlers(this: void): Ref<Array<ConfirmationItem<TConfirmation>>>;
 	useConfirmation(this: void): UseConfirmationResult<TConfirmation>;
 };
 
 type ConfirmationProvider = {
-	confirmations: Ref<ConfirmationItem<unknown>[]>;
+	confirmations: Ref<Array<ConfirmationItem<unknown>>>;
 	confirm(this: void, confirmation: unknown): Promise<boolean>;
 };
 
@@ -48,10 +50,13 @@ export function createConfirmationHelper<TConfirmation>(): ConfirmationHelper<TC
 				app.provide(CONFIRMATIONS_KEY, createConfirmationProvider());
 			},
 		},
+		provideConfirmations() {
+			provide(CONFIRMATIONS_KEY, createConfirmationProvider());
+		},
 		useConfirmationsHandlers() {
 			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 			const { confirmations } = inject(CONFIRMATIONS_KEY)!;
-			return confirmations as Ref<ConfirmationItem<TConfirmation>[]>;
+			return confirmations as Ref<Array<ConfirmationItem<TConfirmation>>>;
 		},
 		useConfirmation() {
 			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -67,7 +72,7 @@ export function createConfirmationHelper<TConfirmation>(): ConfirmationHelper<TC
  */
 function createConfirmationProvider(): ConfirmationProvider {
 	let confirmationIdCounter = 0;
-	const confirmations: Ref<ConfirmationItem<unknown>[]> = ref([]);
+	const confirmations: Ref<Array<ConfirmationItem<unknown>>> = ref([]);
 	const confirm = (confirmation: unknown) => {
 		const confirmationId = `confirmation:${confirmationIdCounter}`;
 		confirmationIdCounter += 1;

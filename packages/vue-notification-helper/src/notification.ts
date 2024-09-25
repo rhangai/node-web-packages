@@ -1,11 +1,12 @@
 import {
+	inject,
+	type InjectionKey,
 	nextTick,
+	type Plugin,
+	provide,
+	type Ref,
 	ref,
 	shallowReactive,
-	inject,
-	type Ref,
-	type InjectionKey,
-	type Plugin,
 } from 'vue';
 import { TIMEOUT_DELAY } from './constants';
 
@@ -22,12 +23,13 @@ type UseNotificationResult<TNotification> = {
 
 type NotificationHelper<TNotification> = {
 	NotificationPlugin: Plugin;
-	useNotificationsHandlers(this: void): Ref<NotificationItem<TNotification>[]>;
+	provideNotifications(): void;
+	useNotificationsHandlers(this: void): Ref<Array<NotificationItem<TNotification>>>;
 	useNotification(this: void): UseNotificationResult<TNotification>;
 };
 
 type NotificationProvider = {
-	notifications: Ref<NotificationItem<unknown>[]>;
+	notifications: Ref<Array<NotificationItem<unknown>>>;
 	notify(this: void, notification: unknown): void;
 };
 
@@ -43,10 +45,13 @@ export function createNotificationHelper<TNotification>(): NotificationHelper<TN
 				app.provide(NOTIFICATIONS_KEY, createNotificationProvider());
 			},
 		},
+		provideNotifications() {
+			provide(NOTIFICATIONS_KEY, createNotificationProvider());
+		},
 		useNotificationsHandlers() {
 			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 			const { notifications } = inject(NOTIFICATIONS_KEY)!;
-			return notifications as Ref<NotificationItem<TNotification>[]>;
+			return notifications as Ref<Array<NotificationItem<TNotification>>>;
 		},
 		useNotification() {
 			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -61,7 +66,7 @@ export function createNotificationHelper<TNotification>(): NotificationHelper<TN
  */
 function createNotificationProvider(): NotificationProvider {
 	let notificationIdCounter = 0;
-	const notifications: Ref<NotificationItem<unknown>[]> = ref([]);
+	const notifications: Ref<Array<NotificationItem<unknown>>> = ref([]);
 	const notify = (notification: unknown) => {
 		let resolved = false;
 		const notificationId = `notification:${notificationIdCounter}`;
