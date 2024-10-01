@@ -20,6 +20,25 @@ const RULES = {
 				shallowOnly: true,
 			},
 		],
+		'vue/attributes-order': [
+			'warn',
+			{
+				order: [
+					'DEFINITION',
+					'LIST_RENDERING',
+					'CONDITIONALS',
+					'RENDER_MODIFIERS',
+					'GLOBAL',
+					['UNIQUE', 'SLOT'],
+					'TWO_WAY_BINDING',
+					'OTHER_DIRECTIVES',
+					'OTHER_ATTR',
+					'EVENTS',
+					'CONTENT',
+				],
+				alphabetical: true,
+			},
+		],
 	},
 	vueOnlyFiles: {
 		'@typescript-eslint/prefer-function-type': 'off',
