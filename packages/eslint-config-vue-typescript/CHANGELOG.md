@@ -1,5 +1,11 @@
 # @rhangai/eslint-config-vue-typescript
 
+## 1.3.0
+
+### Minor Changes
+
+- Ordering of vue attributes
+
 ## 1.2.5
 
 ### Patch Changes
