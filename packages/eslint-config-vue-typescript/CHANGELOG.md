@@ -1,5 +1,11 @@
 # @rhangai/eslint-config-vue-typescript
 
+## 1.4.0
+
+### Minor Changes
+
+- Upgraded dependencies
+
 ## 1.3.0
 
 ### Minor Changes
