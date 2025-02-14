@@ -86,11 +86,8 @@ export function useSubmitHelper<TResult = unknown>(
 	options: UseSubmitHelperOptions<void, TResult>,
 	defaults?: UseSubmitHelperDefaults
 ): UseSubmitHelperResult<TResult> {
-	const { handleSubmit, handleSubmitEvent, submitAsync, submittingAny } = useSubmitHelperMultiple(
-		{
-			...options,
-			keyFn: () => '',
-		},
+	const { handleSubmit, handleSubmitEvent, submitAsync, submitting } = useSubmitArgHelper(
+		options,
 		defaults
 	);
 	return {
@@ -103,7 +100,7 @@ export function useSubmitHelper<TResult = unknown>(
 		submitAsync() {
 			return submitAsync();
 		},
-		submitting: submittingAny,
+		submitting,
 	};
 }
 
@@ -141,18 +138,35 @@ export function useSubmitArgHelper<TArg, TResult = unknown>(
 	options: UseSubmitHelperOptions<TArg, TResult>,
 	defaults?: UseSubmitHelperDefaults
 ): UseSubmitArgHelperResult<TArg, TResult> {
-	const { handleSubmit, handleSubmitEvent, submitAsync, submittingAny } = useSubmitHelperMultiple(
-		{
-			...options,
-			keyFn: () => '',
-		},
-		defaults
-	);
+	const submitting = ref(false);
+	const submitAsync = async (arg: TArg): Promise<TResult> => {
+		if (submitting.value) {
+			throw new Error(`Already submitting`);
+		}
+		submitting.value = true;
+		try {
+			const submitResult = await doSubmit(arg, options, defaults);
+			if ('error' in submitResult) {
+				throw submitResult.error;
+			}
+			return submitResult.result;
+		} finally {
+			submitting.value = false;
+		}
+	};
+	const handleSubmit = (arg: TArg): void => {
+		void submitAsync(arg);
+	};
+	const handleSubmitEvent = (ev: Event, arg: TArg): void => {
+		ev.preventDefault();
+		ev.stopPropagation();
+		void submitAsync(arg);
+	};
 	return {
 		handleSubmit,
 		handleSubmitEvent,
 		submitAsync,
-		submitting: submittingAny,
+		submitting,
 	};
 }
 
@@ -220,43 +234,6 @@ export function useSubmitHelperMultiple<TArg, TResult = unknown>(
 		}
 		return values.findIndex((c) => c) >= 0;
 	});
-	const doSubmit = async (arg: TArg): Promise<{ result: TResult } | { error: unknown }> => {
-		try {
-			if (options.validate) {
-				const validateResult = await submitValidate(options.validate);
-				if (!validateResult.valid) {
-					await defaults?.onValidateError?.(validateResult.error, arg);
-					await options.onValidateError?.(validateResult.error, arg);
-					return {
-						error: validateResult.error ?? new Error('validation'),
-					};
-				}
-			}
-			if (defaults?.prepare) {
-				const prepareResult = await defaults.prepare(arg);
-				if (prepareResult === false) {
-					return { error: new Error(`Aborted`) };
-				}
-			}
-			if (options.prepare) {
-				const prepareResult = await options.prepare(arg);
-				if (prepareResult === false) {
-					return { error: new Error(`Aborted`) };
-				}
-			}
-
-			const result = await options.submitFn(arg);
-			await defaults?.onSuccess?.(result, arg);
-			await options.onSuccess?.(result, arg);
-			return { result };
-		} catch (err) {
-			await defaults?.onError?.(err, arg);
-			await options.onError?.(err, arg);
-			// istanbul ignore next
-			const error = err ?? new Error();
-			return { error };
-		}
-	};
 	const submitAsync = async (arg: TArg): Promise<TResult> => {
 		const key = options.keyFn(arg);
 		if (submittingMap.value[key]) {
@@ -264,7 +241,7 @@ export function useSubmitHelperMultiple<TArg, TResult = unknown>(
 		}
 		submittingMap.value[key] = true;
 		try {
-			const submitResult = await doSubmit(arg);
+			const submitResult = await doSubmit(arg, options, defaults);
 			if ('error' in submitResult) {
 				throw submitResult.error;
 			}
@@ -299,4 +276,47 @@ export function useSubmitHelperMultiple<TArg, TResult = unknown>(
 		isSubmitting,
 		isSubmitDisabled,
 	};
+}
+
+type DoSumitResult<TResult> = Promise<{ result: TResult } | { error: unknown }>;
+async function doSubmit<TArg, TResult>(
+	arg: TArg,
+	options: UseSubmitHelperOptions<TArg, TResult>,
+	defaults: UseSubmitHelperDefaults | undefined
+): DoSumitResult<TResult> {
+	try {
+		if (options.validate) {
+			const validateResult = await submitValidate(options.validate);
+			if (!validateResult.valid) {
+				await defaults?.onValidateError?.(validateResult.error, arg);
+				await options.onValidateError?.(validateResult.error, arg);
+				return {
+					error: validateResult.error ?? new Error('validation'),
+				};
+			}
+		}
+		if (defaults?.prepare) {
+			const prepareResult = await defaults.prepare(arg);
+			if (prepareResult === false) {
+				return { error: new Error(`Aborted`) };
+			}
+		}
+		if (options.prepare) {
+			const prepareResult = await options.prepare(arg);
+			if (prepareResult === false) {
+				return { error: new Error(`Aborted`) };
+			}
+		}
+
+		const result = await options.submitFn(arg);
+		await defaults?.onSuccess?.(result, arg);
+		await options.onSuccess?.(result, arg);
+		return { result };
+	} catch (err) {
+		await defaults?.onError?.(err, arg);
+		await options.onError?.(err, arg);
+		// istanbul ignore next
+		const error = err ?? new Error();
+		return { error };
+	}
 }
