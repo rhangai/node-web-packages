@@ -6,6 +6,8 @@ const VALIDATE_SYMBOL = Symbol('@rhangai/vue-submit-helper:validate');
 
 export type VueSubmitValidateItem =
 	| boolean
+	| null
+	| undefined
 	| (() => VueSubmitValidateItem | Promise<VueSubmitValidateItem>)
 	| Ref<VueSubmitValidateItem>
 	| VueSubmitValidateItem[]
