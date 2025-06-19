@@ -1,21 +1,23 @@
 {
-  "packageManager": "yarn@4.1.1",
+  "packageManager": "pnpm@10.12.1+sha512.f0dda8580f0ee9481c5c79a1d927b9164f2c478e90992ad268bbb2465a736984391d6333d2c327913578b2804af33474ca554ba29c04a8b13060a717675ae3ac",
   "type": "module",
   "devDependencies": {
     "@changesets/cli": "^2.27.1",
+    "@rhangai/eslint-config-vue-typescript": "workspace:*",
     "eslint": "^9.1.1",
+    "nx": "^21.2.1",
     "prettier": "^3.2.5",
     "tsup": "^8.0.2",
     "typescript": "^5.4.5",
-    "vite": "^5.2.10",
+    "vite": "^6.3.5",
     "vitest": "^3.0.5",
     "vue": "^3.4.26"
   },
-  "workspaces": [
-    "packages/*"
-  ],
   "scripts": {
-    "prepare-release": "yarn workspaces foreach -A run clean && yarn workspaces foreach -A run typecheck && yarn workspaces foreach -A run build && yarn changeset",
-    "build:all": "yarn workspaces foreach -A run build"
+    "prepare-release": "pnpm run build && changeset",
+    "build": "nx run-many -t build",
+    "lint": "(pnpm run lint:eslint || true) && pnpm run lint:prettier",
+    "lint:eslint": "eslint --fix packages",
+    "lint:prettier": "prettier --log-level error -w packages"
   }
 }

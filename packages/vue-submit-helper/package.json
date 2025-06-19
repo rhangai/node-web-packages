@@ -43,7 +43,7 @@
   },
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "yarn build:ts && yarn build:types",
+    "build": "pnpm run build:ts && pnpm run build:types",
     "build:ts": "tsup-node --format esm,cjs",
     "build:types": "tsup-node --dts-only",
     "typecheck": "tsc -p tsconfig.lib.json --noEmit"

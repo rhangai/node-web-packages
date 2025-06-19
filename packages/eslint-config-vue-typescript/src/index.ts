@@ -3,9 +3,7 @@ import configs, {
 	type EslintConfig,
 	type EslintConfigRules,
 } from '@rhangai/eslint-config-typescript';
-// @ts-expect-error Types are not defined
 import pluginVue from 'eslint-plugin-vue';
-// @ts-expect-error Types are not defined
 import pluginVueScopedCss from 'eslint-plugin-vue-scoped-css';
 
 export type VueConfigOptions = ConfigOptions & {
@@ -84,7 +82,6 @@ const RULES = {
 } satisfies Record<string, EslintConfigRules>;
 
 function createConfig(options: VueConfigOptions): EslintConfig[] {
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 	const recommendedVue = pluginVue.configs['flat/recommended'] as EslintConfig[];
 	return [
 		...configs.ts({
@@ -99,7 +96,6 @@ function createConfig(options: VueConfigOptions): EslintConfig[] {
 		{
 			name: '@rhangai/esling-config-vue-typescript/vue',
 			plugins: {
-				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 				'vue-scoped-css': pluginVueScopedCss,
 			},
 			rules: {

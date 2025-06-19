@@ -6,6 +6,7 @@ packages/*/lib
 /coverage
 dist/
 package.tgz
+/.nx
 
 # Yarn
 .yarn/*
